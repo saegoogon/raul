@@ -24,19 +24,23 @@ async function attachVoteData(posts: Post[], userId?: string) {
 }
 
 export async function getPosts(): Promise<Post[]> {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  try {
+    const supabase = await createClient();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
 
-  const { data, error } = await supabase
-    .from("posts")
-    .select("*, profiles(username)")
-    .order("created_at", { ascending: false });
+    const { data, error } = await supabase
+      .from("posts")
+      .select("*, profiles(username)")
+      .order("created_at", { ascending: false });
 
-  if (error || !data) return [];
+    if (error || !data) return [];
 
-  return attachVoteData(data as Post[], user?.id);
+    return attachVoteData(data as Post[], user?.id);
+  } catch {
+    return [];
+  }
 }
 
 export async function getPost(id: string): Promise<Post | null> {
@@ -71,9 +75,13 @@ export async function getComments(postId: string): Promise<Comment[]> {
 }
 
 export async function getCurrentUser() {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  return user;
+  try {
+    const supabase = await createClient();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    return user;
+  } catch {
+    return null;
+  }
 }
