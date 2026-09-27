@@ -3,25 +3,8 @@
 import { useState } from "react";
 import { createPost } from "@/actions/posts";
 import { createClient } from "@/lib/supabase/client";
-import {
-  isVideoFile,
-  MAX_FILE_MB,
-  MAX_SHORT_SECONDS,
-} from "@/lib/media";
+import { isVideoFile, MAX_FILE_MB } from "@/lib/media";
 import { uploadErrorMessage, uploadPostFile } from "@/lib/upload";
-
-function videoDuration(file: File) {
-  return new Promise<number>((resolve, reject) => {
-    const video = document.createElement("video");
-    video.preload = "metadata";
-    video.onloadedmetadata = () => {
-      URL.revokeObjectURL(video.src);
-      resolve(video.duration);
-    };
-    video.onerror = () => reject(new Error("Could not read video"));
-    video.src = URL.createObjectURL(file);
-  });
-}
 
 export function ShareForm() {
   const [file, setFile] = useState<File | null>(null);
@@ -55,15 +38,6 @@ export function ShareForm() {
               setError("Keep files under 1GB.");
               setPending(false);
               return;
-            }
-
-            if (isVideoFile(file)) {
-              const seconds = await videoDuration(file);
-              if (seconds > MAX_SHORT_SECONDS) {
-                setError("Videos can be up to 3 minutes.");
-                setPending(false);
-                return;
-              }
             }
 
             const supabase = createClient();
@@ -119,10 +93,10 @@ export function ShareForm() {
           />
         ) : (
           <span className="px-6 text-sm text-zinc-500">
-            Photo or a 3-min video
+            Photo or video
             <br />
             <span className="text-zinc-400">
-              사진이나 3분 영상, 최대 1GB
+              사진이나 영상, 최대 1GB
             </span>
           </span>
         )}
