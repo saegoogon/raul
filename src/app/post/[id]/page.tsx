@@ -5,17 +5,16 @@ import { CommentSection } from "@/components/CommentSection";
 import { ShortsPlayer } from "@/components/ShortsPlayer";
 import { VoteButton } from "@/components/VoteButton";
 import { isVideoUrl } from "@/lib/media";
-import { getComments, getCurrentUser, getPost } from "@/lib/posts";
+import { getComments, getPost } from "@/lib/posts";
 import { timeAgo } from "@/lib/timeAgo";
 
 export default async function PostPage({
   params,
 }: PageProps<"/post/[id]">) {
   const { id } = await params;
-  const [post, comments, user] = await Promise.all([
+  const [post, comments] = await Promise.all([
     getPost(id),
     getComments(id),
-    getCurrentUser(),
   ]);
 
   if (!post) notFound();
@@ -61,11 +60,7 @@ export default async function PostPage({
       </div>
 
       <div className="border-t border-zinc-200 px-4 pb-4">
-        <CommentSection
-          postId={post.id}
-          comments={comments}
-          isLoggedIn={!!user}
-        />
+        <CommentSection postId={post.id} comments={comments} />
       </div>
 
       <div className="border-t border-zinc-200 px-4 py-3">

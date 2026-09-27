@@ -1,7 +1,5 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 
 export async function vote(postId: string, value: 1 | -1) {
@@ -10,7 +8,7 @@ export async function vote(postId: string, value: 1 | -1) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  if (!user) redirect("/login");
+  if (!user) return { error: "login" };
 
   const { data: existing } = await supabase
     .from("votes")
@@ -33,6 +31,5 @@ export async function vote(postId: string, value: 1 | -1) {
     });
   }
 
-  revalidatePath("/");
-  revalidatePath(`/post/${postId}`);
+  return { ok: true };
 }

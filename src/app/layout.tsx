@@ -13,6 +13,8 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+export const preferredRegion = ["icn1"];
+
 export const metadata: Metadata = {
   title: {
     default: "blacksmile",

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export function ShortsPlayer({
   src,
@@ -9,37 +9,39 @@ export function ShortsPlayer({
   src: string;
   className?: string;
 }) {
-  const ref = useRef<HTMLVideoElement>(null);
+  const boxRef = useRef<HTMLDivElement>(null);
+  const [active, setActive] = useState(false);
 
   useEffect(() => {
-    const video = ref.current;
-    if (!video) return;
+    const box = boxRef.current;
+    if (!box) return;
 
     const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          void video.play().catch(() => {});
-        } else {
-          video.pause();
-        }
-      },
-      { threshold: 0.6 },
+      ([entry]) => setActive(entry.isIntersecting),
+      { threshold: 0.4 },
     );
-
-    observer.observe(video);
+    observer.observe(box);
     return () => observer.disconnect();
-  }, [src]);
+  }, []);
 
   return (
-    <video
-      ref={ref}
-      src={src}
-      className={className}
-      muted
-      loop
-      playsInline
-      controls
-      preload="metadata"
-    />
+    <div ref={boxRef} className="bg-black">
+      {active ? (
+        <video
+          src={src}
+          className={className}
+          muted
+          loop
+          playsInline
+          controls
+          autoPlay
+          preload="metadata"
+        />
+      ) : (
+        <div className={`flex items-center justify-center bg-zinc-950 text-zinc-500 ${className}`}>
+          ▶
+        </div>
+      )}
+    </div>
   );
 }

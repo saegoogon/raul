@@ -2,11 +2,11 @@ import { Suspense } from "react";
 import Link from "next/link";
 import { GuestHero } from "@/components/GuestHero";
 import { PostFeed } from "@/components/PostFeed";
-import { getCurrentUser, getPosts } from "@/lib/posts";
+import { getPosts } from "@/lib/posts";
 
 async function HomeFeed({ mode }: { mode: "hot" | "new" }) {
-  const [posts, user] = await Promise.all([getPosts(mode), getCurrentUser()]);
-  return <PostFeed posts={posts} isLoggedIn={!!user} />;
+  const posts = await getPosts(mode);
+  return <PostFeed posts={posts} />;
 }
 
 export default async function HomePage({
