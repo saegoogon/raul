@@ -4,6 +4,7 @@ import { GuestHero } from "@/components/GuestHero";
 import { NightRoom } from "@/components/NightRoom";
 import { PostFeed } from "@/components/PostFeed";
 import { SearchBar } from "@/components/SearchBar";
+import { WinkLoader } from "@/components/WinkLoader";
 import { getCurrentUser, getTonightPosts, getPosts } from "@/lib/posts";
 import type { Post } from "@/lib/types";
 
@@ -100,14 +101,7 @@ export default async function HomePage({
         </div>
       </div>
 
-      <Suspense
-        fallback={
-          <div className="grid gap-4 sm:grid-cols-2">
-            <div className="h-80 animate-pulse rounded-2xl bg-zinc-200" />
-            <div className="h-80 animate-pulse rounded-2xl bg-zinc-200" />
-          </div>
-        }
-      >
+      <Suspense fallback={<WinkLoader />}>
         {mode === "night" && !q ? (
           <NightHome />
         ) : (
