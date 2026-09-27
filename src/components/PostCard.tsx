@@ -6,6 +6,7 @@ import type { Post } from "@/lib/types";
 function timeAgo(dateStr: string) {
   const diff = Date.now() - new Date(dateStr).getTime();
   const minutes = Math.floor(diff / 60000);
+  if (minutes < 1) return "방금";
   if (minutes < 60) return `${minutes}분 전`;
   const hours = Math.floor(minutes / 60);
   if (hours < 24) return `${hours}시간 전`;
@@ -15,7 +16,7 @@ function timeAgo(dateStr: string) {
 
 export function PostCard({ post }: { post: Post }) {
   return (
-    <article className="flex overflow-hidden rounded-lg border border-zinc-200 bg-white hover:border-zinc-300">
+    <article className="flex overflow-hidden rounded-lg border border-zinc-200 bg-white hover:border-zinc-400">
       <VoteButton
         postId={post.id}
         voteCount={post.vote_count}
@@ -28,7 +29,7 @@ export function PostCard({ post }: { post: Post }) {
         </p>
 
         <Link href={`/post/${post.id}`} className="block group">
-          <h2 className="text-lg font-semibold text-zinc-900 group-hover:text-orange-600">
+          <h2 className="text-lg font-semibold text-zinc-900 group-hover:underline">
             {post.title}
           </h2>
           {post.content && (
@@ -52,9 +53,9 @@ export function PostCard({ post }: { post: Post }) {
 
         <Link
           href={`/post/${post.id}`}
-          className="mt-2 inline-block text-xs font-medium text-zinc-500 hover:text-orange-600"
+          className="mt-2 inline-block text-xs font-medium text-zinc-500 hover:text-zinc-950"
         >
-          댓글 보기
+          댓글 {post.comment_count ?? 0}개
         </Link>
       </div>
     </article>

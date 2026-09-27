@@ -14,6 +14,7 @@ export type Post = {
   profiles?: Profile | null;
   vote_count?: number;
   user_vote?: number | null;
+  comment_count?: number;
 };
 
 export type Comment = {

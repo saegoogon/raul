@@ -14,8 +14,8 @@ export function VoteButton({
       <form action={vote.bind(null, postId, 1)}>
         <button
           type="submit"
-          className={`rounded p-1 hover:bg-orange-50 hover:text-orange-600 ${
-            userVote === 1 ? "text-orange-600" : ""
+          className={`rounded p-1 hover:bg-amber-50 hover:text-amber-600 ${
+            userVote === 1 ? "text-amber-600" : ""
           }`}
           aria-label="추천"
         >

@@ -12,18 +12,30 @@ async function attachVoteData(posts: Post[], userId?: string) {
     .select("post_id, value, user_id")
     .in("post_id", postIds);
 
+  const { data: comments } = await supabase
+    .from("comments")
+    .select("post_id")
+    .in("post_id", postIds);
+
   return posts.map((post) => {
     const postVotes = votes?.filter((v) => v.post_id === post.id) ?? [];
     const voteCount = postVotes.reduce((sum, v) => sum + v.value, 0);
     const userVote = userId
       ? (postVotes.find((v) => v.user_id === userId)?.value ?? null)
       : null;
+    const commentCount =
+      comments?.filter((c) => c.post_id === post.id).length ?? 0;
 
-    return { ...post, vote_count: voteCount, user_vote: userVote };
+    return {
+      ...post,
+      vote_count: voteCount,
+      user_vote: userVote,
+      comment_count: commentCount,
+    };
   });
 }
 
-export async function getPosts(): Promise<Post[]> {
+export async function getPosts(sort: "hot" | "new" = "hot"): Promise<Post[]> {
   try {
     const supabase = await createClient();
     const {
@@ -37,7 +49,15 @@ export async function getPosts(): Promise<Post[]> {
 
     if (error || !data) return [];
 
-    return attachVoteData(data as Post[], user?.id);
+    const posts = await attachVoteData(data as Post[], user?.id);
+    if (sort === "new") return posts;
+
+    return [...posts].sort((a, b) => {
+      const scoreA = (a.vote_count ?? 0) + (a.comment_count ?? 0);
+      const scoreB = (b.vote_count ?? 0) + (b.comment_count ?? 0);
+      if (scoreB !== scoreA) return scoreB - scoreA;
+      return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+    });
   } catch {
     return [];
   }

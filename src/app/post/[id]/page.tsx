@@ -61,7 +61,7 @@ export default async function PostPage({
       </div>
 
       <div className="border-t border-zinc-200 px-4 py-3">
-        <Link href="/" className="text-sm text-orange-600 hover:underline">
+        <Link href="/" className="text-sm font-medium text-zinc-950 hover:underline">
           ← 목록으로
         </Link>
       </div>
