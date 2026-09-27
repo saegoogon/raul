@@ -72,7 +72,7 @@ export function uploadErrorMessage(error: unknown) {
     error instanceof Error ? error.message : "Upload failed. Try again.";
   const lower = raw.toLowerCase();
   if (lower.includes("exceeded the maximum allowed size") || lower.includes("entity too large")) {
-    return "파일이 너무 커요. Supabase Storage Settings에서 Global file size limit을 1GB로 올려 주세요. 무료 플랜은 50MB가 끝입니다.";
+    return "파일이 50MB보다 커요. 영상을 작게 저장한 뒤 올려 주세요.";
   }
   return raw;
 }

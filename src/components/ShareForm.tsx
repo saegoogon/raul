@@ -35,7 +35,7 @@ export function ShareForm() {
         try {
           if (file) {
             if (file.size > MAX_FILE_MB * 1024 * 1024) {
-              setError("Keep files under 1GB.");
+              setError("파일이 50MB보다 커요. 영상을 작게 저장한 뒤 올려 주세요.");
               setPending(false);
               return;
             }
@@ -96,7 +96,7 @@ export function ShareForm() {
             Photo or video
             <br />
             <span className="text-zinc-400">
-              사진이나 영상, 최대 1GB
+              사진이나 영상, 최대 50MB
             </span>
           </span>
         )}
@@ -108,7 +108,11 @@ export function ShareForm() {
             const next = event.target.files?.[0] ?? null;
             setFile(next);
             setPreview(next ? URL.createObjectURL(next) : null);
-            setError(null);
+            if (next && next.size > MAX_FILE_MB * 1024 * 1024) {
+              setError("파일이 50MB보다 커요. 영상을 작게 저장한 뒤 올려 주세요.");
+            } else {
+              setError(null);
+            }
           }}
         />
       </label>
