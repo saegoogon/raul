@@ -12,16 +12,16 @@ export async function createPost(formData: FormData) {
 
   if (!user) redirect("/login");
 
-  const title = (formData.get("title") as string)?.trim();
-  const content = (formData.get("content") as string)?.trim() || null;
+  const caption = (formData.get("caption") as string)?.trim() || "";
   const image = formData.get("image") as File | null;
+  const hasImage = Boolean(image && image.size > 0);
 
-  if (!title) return;
+  if (!caption && !hasImage) return;
 
   let imageUrl: string | null = null;
 
-  if (image && image.size > 0) {
-    const ext = image.name.split(".").pop();
+  if (hasImage && image) {
+    const ext = image.name.split(".").pop() || "jpg";
     const path = `${user.id}/${Date.now()}.${ext}`;
     const { error: uploadError } = await supabase.storage
       .from("posts")
@@ -35,10 +35,12 @@ export async function createPost(formData: FormData) {
     imageUrl = publicUrl;
   }
 
+  const title = caption.slice(0, 80) || "Today";
+
   const { error } = await supabase.from("posts").insert({
     user_id: user.id,
     title,
-    content,
+    content: caption || null,
     image_url: imageUrl,
   });
 

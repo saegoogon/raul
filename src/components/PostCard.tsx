@@ -1,61 +1,60 @@
 import Image from "next/image";
 import Link from "next/link";
 import { VoteButton } from "@/components/VoteButton";
+import { timeAgo } from "@/lib/timeAgo";
 import type { Post } from "@/lib/types";
 
-function timeAgo(dateStr: string) {
-  const diff = Date.now() - new Date(dateStr).getTime();
-  const minutes = Math.floor(diff / 60000);
-  if (minutes < 1) return "방금";
-  if (minutes < 60) return `${minutes}분 전`;
-  const hours = Math.floor(minutes / 60);
-  if (hours < 24) return `${hours}시간 전`;
-  const days = Math.floor(hours / 24);
-  return `${days}일 전`;
-}
-
 export function PostCard({ post }: { post: Post }) {
+  const caption = post.content || post.title;
+
   return (
-    <article className="flex overflow-hidden rounded-lg border border-zinc-200 bg-white hover:border-zinc-400">
-      <VoteButton
-        postId={post.id}
-        voteCount={post.vote_count}
-        userVote={post.user_vote}
-      />
-
-      <div className="min-w-0 flex-1 py-3 pr-4">
-        <p className="mb-1 text-xs text-zinc-500">
-          u/{post.profiles?.username ?? "unknown"} · {timeAgo(post.created_at)}
+    <article className="overflow-hidden rounded-2xl border border-zinc-200 bg-white">
+      <div className="flex items-center justify-between px-4 py-3">
+        <p className="text-sm font-medium text-zinc-900">
+          {post.profiles?.username ?? "someone"}
         </p>
+        <p className="text-xs text-zinc-500">{timeAgo(post.created_at)}</p>
+      </div>
 
-        <Link href={`/post/${post.id}`} className="block group">
-          <h2 className="text-lg font-semibold text-zinc-900 group-hover:underline">
-            {post.title}
-          </h2>
-          {post.content && (
-            <p className="mt-1 line-clamp-2 text-sm text-zinc-600">
-              {post.content}
-            </p>
-          )}
-        </Link>
-
-        {post.image_url && (
-          <div className="relative mt-3 aspect-video max-h-96 w-full overflow-hidden rounded-md bg-zinc-100">
+      <Link href={`/post/${post.id}`} className="block">
+        {post.image_url ? (
+          <div className="relative aspect-square w-full bg-zinc-100">
             <Image
               src={post.image_url}
-              alt=""
+              alt={caption}
               fill
-              className="object-contain"
-              sizes="(max-width: 768px) 100vw, 640px"
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, 420px"
             />
           </div>
+        ) : (
+          <div className="bg-zinc-950 px-5 py-10 text-white">
+            <p className="text-lg leading-relaxed">{caption}</p>
+          </div>
         )}
+      </Link>
 
+      <div className="px-4 py-3">
+        <VoteButton
+          postId={post.id}
+          voteCount={post.vote_count}
+          userVote={post.user_vote}
+        />
+        {post.image_url && caption && caption !== "Today" && (
+          <p className="mt-2 text-sm text-zinc-800">
+            <span className="font-semibold">
+              {post.profiles?.username ?? "someone"}
+            </span>{" "}
+            {caption}
+          </p>
+        )}
         <Link
           href={`/post/${post.id}`}
-          className="mt-2 inline-block text-xs font-medium text-zinc-500 hover:text-zinc-950"
+          className="mt-2 inline-block text-xs text-zinc-500 hover:text-zinc-900"
         >
-          댓글 {post.comment_count ?? 0}개
+          {post.comment_count
+            ? `View ${post.comment_count} comments`
+            : "Add a comment"}
         </Link>
       </div>
     </article>

@@ -10,7 +10,7 @@ export default function LoginPage() {
   return (
     <div className="mx-auto max-w-sm">
       <p className="mb-1 text-sm font-medium text-zinc-500">blacksmile</p>
-      <h1 className="mb-6 text-2xl font-bold">로그인</h1>
+      <h1 className="mb-6 text-2xl font-bold">Log in</h1>
 
       <form
         action={formAction}
@@ -24,7 +24,7 @@ export default function LoginPage() {
 
         <div>
           <label htmlFor="email" className="mb-1 block text-sm font-medium">
-            이메일
+            Email
           </label>
           <input
             id="email"
@@ -37,7 +37,7 @@ export default function LoginPage() {
 
         <div>
           <label htmlFor="password" className="mb-1 block text-sm font-medium">
-            비밀번호
+            Password
           </label>
           <input
             id="password"
@@ -54,14 +54,14 @@ export default function LoginPage() {
           disabled={pending}
           className="rounded-full bg-zinc-950 py-2.5 font-medium text-white hover:bg-zinc-800 disabled:opacity-50"
         >
-          {pending ? "로그인 중..." : "로그인"}
+          {pending ? "Logging in..." : "Log in"}
         </button>
       </form>
 
       <p className="mt-4 text-center text-sm text-zinc-600">
-        계정이 없으신가요?{" "}
+        New here?{" "}
         <Link href="/signup" className="font-medium text-zinc-950 hover:underline">
-          가입하기
+          Join
         </Link>
       </p>
     </div>

@@ -1,15 +1,7 @@
 import Link from "next/link";
 import { createComment } from "@/actions/comments";
+import { timeAgo } from "@/lib/timeAgo";
 import type { Comment } from "@/lib/types";
-
-function timeAgo(dateStr: string) {
-  const diff = Date.now() - new Date(dateStr).getTime();
-  const minutes = Math.floor(diff / 60000);
-  if (minutes < 60) return `${minutes}분 전`;
-  const hours = Math.floor(minutes / 60);
-  if (hours < 24) return `${hours}시간 전`;
-  return `${Math.floor(hours / 24)}일 전`;
-}
 
 export function CommentSection({
   postId,
@@ -23,7 +15,7 @@ export function CommentSection({
   return (
     <section className="mt-6">
       <h3 className="mb-4 text-sm font-semibold text-zinc-700">
-        댓글 {comments.length}개
+        Comments {comments.length}
       </h3>
 
       {isLoggedIn ? (
@@ -31,8 +23,8 @@ export function CommentSection({
           <input type="hidden" name="postId" value={postId} />
           <textarea
             name="content"
-            rows={3}
-            placeholder="댓글을 입력하세요..."
+            rows={2}
+            placeholder="Say something nice..."
             required
             className="w-full rounded-lg border border-zinc-300 px-3 py-2 text-sm outline-none focus:border-zinc-900"
           />
@@ -40,27 +32,23 @@ export function CommentSection({
             type="submit"
             className="mt-2 rounded-full bg-zinc-950 px-4 py-1.5 text-sm font-medium text-white hover:bg-zinc-800"
           >
-            댓글 달기
+            Reply
           </button>
         </form>
       ) : (
         <p className="mb-6 text-sm text-zinc-500">
-          댓글을 쓰려면{" "}
           <Link href="/login" className="font-medium text-zinc-950 underline">
-            로그인
-          </Link>
-          이 필요해요.
+            Log in
+          </Link>{" "}
+          to comment.
         </p>
       )}
 
-      <ul className="flex flex-col gap-4">
+      <ul className="flex flex-col gap-3">
         {comments.map((comment) => (
-          <li
-            key={comment.id}
-            className="rounded-lg border border-zinc-200 bg-zinc-50 px-4 py-3"
-          >
+          <li key={comment.id} className="rounded-lg bg-zinc-50 px-4 py-3">
             <p className="text-xs text-zinc-500">
-              u/{comment.profiles?.username ?? "unknown"} ·{" "}
+              {comment.profiles?.username ?? "someone"} ·{" "}
               {timeAgo(comment.created_at)}
             </p>
             <p className="mt-1 text-sm text-zinc-800">{comment.content}</p>

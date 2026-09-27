@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { CommentSection } from "@/components/CommentSection";
 import { VoteButton } from "@/components/VoteButton";
 import { getComments, getCurrentUser, getPost } from "@/lib/posts";
+import { timeAgo } from "@/lib/timeAgo";
 
 export default async function PostPage({
   params,
@@ -17,38 +18,36 @@ export default async function PostPage({
 
   if (!post) notFound();
 
+  const caption = post.content || post.title;
+
   return (
-    <article className="rounded-lg border border-zinc-200 bg-white">
-      <div className="flex">
-        <VoteButton
-          postId={post.id}
-          voteCount={post.vote_count}
-          userVote={post.user_vote}
-        />
+    <article className="overflow-hidden rounded-2xl border border-zinc-200 bg-white">
+      {post.image_url && (
+        <div className="relative aspect-square w-full bg-zinc-100 sm:aspect-video">
+          <Image
+            src={post.image_url}
+            alt={caption}
+            fill
+            className="object-contain"
+            sizes="(max-width: 768px) 100vw, 768px"
+          />
+        </div>
+      )}
 
-        <div className="min-w-0 flex-1 py-4 pr-4">
-          <p className="text-xs text-zinc-500">
-            u/{post.profiles?.username ?? "unknown"}
+      <div className="px-4 py-4">
+        <div className="flex items-center justify-between">
+          <p className="text-sm font-semibold">
+            {post.profiles?.username ?? "someone"}
           </p>
-          <h1 className="mt-1 text-2xl font-bold">{post.title}</h1>
-
-          {post.content && (
-            <p className="mt-3 whitespace-pre-wrap text-zinc-700">
-              {post.content}
-            </p>
-          )}
-
-          {post.image_url && (
-            <div className="relative mt-4 aspect-video max-h-[480px] w-full overflow-hidden rounded-md bg-zinc-100">
-              <Image
-                src={post.image_url}
-                alt=""
-                fill
-                className="object-contain"
-                sizes="(max-width: 768px) 100vw, 640px"
-              />
-            </div>
-          )}
+          <p className="text-xs text-zinc-500">{timeAgo(post.created_at)}</p>
+        </div>
+        <p className="mt-3 whitespace-pre-wrap text-zinc-800">{caption}</p>
+        <div className="mt-3">
+          <VoteButton
+            postId={post.id}
+            voteCount={post.vote_count}
+            userVote={post.user_vote}
+          />
         </div>
       </div>
 
@@ -62,7 +61,7 @@ export default async function PostPage({
 
       <div className="border-t border-zinc-200 px-4 py-3">
         <Link href="/" className="text-sm font-medium text-zinc-950 hover:underline">
-          ← 목록으로
+          ← Back to the feed
         </Link>
       </div>
     </article>

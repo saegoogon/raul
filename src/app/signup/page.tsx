@@ -10,7 +10,7 @@ export default function SignUpPage() {
   return (
     <div className="mx-auto max-w-sm">
       <p className="mb-1 text-sm font-medium text-zinc-500">blacksmile</p>
-      <h1 className="mb-6 text-2xl font-bold">가입</h1>
+      <h1 className="mb-6 text-2xl font-bold">Join blacksmile</h1>
 
       <form
         action={formAction}
@@ -24,7 +24,7 @@ export default function SignUpPage() {
 
         <div>
           <label htmlFor="username" className="mb-1 block text-sm font-medium">
-            사용자 이름
+            Username
           </label>
           <input
             id="username"
@@ -34,14 +34,14 @@ export default function SignUpPage() {
             minLength={3}
             maxLength={20}
             pattern="[a-zA-Z0-9_]+"
-            title="영문, 숫자, 밑줄만 사용 가능"
+            title="Letters, numbers, underscore only"
             className="w-full rounded-lg border border-zinc-300 px-3 py-2 outline-none focus:border-zinc-900"
           />
         </div>
 
         <div>
           <label htmlFor="email" className="mb-1 block text-sm font-medium">
-            이메일
+            Email
           </label>
           <input
             id="email"
@@ -54,7 +54,7 @@ export default function SignUpPage() {
 
         <div>
           <label htmlFor="password" className="mb-1 block text-sm font-medium">
-            비밀번호
+            Password
           </label>
           <input
             id="password"
@@ -71,14 +71,14 @@ export default function SignUpPage() {
           disabled={pending}
           className="rounded-full bg-zinc-950 py-2.5 font-medium text-white hover:bg-zinc-800 disabled:opacity-50"
         >
-          {pending ? "가입 중..." : "가입하기"}
+          {pending ? "Creating..." : "Create account"}
         </button>
       </form>
 
       <p className="mt-4 text-center text-sm text-zinc-600">
-        이미 계정이 있으신가요?{" "}
+        Already have an account?{" "}
         <Link href="/login" className="font-medium text-zinc-950 hover:underline">
-          로그인
+          Log in
         </Link>
       </p>
     </div>

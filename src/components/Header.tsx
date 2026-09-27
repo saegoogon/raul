@@ -20,27 +20,27 @@ export function Header({ user }: { user: User | null }) {
                 href="/submit"
                 className="rounded-full bg-amber-300 px-4 py-1.5 font-medium text-zinc-950 hover:bg-amber-200"
               >
-                글쓰기
+                Share
               </Link>
               <form action={signOut}>
                 <button
                   type="submit"
                   className="text-zinc-300 hover:text-white"
                 >
-                  로그아웃
+                  Log out
                 </button>
               </form>
             </>
           ) : (
             <>
               <Link href="/login" className="text-zinc-300 hover:text-white">
-                로그인
+                Log in
               </Link>
               <Link
                 href="/signup"
                 className="rounded-full bg-amber-300 px-4 py-1.5 font-medium text-zinc-950 hover:bg-amber-200"
               >
-                가입
+                Join
               </Link>
             </>
           )}

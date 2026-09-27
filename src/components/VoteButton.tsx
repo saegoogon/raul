@@ -9,31 +9,22 @@ export function VoteButton({
   voteCount?: number;
   userVote?: number | null;
 }) {
+  const liked = userVote === 1;
+
   return (
-    <div className="flex flex-col items-center gap-0.5 px-2 py-1 text-zinc-500">
-      <form action={vote.bind(null, postId, 1)}>
-        <button
-          type="submit"
-          className={`rounded p-1 hover:bg-amber-50 hover:text-amber-600 ${
-            userVote === 1 ? "text-amber-600" : ""
-          }`}
-          aria-label="추천"
-        >
-          ▲
-        </button>
-      </form>
-      <span className="text-sm font-semibold text-zinc-800">{voteCount}</span>
-      <form action={vote.bind(null, postId, -1)}>
-        <button
-          type="submit"
-          className={`rounded p-1 hover:bg-blue-50 hover:text-blue-600 ${
-            userVote === -1 ? "text-blue-600" : ""
-          }`}
-          aria-label="비추천"
-        >
-          ▼
-        </button>
-      </form>
-    </div>
+    <form action={vote.bind(null, postId, 1)}>
+      <button
+        type="submit"
+        className={`flex items-center gap-1.5 rounded-full px-2 py-1 text-sm ${
+          liked
+            ? "text-rose-500"
+            : "text-zinc-500 hover:bg-rose-50 hover:text-rose-500"
+        }`}
+        aria-label="Like"
+      >
+        <span aria-hidden>{liked ? "♥" : "♡"}</span>
+        <span className="font-medium">{voteCount}</span>
+      </button>
+    </form>
   );
 }
