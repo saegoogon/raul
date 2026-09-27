@@ -15,8 +15,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "라울",
-  description: "Reddit 스타일 커뮤니티",
+  title: "redsmile",
+  description: "누구나 올리는 커뮤니티",
 };
 
 export default async function RootLayout({ children }: LayoutProps<"/">) {

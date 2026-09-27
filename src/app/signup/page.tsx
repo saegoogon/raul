@@ -5,12 +5,7 @@ import { useActionState } from "react";
 import { signUp } from "@/actions/auth";
 
 export default function SignUpPage() {
-  const [state, formAction, pending] = useActionState(
-    async (_prev: { error?: string } | null, formData: FormData) => {
-      return (await signUp(formData)) ?? null;
-    },
-    null,
-  );
+  const [state, formAction, pending] = useActionState(signUp, null);
 
   return (
     <div className="mx-auto max-w-sm">
