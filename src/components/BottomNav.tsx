@@ -39,7 +39,7 @@ export function BottomNav() {
   return (
     <nav className="fixed inset-x-0 bottom-0 z-20 border-t border-zinc-800 bg-zinc-950 text-white md:hidden">
       <div className="mx-auto flex max-w-5xl">
-        {item("/", "Home", pathname === "/")}
+        {item("/", "Night", pathname === "/")}
         {item("/submit", "Share", pathname === "/submit")}
         {item(me ? `/u/${me}` : "/login", "Me", pathname.startsWith("/u/"))}
       </div>

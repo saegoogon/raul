@@ -35,12 +35,12 @@ export function VoteButton({
       }}
       className={`flex items-center gap-1.5 rounded-full px-2 py-1 text-sm active:scale-95 ${
         liked
-          ? "text-rose-500"
-          : "text-zinc-500 hover:bg-rose-50 hover:text-rose-500"
+          ? "bg-zinc-950 text-amber-300"
+          : "text-zinc-500 hover:bg-zinc-950 hover:text-amber-200"
       }`}
-      aria-label="Like"
+      aria-label="Black smile"
     >
-      <span aria-hidden>{liked ? "♥" : "♡"}</span>
+      <span aria-hidden>:)</span>
       <span className="font-medium">{count}</span>
     </button>
   );

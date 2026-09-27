@@ -21,10 +21,10 @@ export const metadata: Metadata = {
     default: "blacksmile",
     template: "%s · blacksmile",
   },
-  description: "Share any photo. Share your day. A worldwide feed of ordinary moments.",
+  description: "A smile in the dark. Share a real moment. No follow.",
   openGraph: {
     title: "blacksmile",
-    description: "Share any photo. Share your day.",
+    description: "A smile in the dark. No follow.",
     siteName: "blacksmile",
     type: "website",
   },
@@ -43,7 +43,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         </main>
         <BottomNav />
         <footer className="border-t border-zinc-200 bg-white py-6 text-center text-xs text-zinc-500">
-          blacksmile · share your day with the world
+          blacksmile · a smile in the dark
         </footer>
       </body>
     </html>

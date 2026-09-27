@@ -21,14 +21,14 @@ export function GuestHero() {
     <section className="rounded-3xl bg-zinc-950 px-6 py-10 text-white">
       <p className="text-sm font-medium text-amber-300">blacksmile</p>
       <h1 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">
-        Share any photo.
+        A smile
         <br />
-        Share your day.
+        in the dark.
       </h1>
       <p className="mt-3 max-w-lg text-sm text-zinc-300">
-        A worldwide feed of ordinary moments. No perfect shots needed.
+        No follow. Just tonight, and a black smile on a real moment.
         <br />
-        아무 사진이나, 오늘의 일상을 올려보세요.
+        팔로우 없이, 오늘 밤의 순간에 검은 웃음만 남기세요.
       </p>
       <div className="mt-6 flex gap-3">
         <Link

@@ -1,4 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
+import { tonightRange } from "@/lib/night";
 import type { Comment, Post } from "@/lib/types";
 
 type RawPost = Post & {
@@ -88,6 +89,28 @@ export async function getComments(postId: string): Promise<Comment[]> {
 
     if (error || !data) return [];
     return data as Comment[];
+  } catch {
+    return [];
+  }
+}
+
+export async function getTonightPosts(): Promise<Post[]> {
+  try {
+    const { start, end } = tonightRange();
+    const supabase = await createClient();
+    const [{ data: auth }, { data, error }] = await Promise.all([
+      supabase.auth.getUser(),
+      supabase
+        .from("posts")
+        .select(postSelect)
+        .gte("created_at", start.toISOString())
+        .lt("created_at", end.toISOString())
+        .order("created_at", { ascending: false })
+        .limit(60),
+    ]);
+
+    if (error || !data) return [];
+    return (data as RawPost[]).map((row) => toPost(row, auth.user?.id));
   } catch {
     return [];
   }

@@ -1,9 +1,35 @@
 import { Suspense } from "react";
 import Link from "next/link";
 import { GuestHero } from "@/components/GuestHero";
+import { NightRoom } from "@/components/NightRoom";
 import { PostFeed } from "@/components/PostFeed";
 import { SearchBar } from "@/components/SearchBar";
-import { getPosts } from "@/lib/posts";
+import { getTonightPosts, getPosts } from "@/lib/posts";
+import type { Post } from "@/lib/types";
+
+function peopleFromPosts(posts: Post[]) {
+  const seen = new Set<string>();
+  return posts.flatMap((post) => {
+    const username = post.profiles?.username;
+    if (!username || seen.has(username)) return [];
+    seen.add(username);
+    return [{ id: post.user_id, username, created_at: post.created_at }];
+  });
+}
+
+async function NightHome() {
+  const posts = await getTonightPosts();
+  return (
+    <>
+      <NightRoom people={peopleFromPosts(posts)} />
+      <PostFeed
+        posts={posts}
+        emptyTitle="Tonight is still dark"
+        emptyBody="Share a moment and leave the first black smile. 올리면 오늘 밤이 열려요."
+      />
+    </>
+  );
+}
 
 async function HomeFeed({
   mode,
@@ -22,18 +48,34 @@ export default async function HomePage({
   searchParams: Promise<{ sort?: string; q?: string }>;
 }) {
   const { sort, q } = await searchParams;
-  const mode = sort === "new" ? "new" : "hot";
+  const mode = sort === "new" || sort === "hot" ? sort : "night";
 
   return (
     <div className="flex flex-col gap-5">
       <GuestHero />
       <SearchBar value={q} />
 
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between gap-3">
         <h2 className="text-lg font-bold">
-          {q ? `Search: ${q}` : mode === "new" ? "Latest" : "Today"}
+          {q
+            ? `Search: ${q}`
+            : mode === "night"
+              ? "Tonight"
+              : mode === "new"
+                ? "Latest"
+                : "Popular"}
         </h2>
         <div className="flex rounded-full border border-zinc-300 bg-white p-1 text-sm">
+          <Link
+            href="/"
+            className={`rounded-full px-3 py-1 ${
+              mode === "night" && !q
+                ? "bg-zinc-950 text-white"
+                : "text-zinc-600 hover:text-zinc-950"
+            }`}
+          >
+            Night
+          </Link>
           <Link
             href={q ? `/?sort=hot&q=${encodeURIComponent(q)}` : "/?sort=hot"}
             className={`rounded-full px-3 py-1 ${
@@ -65,7 +107,11 @@ export default async function HomePage({
           </div>
         }
       >
-        <HomeFeed mode={mode} query={q} />
+        {mode === "night" && !q ? (
+          <NightHome />
+        ) : (
+          <HomeFeed mode={mode === "night" ? "new" : mode} query={q} />
+        )}
       </Suspense>
     </div>
   );

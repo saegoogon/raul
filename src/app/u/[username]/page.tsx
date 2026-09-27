@@ -19,7 +19,7 @@ export default async function ProfilePage({
         <p className="text-sm text-amber-300">blacksmile</p>
         <h1 className="mt-1 text-2xl font-bold">{profile.username}</h1>
         <p className="mt-2 text-sm text-zinc-400">
-          {posts.length} {posts.length === 1 ? "moment" : "moments"}
+          {posts.length} {posts.length === 1 ? "moment in the dark" : "moments in the dark"}
         </p>
       </section>
       <PostFeed posts={posts} />

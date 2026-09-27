@@ -8,9 +8,11 @@ export default async function SubmitPage() {
 
   return (
     <div className="mx-auto max-w-xl">
-      <h1 className="mb-2 text-2xl font-bold">Share your day</h1>
+      <h1 className="mb-2 text-2xl font-bold">Share tonight</h1>
       <p className="mb-6 text-sm text-zinc-500">
-        Photo or a 60-second short. 사진이나 1분 숏폼이면 돼요.
+        Photo or a 60-second short. It lands in tonight&apos;s dark.
+        <br />
+        올리면 오늘 밤의 방에 들어가요.
       </p>
       <ShareForm />
     </div>
