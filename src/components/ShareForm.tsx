@@ -22,7 +22,7 @@ function videoDuration(file: File) {
   });
 }
 
-export function ShareForm() {
+export function ShareForm({ placeholder }: { placeholder?: string }) {
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -153,7 +153,7 @@ export function ShareForm() {
         name="caption"
         rows={3}
         maxLength={500}
-        placeholder="What happened today? / 오늘 뭐 했나요?"
+        placeholder={placeholder ?? "What happened today? / 오늘 뭐 했나요?"}
         className="w-full rounded-xl border border-zinc-300 px-3 py-2 outline-none focus:border-zinc-900"
       />
 
