@@ -31,3 +31,23 @@ export async function createPost(formData: FormData) {
   revalidatePath("/");
   redirect("/");
 }
+
+export async function deletePost(postId: string) {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) redirect("/login");
+
+  const { error } = await supabase
+    .from("posts")
+    .delete()
+    .eq("id", postId)
+    .eq("user_id", user.id);
+
+  if (error) return { error: error.message };
+
+  revalidatePath("/");
+  redirect("/");
+}

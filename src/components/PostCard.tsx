@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { DeletePostButton } from "@/components/DeletePostButton";
 import { ShortsPlayer } from "@/components/ShortsPlayer";
 import { VoteButton } from "@/components/VoteButton";
 import { isVideoUrl } from "@/lib/media";
@@ -12,9 +13,12 @@ export function PostCard({ post }: { post: Post }) {
   return (
     <article className="overflow-hidden rounded-2xl border border-zinc-200 bg-white">
       <div className="flex items-center justify-between px-4 py-3">
-        <p className="text-sm font-medium text-zinc-900">
+        <Link
+          href={post.profiles?.username ? `/u/${post.profiles.username}` : "/"}
+          className="text-sm font-medium text-zinc-900 hover:underline"
+        >
           {post.profiles?.username ?? "someone"}
-        </p>
+        </Link>
         <p className="text-xs text-zinc-500">{timeAgo(post.created_at)}</p>
       </div>
 
@@ -46,16 +50,24 @@ export function PostCard({ post }: { post: Post }) {
       )}
 
       <div className="px-4 py-3">
-        <VoteButton
-          postId={post.id}
-          voteCount={post.vote_count}
-          userVote={post.user_vote}
-        />
+        <div className="flex items-center justify-between">
+          <VoteButton
+            postId={post.id}
+            voteCount={post.vote_count}
+            userVote={post.user_vote}
+          />
+          <DeletePostButton postId={post.id} authorId={post.user_id} />
+        </div>
         {post.image_url && caption && caption !== "Today" && (
           <p className="mt-2 text-sm text-zinc-800">
-            <span className="font-semibold">
+            <Link
+              href={
+                post.profiles?.username ? `/u/${post.profiles.username}` : "/"
+              }
+              className="font-semibold hover:underline"
+            >
               {post.profiles?.username ?? "someone"}
-            </span>{" "}
+            </Link>{" "}
             {caption}
           </p>
         )}

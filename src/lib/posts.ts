@@ -22,16 +22,26 @@ function toPost(raw: RawPost, userId?: string): Post {
 const postSelect =
   "*, profiles(username), votes(value, user_id), comments(count)";
 
-export async function getPosts(sort: "hot" | "new" = "hot"): Promise<Post[]> {
+export async function getPosts(
+  sort: "hot" | "new" = "hot",
+  query?: string,
+): Promise<Post[]> {
   try {
     const supabase = await createClient();
+    let request = supabase
+      .from("posts")
+      .select(postSelect)
+      .order("created_at", { ascending: false })
+      .limit(40);
+
+    const q = query?.trim().replace(/[%(),]/g, "").slice(0, 40);
+    if (q) {
+      request = request.or(`title.ilike.%${q}%,content.ilike.%${q}%`);
+    }
+
     const [{ data: auth }, { data, error }] = await Promise.all([
       supabase.auth.getUser(),
-      supabase
-        .from("posts")
-        .select(postSelect)
-        .order("created_at", { ascending: false })
-        .limit(40),
+      request,
     ]);
 
     if (error || !data) return [];
@@ -78,6 +88,41 @@ export async function getComments(postId: string): Promise<Comment[]> {
 
     if (error || !data) return [];
     return data as Comment[];
+  } catch {
+    return [];
+  }
+}
+
+export async function getProfile(username: string) {
+  try {
+    const supabase = await createClient();
+    const { data, error } = await supabase
+      .from("profiles")
+      .select("id, username, created_at")
+      .eq("username", username)
+      .single();
+
+    if (error || !data) return null;
+    return data;
+  } catch {
+    return null;
+  }
+}
+
+export async function getPostsByUser(userId: string): Promise<Post[]> {
+  try {
+    const supabase = await createClient();
+    const [{ data: auth }, { data, error }] = await Promise.all([
+      supabase.auth.getUser(),
+      supabase
+        .from("posts")
+        .select(postSelect)
+        .eq("user_id", userId)
+        .order("created_at", { ascending: false }),
+    ]);
+
+    if (error || !data) return [];
+    return (data as RawPost[]).map((row) => toPost(row, auth.user?.id));
   } catch {
     return [];
   }

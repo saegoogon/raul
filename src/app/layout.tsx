@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { BottomNav } from "@/components/BottomNav";
 import { Header } from "@/components/Header";
 import "./globals.css";
 
@@ -37,9 +38,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="flex min-h-full flex-col bg-zinc-100 text-zinc-900">
         <Header />
-        <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-6">
+        <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-6 pb-20 md:pb-6">
           {children}
         </main>
+        <BottomNav />
         <footer className="border-t border-zinc-200 bg-white py-6 text-center text-xs text-zinc-500">
           blacksmile · share your day with the world
         </footer>

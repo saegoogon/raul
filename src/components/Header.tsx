@@ -8,14 +8,32 @@ import type { User } from "@supabase/supabase-js";
 
 export function Header() {
   const [user, setUser] = useState<User | null>(null);
+  const [username, setUsername] = useState<string | null>(null);
 
   useEffect(() => {
     const supabase = createClient();
-    supabase.auth.getUser().then(({ data }) => setUser(data.user));
+    const load = async (userId?: string) => {
+      if (!userId) {
+        setUsername(null);
+        return;
+      }
+      const { data } = await supabase
+        .from("profiles")
+        .select("username")
+        .eq("id", userId)
+        .single();
+      setUsername(data?.username ?? null);
+    };
+
+    supabase.auth.getUser().then(({ data }) => {
+      setUser(data.user);
+      void load(data.user?.id);
+    });
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null);
+      void load(session?.user?.id);
     });
     return () => subscription.unsubscribe();
   }, []);
@@ -33,6 +51,14 @@ export function Header() {
         <nav className="flex items-center gap-3 text-sm">
           {user ? (
             <>
+              {username && (
+                <Link
+                  href={`/u/${username}`}
+                  className="hidden text-zinc-300 hover:text-white sm:inline"
+                >
+                  @{username}
+                </Link>
+              )}
               <Link
                 href="/submit"
                 className="rounded-full bg-amber-300 px-4 py-1.5 font-medium text-zinc-950 hover:bg-amber-200"

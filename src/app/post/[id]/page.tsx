@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { CommentSection } from "@/components/CommentSection";
+import { DeletePostButton } from "@/components/DeletePostButton";
 import { ShortsPlayer } from "@/components/ShortsPlayer";
 import { VoteButton } from "@/components/VoteButton";
 import { isVideoUrl } from "@/lib/media";
@@ -44,18 +45,24 @@ export default async function PostPage({
 
       <div className="px-4 py-4">
         <div className="flex items-center justify-between">
-          <p className="text-sm font-semibold">
+          <Link
+            href={
+              post.profiles?.username ? `/u/${post.profiles.username}` : "/"
+            }
+            className="text-sm font-semibold hover:underline"
+          >
             {post.profiles?.username ?? "someone"}
-          </p>
+          </Link>
           <p className="text-xs text-zinc-500">{timeAgo(post.created_at)}</p>
         </div>
         <p className="mt-3 whitespace-pre-wrap text-zinc-800">{caption}</p>
-        <div className="mt-3">
+        <div className="mt-3 flex items-center justify-between">
           <VoteButton
             postId={post.id}
             voteCount={post.vote_count}
             userVote={post.user_vote}
           />
+          <DeletePostButton postId={post.id} authorId={post.user_id} />
         </div>
       </div>
 

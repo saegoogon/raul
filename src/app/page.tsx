@@ -2,32 +2,40 @@ import { Suspense } from "react";
 import Link from "next/link";
 import { GuestHero } from "@/components/GuestHero";
 import { PostFeed } from "@/components/PostFeed";
+import { SearchBar } from "@/components/SearchBar";
 import { getPosts } from "@/lib/posts";
 
-async function HomeFeed({ mode }: { mode: "hot" | "new" }) {
-  const posts = await getPosts(mode);
+async function HomeFeed({
+  mode,
+  query,
+}: {
+  mode: "hot" | "new";
+  query?: string;
+}) {
+  const posts = await getPosts(mode, query);
   return <PostFeed posts={posts} />;
 }
 
 export default async function HomePage({
   searchParams,
 }: {
-  searchParams: Promise<{ sort?: string }>;
+  searchParams: Promise<{ sort?: string; q?: string }>;
 }) {
-  const { sort } = await searchParams;
+  const { sort, q } = await searchParams;
   const mode = sort === "new" ? "new" : "hot";
 
   return (
     <div className="flex flex-col gap-5">
       <GuestHero />
+      <SearchBar value={q} />
 
       <div className="flex items-center justify-between">
         <h2 className="text-lg font-bold">
-          {mode === "new" ? "Latest" : "Today"}
+          {q ? `Search: ${q}` : mode === "new" ? "Latest" : "Today"}
         </h2>
         <div className="flex rounded-full border border-zinc-300 bg-white p-1 text-sm">
           <Link
-            href="/?sort=hot"
+            href={q ? `/?sort=hot&q=${encodeURIComponent(q)}` : "/?sort=hot"}
             className={`rounded-full px-3 py-1 ${
               mode === "hot"
                 ? "bg-zinc-950 text-white"
@@ -37,7 +45,7 @@ export default async function HomePage({
             Popular
           </Link>
           <Link
-            href="/?sort=new"
+            href={q ? `/?sort=new&q=${encodeURIComponent(q)}` : "/?sort=new"}
             className={`rounded-full px-3 py-1 ${
               mode === "new"
                 ? "bg-zinc-950 text-white"
@@ -57,7 +65,7 @@ export default async function HomePage({
           </div>
         }
       >
-        <HomeFeed mode={mode} />
+        <HomeFeed mode={mode} query={q} />
       </Suspense>
     </div>
   );
