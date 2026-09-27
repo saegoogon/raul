@@ -7,7 +7,7 @@ export function Header({ user }: { user: User | null }) {
     <header className="sticky top-0 z-10 border-b border-zinc-200 bg-white/95 backdrop-blur">
       <div className="mx-auto flex h-14 max-w-5xl items-center justify-between px-4">
         <Link href="/" className="text-xl font-bold text-orange-600">
-          redsmile
+          블랙스마일
         </Link>
 
         <nav className="flex items-center gap-3 text-sm">
