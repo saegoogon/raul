@@ -41,12 +41,19 @@ export function Header() {
   return (
     <header className="sticky top-0 z-10 border-b border-zinc-800 bg-zinc-950/95 text-white backdrop-blur">
       <div className="mx-auto flex h-14 max-w-5xl items-center justify-between px-4">
-        <Link href="/" className="flex items-center gap-2 text-xl font-bold">
+        <a
+          href="/"
+          className="flex items-center gap-2 text-xl font-bold"
+          onClick={(event) => {
+            event.preventDefault();
+            window.location.href = "/";
+          }}
+        >
           <span aria-hidden className="text-amber-300">
             :)
           </span>
           blacksmile
-        </Link>
+        </a>
 
         <nav className="flex items-center gap-3 text-sm">
           {user ? (
