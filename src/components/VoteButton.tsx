@@ -1,8 +1,8 @@
 "use client";
 
-import { useOptimistic, useTransition } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { vote } from "@/actions/votes";
+import { setLike } from "@/actions/votes";
 
 export function VoteButton({
   postId,
@@ -14,36 +14,34 @@ export function VoteButton({
   userVote?: number | null;
 }) {
   const router = useRouter();
-  const [, startTransition] = useTransition();
-  const [state, setState] = useOptimistic(
-    {
-      liked: userVote === 1,
-      count: voteCount,
-    },
-    (_current, next: { liked: boolean; count: number }) => next,
-  );
+  const [liked, setLiked] = useState(userVote === 1);
+  const [count, setCount] = useState(voteCount);
 
   return (
     <button
       type="button"
       onClick={() => {
-        const liked = !state.liked;
-        const count = state.count + (liked ? 1 : -1);
-        startTransition(async () => {
-          setState({ liked, count });
-          const result = await vote(postId, 1);
-          if (result?.error === "login") router.push("/login");
+        const nextLiked = !liked;
+        setLiked(nextLiked);
+        setCount((value) => value + (nextLiked ? 1 : -1));
+
+        void setLike(postId, nextLiked).then((result) => {
+          if (result?.error === "login") {
+            setLiked(liked);
+            setCount(voteCount);
+            router.push("/login");
+          }
         });
       }}
       className={`flex items-center gap-1.5 rounded-full px-2 py-1 text-sm active:scale-95 ${
-        state.liked
+        liked
           ? "text-rose-500"
           : "text-zinc-500 hover:bg-rose-50 hover:text-rose-500"
       }`}
       aria-label="Like"
     >
-      <span aria-hidden>{state.liked ? "♥" : "♡"}</span>
-      <span className="font-medium">{state.count}</span>
+      <span aria-hidden>{liked ? "♥" : "♡"}</span>
+      <span className="font-medium">{count}</span>
     </button>
   );
 }
