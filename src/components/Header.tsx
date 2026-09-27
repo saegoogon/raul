@@ -1,8 +1,25 @@
+"use client";
+
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { signOut } from "@/actions/auth";
+import { createClient } from "@/lib/supabase/client";
 import type { User } from "@supabase/supabase-js";
 
-export function Header({ user }: { user: User | null }) {
+export function Header() {
+  const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    const supabase = createClient();
+    supabase.auth.getUser().then(({ data }) => setUser(data.user));
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+    });
+    return () => subscription.unsubscribe();
+  }, []);
+
   return (
     <header className="sticky top-0 z-10 border-b border-zinc-800 bg-zinc-950/95 text-white backdrop-blur">
       <div className="mx-auto flex h-14 max-w-5xl items-center justify-between px-4">
@@ -38,6 +55,7 @@ export function Header({ user }: { user: User | null }) {
               </Link>
               <Link
                 href="/signup"
+                prefetch
                 className="rounded-full bg-amber-300 px-4 py-1.5 font-medium text-zinc-950 hover:bg-amber-200"
               >
                 Join

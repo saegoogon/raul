@@ -1,5 +1,8 @@
+"use client";
+
 import Link from "next/link";
-import { createComment } from "@/actions/comments";
+import { useState } from "react";
+import { createClient } from "@/lib/supabase/client";
 import { timeAgo } from "@/lib/timeAgo";
 import type { Comment } from "@/lib/types";
 
@@ -12,17 +15,53 @@ export function CommentSection({
   comments: Comment[];
   isLoggedIn: boolean;
 }) {
+  const [items, setItems] = useState(comments);
+  const [text, setText] = useState("");
+  const [pending, setPending] = useState(false);
+
   return (
     <section className="mt-6">
       <h3 className="mb-4 text-sm font-semibold text-zinc-700">
-        Comments {comments.length}
+        Comments {items.length}
       </h3>
 
       {isLoggedIn ? (
-        <form action={createComment} className="mb-6">
-          <input type="hidden" name="postId" value={postId} />
+        <form
+          className="mb-6"
+          onSubmit={async (event) => {
+            event.preventDefault();
+            const content = text.trim();
+            if (!content || pending) return;
+
+            setPending(true);
+            const optimistic: Comment = {
+              id: `local-${Date.now()}`,
+              post_id: postId,
+              user_id: "me",
+              content,
+              created_at: new Date().toISOString(),
+              profiles: { id: "me", username: "you", created_at: "" },
+            };
+            setItems((current) => [...current, optimistic]);
+            setText("");
+
+            const supabase = createClient();
+            const {
+              data: { user },
+            } = await supabase.auth.getUser();
+            if (user) {
+              await supabase.from("comments").insert({
+                post_id: postId,
+                user_id: user.id,
+                content,
+              });
+            }
+            setPending(false);
+          }}
+        >
           <textarea
-            name="content"
+            value={text}
+            onChange={(event) => setText(event.target.value)}
             rows={2}
             placeholder="Say something nice..."
             required
@@ -30,7 +69,8 @@ export function CommentSection({
           />
           <button
             type="submit"
-            className="mt-2 rounded-full bg-zinc-950 px-4 py-1.5 text-sm font-medium text-white hover:bg-zinc-800"
+            disabled={pending}
+            className="mt-2 rounded-full bg-zinc-950 px-4 py-1.5 text-sm font-medium text-white hover:bg-zinc-800 disabled:opacity-50"
           >
             Reply
           </button>
@@ -45,7 +85,7 @@ export function CommentSection({
       )}
 
       <ul className="flex flex-col gap-3">
-        {comments.map((comment) => (
+        {items.map((comment) => (
           <li key={comment.id} className="rounded-lg bg-zinc-50 px-4 py-3">
             <p className="text-xs text-zinc-500">
               {comment.profiles?.username ?? "someone"} ·{" "}
