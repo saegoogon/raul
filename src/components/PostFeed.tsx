@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { FadingMoment } from "@/components/FadingMoment";
 import { PostCard } from "@/components/PostCard";
 import type { Post } from "@/lib/types";
 
@@ -35,7 +36,9 @@ export function PostFeed({
   return (
     <div className="grid gap-4 sm:grid-cols-2">
       {posts.map((post) => (
-        <PostCard key={post.id} post={post} />
+        <FadingMoment key={post.id} createdAt={post.created_at}>
+          <PostCard post={post} />
+        </FadingMoment>
       ))}
     </div>
   );

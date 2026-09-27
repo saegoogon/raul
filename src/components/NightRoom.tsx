@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { DarkPresence } from "@/components/DarkPresence";
 import type { Profile } from "@/lib/types";
 
 export function NightRoom({ people }: { people: Profile[] }) {
@@ -13,6 +14,7 @@ export function NightRoom({ people }: { people: Profile[] }) {
         <br />
         팔로우 없이, 오늘 밤의 순간에 검은 웃음만 남기세요.
       </p>
+      <DarkPresence />
 
       {people.length === 0 ? (
         <p className="mt-4 text-sm text-zinc-500">

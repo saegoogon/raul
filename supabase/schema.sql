@@ -103,3 +103,22 @@ create policy "Anyone can view post images"
 create policy "Authenticated users can upload post images"
   on storage.objects for insert
   with check (bucket_id = 'posts' and auth.role() = 'authenticated');
+
+create table if not exists public.presence (
+  visitor_id text primary key,
+  last_seen timestamptz default now() not null
+);
+
+alter table public.presence enable row level security;
+
+create policy "Anyone can read presence"
+  on public.presence for select
+  using (true);
+
+create policy "Anyone can upsert presence"
+  on public.presence for insert
+  with check (true);
+
+create policy "Anyone can update presence"
+  on public.presence for update
+  using (true);
