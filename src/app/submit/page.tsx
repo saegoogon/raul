@@ -10,7 +10,7 @@ export default async function SubmitPage() {
     <div className="mx-auto max-w-xl">
       <h1 className="mb-2 text-2xl font-bold">Share your day</h1>
       <p className="mb-6 text-sm text-zinc-500">
-        Any photo. Any moment. 아무 사진이나 괜찮아요.
+        Photo or a 60-second short. 사진이나 1분 숏폼이면 돼요.
       </p>
       <ShareForm />
     </div>

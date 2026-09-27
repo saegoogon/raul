@@ -2,7 +2,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { CommentSection } from "@/components/CommentSection";
+import { ShortsPlayer } from "@/components/ShortsPlayer";
 import { VoteButton } from "@/components/VoteButton";
+import { isVideoUrl } from "@/lib/media";
 import { getComments, getCurrentUser, getPost } from "@/lib/posts";
 import { timeAgo } from "@/lib/timeAgo";
 
@@ -22,7 +24,14 @@ export default async function PostPage({
 
   return (
     <article className="overflow-hidden rounded-2xl border border-zinc-200 bg-white">
-      {post.image_url && (
+      {post.image_url && isVideoUrl(post.image_url) ? (
+        <div className="bg-black">
+          <ShortsPlayer
+            src={post.image_url}
+            className="mx-auto max-h-[80vh] w-full object-contain"
+          />
+        </div>
+      ) : post.image_url ? (
         <div className="relative aspect-square w-full bg-zinc-100 sm:aspect-video">
           <Image
             src={post.image_url}
@@ -32,7 +41,7 @@ export default async function PostPage({
             sizes="(max-width: 768px) 100vw, 768px"
           />
         </div>
-      )}
+      ) : null}
 
       <div className="px-4 py-4">
         <div className="flex items-center justify-between">

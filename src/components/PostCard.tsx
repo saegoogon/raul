@@ -1,6 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
+import { ShortsPlayer } from "@/components/ShortsPlayer";
 import { VoteButton } from "@/components/VoteButton";
+import { isVideoUrl } from "@/lib/media";
 import { timeAgo } from "@/lib/timeAgo";
 import type { Post } from "@/lib/types";
 
@@ -16,23 +18,32 @@ export function PostCard({ post }: { post: Post }) {
         <p className="text-xs text-zinc-500">{timeAgo(post.created_at)}</p>
       </div>
 
-      <Link href={`/post/${post.id}`} className="block">
-        {post.image_url ? (
-          <div className="relative aspect-square w-full bg-zinc-100">
-            <Image
-              src={post.image_url}
-              alt={caption}
-              fill
-              className="object-cover"
-              sizes="(max-width: 768px) 100vw, 420px"
-            />
-          </div>
-        ) : (
-          <div className="bg-zinc-950 px-5 py-10 text-white">
-            <p className="text-lg leading-relaxed">{caption}</p>
-          </div>
-        )}
-      </Link>
+      {post.image_url && isVideoUrl(post.image_url) ? (
+        <div className="bg-black">
+          <ShortsPlayer
+            src={post.image_url}
+            className="mx-auto max-h-[34rem] w-full object-contain"
+          />
+        </div>
+      ) : (
+        <Link href={`/post/${post.id}`} className="block">
+          {post.image_url ? (
+            <div className="relative aspect-square w-full bg-zinc-100">
+              <Image
+                src={post.image_url}
+                alt={caption}
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, 420px"
+              />
+            </div>
+          ) : (
+            <div className="bg-zinc-950 px-5 py-10 text-white">
+              <p className="text-lg leading-relaxed">{caption}</p>
+            </div>
+          )}
+        </Link>
+      )}
 
       <div className="px-4 py-3">
         <VoteButton
