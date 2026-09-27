@@ -92,7 +92,7 @@ create trigger on_auth_user_created
   for each row execute function public.handle_new_user();
 
 insert into storage.buckets (id, name, public, file_size_limit)
-values ('posts', 'posts', true, 209715200)
+values ('posts', 'posts', true, 1073741824)
 on conflict (id) do update
 set file_size_limit = excluded.file_size_limit;
 

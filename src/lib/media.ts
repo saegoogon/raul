@@ -8,4 +8,4 @@ export function isVideoFile(file: File) {
 }
 
 export const MAX_SHORT_SECONDS = 180;
-export const MAX_FILE_MB = 200;
+export const MAX_FILE_MB = 1024;

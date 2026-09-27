@@ -10,9 +10,9 @@ export default async function SubmitPage() {
     <div className="mx-auto max-w-xl">
       <h1 className="mb-2 text-2xl font-bold">Share tonight</h1>
       <p className="mb-6 text-sm text-zinc-500">
-        Photo or a 3-minute video, up to 200MB.
+        Photo or a 3-minute video, up to 1GB.
         <br />
-        사진이나 3분 영상, 최대 200MB까지 올려요.
+        사진이나 3분 영상, 최대 1GB까지 올려요.
       </p>
       <ShareForm />
     </div>

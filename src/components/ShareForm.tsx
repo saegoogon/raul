@@ -8,6 +8,7 @@ import {
   MAX_FILE_MB,
   MAX_SHORT_SECONDS,
 } from "@/lib/media";
+import { uploadErrorMessage, uploadPostFile } from "@/lib/upload";
 
 function videoDuration(file: File) {
   return new Promise<number>((resolve, reject) => {
@@ -27,6 +28,7 @@ export function ShareForm() {
   const [preview, setPreview] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [pending, setPending] = useState(false);
+  const [progress, setProgress] = useState(0);
 
   return (
     <form
@@ -44,12 +46,13 @@ export function ShareForm() {
         }
 
         setPending(true);
+        setProgress(0);
         let mediaUrl = "";
 
         try {
           if (file) {
             if (file.size > MAX_FILE_MB * 1024 * 1024) {
-              setError(`Keep files under ${MAX_FILE_MB}MB.`);
+              setError("Keep files under 1GB.");
               setPending(false);
               return;
             }
@@ -75,20 +78,7 @@ export function ShareForm() {
 
             const ext = file.name.split(".").pop() || "bin";
             const path = `${user.id}/${Date.now()}.${ext}`;
-            const { error: uploadError } = await supabase.storage
-              .from("posts")
-              .upload(path, file);
-
-            if (uploadError) {
-              setError(uploadError.message);
-              setPending(false);
-              return;
-            }
-
-            const {
-              data: { publicUrl },
-            } = supabase.storage.from("posts").getPublicUrl(path);
-            mediaUrl = publicUrl;
+            mediaUrl = await uploadPostFile(path, file, setProgress);
           }
 
           const payload = new FormData();
@@ -105,7 +95,7 @@ export function ShareForm() {
           ) {
             throw error;
           }
-          setError("Upload failed. Try a smaller file.");
+          setError(uploadErrorMessage(error));
         } finally {
           setPending(false);
         }
@@ -132,7 +122,7 @@ export function ShareForm() {
             Photo or a 3-min video
             <br />
             <span className="text-zinc-400">
-              사진이나 3분 영상, 최대 200MB
+              사진이나 3분 영상, 최대 1GB
             </span>
           </span>
         )}
@@ -168,7 +158,11 @@ export function ShareForm() {
         disabled={pending}
         className="rounded-full bg-zinc-950 py-2.5 font-medium text-white hover:bg-zinc-800 disabled:opacity-50"
       >
-        {pending ? "Uploading..." : "Share"}
+        {pending
+          ? progress > 0
+            ? `Uploading ${progress}%`
+            : "Uploading..."
+          : "Share"}
       </button>
     </form>
   );
