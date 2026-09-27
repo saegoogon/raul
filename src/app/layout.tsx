@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { BottomNav } from "@/components/BottomNav";
+import { BrandMark } from "@/components/BrandMark";
 import { Header } from "@/components/Header";
 import { WinkIntro } from "@/components/WinkIntro";
 import "./globals.css";
@@ -45,7 +46,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         </main>
         <BottomNav />
         <footer className="border-t border-zinc-200 bg-white py-6 text-center text-xs text-zinc-500">
-          blacksmile · a smile in the dark
+          <BrandMark /> · a smile in the dark
         </footer>
       </body>
     </html>

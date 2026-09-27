@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useActionState } from "react";
+import { BrandMark } from "@/components/BrandMark";
 import { signIn } from "@/actions/auth";
 
 export default function LoginPage() {
@@ -9,7 +10,9 @@ export default function LoginPage() {
 
   return (
     <div className="mx-auto max-w-sm">
-      <p className="mb-1 text-sm font-medium text-zinc-500">blacksmile</p>
+      <p className="mb-1 text-sm font-medium text-zinc-500">
+        <BrandMark />
+      </p>
       <h1 className="mb-6 text-2xl font-bold">Log in</h1>
 
       <form

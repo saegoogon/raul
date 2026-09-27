@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { BrandMark } from "@/components/BrandMark";
 import { signOut } from "@/actions/auth";
 import { createClient } from "@/lib/supabase/client";
 import type { User } from "@supabase/supabase-js";
@@ -52,7 +53,7 @@ export function Header() {
           <span aria-hidden className="text-amber-300">
             :)
           </span>
-          blacksmile
+          <BrandMark />
         </a>
 
         <nav className="flex items-center gap-3 text-sm">

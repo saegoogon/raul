@@ -5,7 +5,10 @@ export function GuestHero({ isLoggedIn }: { isLoggedIn: boolean }) {
 
   return (
     <section className="rounded-3xl bg-zinc-950 px-6 py-10 text-white">
-      <p className="text-sm font-medium text-amber-300">blacksmile</p>
+      <p className="text-sm font-medium text-amber-300">
+        blacksmile
+        <sup className="ml-0.5 text-[0.55em] font-semibold opacity-70">TM</sup>
+      </p>
       <h1 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">
         A smile
         <br />
