@@ -1,45 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import type { Metadata } from "next";
 import { CommentSection } from "@/components/CommentSection";
 import { DeletePostButton } from "@/components/DeletePostButton";
-import { ShareButton } from "@/components/ShareButton";
 import { ShortsPlayer } from "@/components/ShortsPlayer";
 import { VoteButton } from "@/components/VoteButton";
 import { isVideoUrl } from "@/lib/media";
+import { TimeAgo } from "@/components/TimeAgo";
 import { getComments, getPost } from "@/lib/posts";
-import { SITE_NAME, SITE_URL } from "@/lib/site";
-import { timeAgo } from "@/lib/timeAgo";
-
-export async function generateMetadata({
-  params,
-}: PageProps<"/post/[id]">): Promise<Metadata> {
-  const { id } = await params;
-  const post = await getPost(id);
-  if (!post) return { title: "Moment" };
-
-  const caption = (post.content || post.title || "A moment in the dark").slice(
-    0,
-    90,
-  );
-  const who = post.profiles?.username ?? "someone";
-  const image =
-    post.image_url && !isVideoUrl(post.image_url) ? post.image_url : undefined;
-
-  return {
-    title: caption,
-    description: `${who} in the dark · ${SITE_NAME}`,
-    openGraph: {
-      title: caption,
-      description: `${who} left a moment in the dark.`,
-      type: "article",
-      url: `${SITE_URL}/post/${id}`,
-      siteName: SITE_NAME,
-      images: image ? [{ url: image }] : undefined,
-    },
-  };
-}
 
 export default async function PostPage({
   params,
@@ -85,22 +53,15 @@ export default async function PostPage({
           >
             {post.profiles?.username ?? "someone"}
           </Link>
-          <p className="text-xs text-zinc-500">{timeAgo(post.created_at)}</p>
+          <TimeAgo date={post.created_at} />
         </div>
         <p className="mt-3 whitespace-pre-wrap text-zinc-800">{caption}</p>
         <div className="mt-3 flex items-center justify-between">
-          <div className="flex items-center gap-1">
-            <VoteButton
-              postId={post.id}
-              voteCount={post.vote_count}
-              userVote={post.user_vote}
-            />
-            <ShareButton
-              path={`/post/${post.id}`}
-              title="blacksmile"
-              text={caption ? `${caption} — a moment in the dark` : "A moment in the dark"}
-            />
-          </div>
+          <VoteButton
+            postId={post.id}
+            voteCount={post.vote_count}
+            userVote={post.user_vote}
+          />
           <DeletePostButton postId={post.id} authorId={post.user_id} />
         </div>
       </div>

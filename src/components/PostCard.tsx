@@ -1,11 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import { DeletePostButton } from "@/components/DeletePostButton";
-import { ShareButton } from "@/components/ShareButton";
 import { ShortsPlayer } from "@/components/ShortsPlayer";
 import { VoteButton } from "@/components/VoteButton";
+import { TimeAgo } from "@/components/TimeAgo";
 import { isVideoUrl } from "@/lib/media";
-import { timeAgo } from "@/lib/timeAgo";
 import type { Post } from "@/lib/types";
 
 export function PostCard({ post }: { post: Post }) {
@@ -20,7 +19,7 @@ export function PostCard({ post }: { post: Post }) {
         >
           {post.profiles?.username ?? "someone"}
         </Link>
-        <p className="text-xs text-zinc-500">{timeAgo(post.created_at)}</p>
+        <TimeAgo date={post.created_at} />
       </div>
 
       {post.image_url && isVideoUrl(post.image_url) ? (
@@ -52,18 +51,11 @@ export function PostCard({ post }: { post: Post }) {
 
       <div className="px-4 py-3">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-1">
-            <VoteButton
-              postId={post.id}
-              voteCount={post.vote_count}
-              userVote={post.user_vote}
-            />
-            <ShareButton
-              path={`/post/${post.id}`}
-              title="blacksmile"
-              text={caption ? `${caption} — a moment in the dark` : "A moment in the dark"}
-            />
-          </div>
+          <VoteButton
+            postId={post.id}
+            voteCount={post.vote_count}
+            userVote={post.user_vote}
+          />
           <DeletePostButton postId={post.id} authorId={post.user_id} />
         </div>
         {post.image_url && caption && caption !== "Today" && (

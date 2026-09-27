@@ -10,10 +10,7 @@ export default function SignUpPage() {
   return (
     <div className="mx-auto max-w-sm">
       <p className="mb-1 text-sm font-medium text-zinc-500">blacksmile</p>
-      <h1 className="mb-2 text-2xl font-bold">Join tonight</h1>
-      <p className="mb-6 text-sm text-zinc-500">
-        No follow. Answer tonight&apos;s prompt and leave a black smile.
-      </p>
+      <h1 className="mb-6 text-2xl font-bold">Join blacksmile</h1>
 
       <form
         action={formAction}

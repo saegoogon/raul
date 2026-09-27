@@ -47,7 +47,7 @@ export async function signUp(_prev: AuthState, formData: FormData): Promise<Auth
         "가입은 됐지만 이메일 확인이 켜져 있어요. Supabase에서 Confirm email을 끄고 로그인해 주세요.",
     };
   }
-  redirect("/submit");
+  redirect("/");
 }
 
 export async function signIn(_prev: AuthState, formData: FormData): Promise<AuthState> {

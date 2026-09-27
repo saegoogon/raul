@@ -91,9 +91,10 @@ create trigger on_auth_user_created
   after insert on auth.users
   for each row execute function public.handle_new_user();
 
-insert into storage.buckets (id, name, public)
-values ('posts', 'posts', true)
-on conflict (id) do nothing;
+insert into storage.buckets (id, name, public, file_size_limit)
+values ('posts', 'posts', true, 209715200)
+on conflict (id) do update
+set file_size_limit = excluded.file_size_limit;
 
 create policy "Anyone can view post images"
   on storage.objects for select

@@ -7,5 +7,5 @@ export function isVideoFile(file: File) {
   return file.type.startsWith("video/");
 }
 
-export const MAX_SHORT_SECONDS = 60;
-export const MAX_FILE_MB = 40;
+export const MAX_SHORT_SECONDS = 180;
+export const MAX_FILE_MB = 200;

@@ -22,7 +22,7 @@ function videoDuration(file: File) {
   });
 }
 
-export function ShareForm({ placeholder }: { placeholder?: string }) {
+export function ShareForm() {
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -57,7 +57,7 @@ export function ShareForm({ placeholder }: { placeholder?: string }) {
             if (isVideoFile(file)) {
               const seconds = await videoDuration(file);
               if (seconds > MAX_SHORT_SECONDS) {
-                setError("Shorts can be up to 60 seconds.");
+                setError("Videos can be up to 3 minutes.");
                 setPending(false);
                 return;
               }
@@ -129,10 +129,10 @@ export function ShareForm({ placeholder }: { placeholder?: string }) {
           />
         ) : (
           <span className="px-6 text-sm text-zinc-500">
-            Photo or a 60s short
+            Photo or a 3-min video
             <br />
             <span className="text-zinc-400">
-              사진이나 1분 숏폼을 올려보세요
+              사진이나 3분 영상, 최대 200MB
             </span>
           </span>
         )}
@@ -153,7 +153,7 @@ export function ShareForm({ placeholder }: { placeholder?: string }) {
         name="caption"
         rows={3}
         maxLength={500}
-        placeholder={placeholder ?? "What happened today? / 오늘 뭐 했나요?"}
+        placeholder="What happened today? / 오늘 뭐 했나요?"
         className="w-full rounded-xl border border-zinc-300 px-3 py-2 outline-none focus:border-zinc-900"
       />
 
