@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "블랙스마일",
+  title: "blacksmile",
   description: "누구나 올리는 커뮤니티",
 };
 
