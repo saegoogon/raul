@@ -4,7 +4,7 @@ import { GuestHero } from "@/components/GuestHero";
 import { NightRoom } from "@/components/NightRoom";
 import { PostFeed } from "@/components/PostFeed";
 import { SearchBar } from "@/components/SearchBar";
-import { getTonightPosts, getPosts } from "@/lib/posts";
+import { getCurrentUser, getTonightPosts, getPosts } from "@/lib/posts";
 import type { Post } from "@/lib/types";
 
 function peopleFromPosts(posts: Post[]) {
@@ -49,10 +49,11 @@ export default async function HomePage({
 }) {
   const { sort, q } = await searchParams;
   const mode = sort === "new" || sort === "hot" ? sort : "night";
+  const user = await getCurrentUser();
 
   return (
     <div className="flex flex-col gap-5">
-      <GuestHero />
+      <GuestHero isLoggedIn={!!user} />
       <SearchBar value={q} />
 
       <div className="flex items-center justify-between gap-3">

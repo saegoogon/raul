@@ -1,21 +1,7 @@
-"use client";
-
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import { createClient } from "@/lib/supabase/client";
 
-export function GuestHero() {
-  const [show, setShow] = useState(true);
-
-  useEffect(() => {
-    createClient()
-      .auth.getUser()
-      .then(({ data }) => {
-        if (data.user) setShow(false);
-      });
-  }, []);
-
-  if (!show) return null;
+export function GuestHero({ isLoggedIn }: { isLoggedIn: boolean }) {
+  if (isLoggedIn) return null;
 
   return (
     <section className="rounded-3xl bg-zinc-950 px-6 py-10 text-white">

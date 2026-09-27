@@ -23,12 +23,7 @@ export function PostCard({ post }: { post: Post }) {
       </div>
 
       {post.image_url && isVideoUrl(post.image_url) ? (
-        <div className="bg-black">
-          <ShortsPlayer
-            src={post.image_url}
-            className="mx-auto max-h-[34rem] w-full object-contain"
-          />
-        </div>
+        <ShortsPlayer src={post.image_url} />
       ) : (
         <Link href={`/post/${post.id}`} className="block">
           {post.image_url ? (

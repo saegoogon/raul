@@ -25,12 +25,7 @@ export default async function PostPage({
   return (
     <article className="overflow-hidden rounded-2xl border border-zinc-200 bg-white">
       {post.image_url && isVideoUrl(post.image_url) ? (
-        <div className="bg-black">
-          <ShortsPlayer
-            src={post.image_url}
-            className="mx-auto max-h-[80vh] w-full object-contain"
-          />
-        </div>
+        <ShortsPlayer src={post.image_url} />
       ) : post.image_url ? (
         <div className="relative aspect-square w-full bg-zinc-100 sm:aspect-video">
           <Image
