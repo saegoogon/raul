@@ -18,21 +18,6 @@ function peopleFromPosts(posts: Post[]) {
   });
 }
 
-async function NightHome({ isLoggedIn }: { isLoggedIn: boolean }) {
-  const posts = await getPosts("new");
-  return (
-    <>
-      <NightRoom people={peopleFromPosts(posts)} />
-      <PostFeed
-        posts={posts}
-        isLoggedIn={isLoggedIn}
-        emptyTitle="Tonight is still dark"
-        emptyBody="Moments last 24 hours. Share one before it is gone."
-      />
-    </>
-  );
-}
-
 async function HomeFeed({
   mode,
   query,
@@ -54,14 +39,20 @@ export default async function HomePage({
   const { sort, q } = await searchParams;
   const mode = sort === "new" || sort === "hot" ? sort : "night";
   const user = await getCurrentUser();
+  const needTonight = !!user || (mode === "night" && !q);
+  const tonight = needTonight ? await getPosts("new") : [];
 
   return (
     <div className="flex flex-col gap-5">
-      <GuestHero isLoggedIn={!!user} />
+      {user ? (
+        <NightRoom people={peopleFromPosts(tonight)} />
+      ) : (
+        <GuestHero />
+      )}
       <SearchBar value={q} />
 
-      <div className="flex items-end justify-between gap-3 border-b border-line">
-        <h2 className="pb-2 text-base">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <h2 className="text-base">
           {q
             ? `Search: ${q}`
             : mode === "night"
@@ -70,12 +61,12 @@ export default async function HomePage({
                 ? "New"
                 : "Hot"}
         </h2>
-        <div className="flex gap-3 text-sm">
+        <div className="flex gap-1 rounded-2xl border border-line bg-ink p-1 text-sm">
           <Link
             href="/"
-            className={`pb-2 ${
+            className={`rounded-xl px-3 py-1.5 ${
               mode === "night" && !q
-                ? "border-b-2 border-smile text-smile"
+                ? "bg-smile text-night"
                 : "text-mute hover:text-paper"
             }`}
           >
@@ -83,9 +74,9 @@ export default async function HomePage({
           </Link>
           <Link
             href={q ? `/?sort=hot&q=${encodeURIComponent(q)}` : "/?sort=hot"}
-            className={`pb-2 ${
+            className={`rounded-xl px-3 py-1.5 ${
               mode === "hot"
-                ? "border-b-2 border-smile text-smile"
+                ? "bg-smile text-night"
                 : "text-mute hover:text-paper"
             }`}
           >
@@ -93,9 +84,9 @@ export default async function HomePage({
           </Link>
           <Link
             href={q ? `/?sort=new&q=${encodeURIComponent(q)}` : "/?sort=new"}
-            className={`pb-2 ${
+            className={`rounded-xl px-3 py-1.5 ${
               mode === "new"
-                ? "border-b-2 border-smile text-smile"
+                ? "bg-smile text-night"
                 : "text-mute hover:text-paper"
             }`}
           >
@@ -106,7 +97,12 @@ export default async function HomePage({
 
       <Suspense fallback={<WinkLoader />}>
         {mode === "night" && !q ? (
-          <NightHome isLoggedIn={!!user} />
+          <PostFeed
+            posts={tonight}
+            isLoggedIn={!!user}
+            emptyTitle="Tonight is still dark"
+            emptyBody="Moments last 24 hours. Share one before it is gone."
+          />
         ) : (
           <HomeFeed
             mode={mode === "night" ? "new" : mode}

@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 const SHARE_URL = "https://www.blacksmile.co.kr";
-const SHARE_TEXT = "blacksmile — a smile in the dark. One night only.";
+const SHARE_TEXT = `blacksmile — a smile in the dark.\n${SHARE_URL}`;
 
 export function InviteNight({ className = "" }: { className?: string }) {
   const [copied, setCopied] = useState(false);
@@ -22,7 +22,7 @@ export function InviteNight({ className = "" }: { className?: string }) {
             });
             return;
           }
-          await navigator.clipboard.writeText(`${SHARE_TEXT} ${SHARE_URL}`);
+          await navigator.clipboard.writeText(SHARE_TEXT);
           setCopied(true);
           window.setTimeout(() => setCopied(false), 1800);
         } catch (error) {
@@ -34,7 +34,7 @@ export function InviteNight({ className = "" }: { className?: string }) {
             setCopied(true);
             window.setTimeout(() => setCopied(false), 1800);
           } catch {
-            window.location.href = SHARE_URL;
+            window.prompt("Copy this link", SHARE_URL);
           }
         }
       }}

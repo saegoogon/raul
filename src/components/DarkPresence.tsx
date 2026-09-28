@@ -6,12 +6,18 @@ import { createClient } from "@/lib/supabase/client";
 const WINDOW_MS = 75_000;
 
 function visitorId() {
-  const key = "blacksmile-visitor";
-  const existing = sessionStorage.getItem(key);
-  if (existing) return existing;
-  const next = crypto.randomUUID();
-  sessionStorage.setItem(key, next);
-  return next;
+  try {
+    const key = "blacksmile-visitor";
+    const existing = sessionStorage.getItem(key);
+    if (existing) return existing;
+    const next =
+      crypto.randomUUID?.() ??
+      `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+    sessionStorage.setItem(key, next);
+    return next;
+  } catch {
+    return `tmp-${Date.now()}`;
+  }
 }
 
 export function DarkPresence() {
@@ -53,7 +59,7 @@ export function DarkPresence() {
   const alone = n <= 1;
 
   return (
-    <p className="mt-4 text-sm text-smile">
+    <p className="text-sm text-smile">
       {alone
         ? "You are alone in the dark."
         : `${n} people are awake in the dark.`}

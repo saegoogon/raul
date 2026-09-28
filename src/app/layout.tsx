@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { BottomNav } from "@/components/BottomNav";
 import { BrandMark } from "@/components/BrandMark";
 import { Header } from "@/components/Header";
+import { Mascot } from "@/components/Mascot";
 import { Providers } from "@/components/Providers";
 import { WinkIntro } from "@/components/WinkIntro";
 import "./globals.css";
@@ -21,6 +22,9 @@ export const metadata: Metadata = {
   },
   description: "blacksmile — a smile in the dark. One night only.",
   applicationName: "blacksmile",
+  alternates: {
+    canonical: "https://www.blacksmile.co.kr",
+  },
   openGraph: {
     title: "blacksmile",
     description: "A smile in the dark. One night only.",
@@ -28,31 +32,40 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: "https://www.blacksmile.co.kr",
+    images: [
+      {
+        url: "/brand/blacksmile-logo.png",
+        width: 1024,
+        height: 1024,
+        alt: "blacksmile",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "blacksmile",
     description: "A smile in the dark. One night only.",
+    images: ["/brand/blacksmile-logo.png"],
   },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html
-      lang="en"
-      className="h-full"
-    >
+    <html lang="en" className="h-full">
       <body className="flex min-h-full flex-col bg-night text-paper">
         <WinkIntro />
         <Providers>
           <Header />
-          <main className="mx-auto w-full max-w-3xl flex-1 px-3 py-5 pb-20 md:pb-6">
+          <main className="mx-auto w-full max-w-2xl flex-1 px-4 py-6 pb-24 md:pb-8">
             {children}
           </main>
           <BottomNav />
         </Providers>
-        <footer className="border-t border-line py-6 text-center text-xs text-mute">
-          <BrandMark className="text-sm" />
+        <footer className="border-t border-line/80 py-8 text-center text-xs text-mute">
+          <Mascot size="sm" className="mx-auto" />
+          <p className="mt-2 text-sm">
+            <BrandMark />
+          </p>
           <p className="mt-1">one night only</p>
         </footer>
       </body>

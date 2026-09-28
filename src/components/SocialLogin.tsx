@@ -78,7 +78,7 @@ export function SocialLogin() {
   return (
     <div className="flex flex-col gap-2">
       {error && (
-        <p className="rounded-md bg-red-950/50 px-3 py-2 text-sm text-red-300">
+        <p className="rounded-2xl bg-red-950/50 px-3 py-2 text-sm text-red-300">
           {error}
         </p>
       )}
@@ -86,7 +86,7 @@ export function SocialLogin() {
         type="button"
         disabled={pending !== null}
         onClick={() => void start("google")}
-        className="flex items-center justify-center gap-2 border border-line bg-paper px-3 py-2 text-sm text-night disabled:opacity-50"
+        className="flex items-center justify-center gap-2 rounded-2xl border border-line bg-paper px-3 py-2.5 text-sm text-night disabled:opacity-50"
       >
         <GoogleMark />
         {pending === "google" ? "Opening Google..." : "Continue with Google"}
@@ -95,7 +95,7 @@ export function SocialLogin() {
         type="button"
         disabled={pending !== null}
         onClick={() => void start("naver")}
-        className="flex items-center justify-center gap-2 border border-[#03C75A] bg-[#03C75A] px-3 py-2 text-sm text-white disabled:opacity-50"
+        className="flex items-center justify-center gap-2 rounded-2xl border border-[#03C75A] bg-[#03C75A] px-3 py-2.5 text-sm text-white disabled:opacity-50"
       >
         <NaverMark />
         {pending === "naver" ? "Opening Naver..." : "Continue with Naver"}

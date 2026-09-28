@@ -1,4 +1,4 @@
-import { SmileMark } from "@/components/SmileMark";
+import { Mascot } from "@/components/Mascot";
 
 export function WinkLoader() {
   return (
@@ -7,7 +7,7 @@ export function WinkLoader() {
       aria-busy
       aria-label="Loading"
     >
-      <SmileMark className="h-16 w-16 text-smile" wink="loop" />
+      <Mascot size="md" bob />
     </div>
   );
 }

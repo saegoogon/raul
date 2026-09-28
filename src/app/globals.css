@@ -9,12 +9,14 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-night: #0b0b0b;
-  --color-ink: #161616;
-  --color-line: #3a3a3a;
+  --color-ink: #161310;
+  --color-line: #3d372c;
   --color-smile: #e2b441;
   --color-paper: #ececec;
   --color-mute: #8a8a8a;
   --font-sans: "Malgun Gothic", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+  --radius-card: 1.5rem;
+  --radius-control: 1rem;
 }
 
 ::selection {
@@ -26,6 +28,11 @@ body {
   font-family: "Malgun Gothic", "Apple SD Gothic Neo", sans-serif;
   color: #ececec;
   background-color: #0b0b0b;
+  background-image: radial-gradient(
+    ellipse 90% 55% at 50% -20%,
+    #1c1812 0%,
+    #0b0b0b 58%
+  );
 }
 
 body::after {
@@ -34,13 +41,72 @@ body::after {
   position: fixed;
   inset: 0;
   z-index: 40;
-  opacity: 0.045;
+  opacity: 0.03;
   background-image: repeating-linear-gradient(
     0deg,
     transparent,
-    transparent 2px,
-    rgba(255, 255, 255, 0.35) 3px
+    transparent 3px,
+    rgba(255, 255, 255, 0.35) 4px
   );
+}
+
+.surface {
+  border: 1px solid #3d372c;
+  background: #161310;
+  border-radius: 1.5rem;
+}
+
+.field {
+  width: 100%;
+  border: 1px solid #3d372c;
+  background: #0b0b0b;
+  border-radius: 1rem;
+  padding: 0.6rem 0.9rem;
+  color: #ececec;
+  outline: none;
+}
+
+.field:focus {
+  border-color: #e2b441;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #e2b441;
+  background: #e2b441;
+  color: #0b0b0b;
+  border-radius: 1rem;
+  padding: 0.55rem 1rem;
+}
+
+.btn-primary:disabled {
+  opacity: 0.5;
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #3d372c;
+  color: #ececec;
+  border-radius: 1rem;
+  padding: 0.55rem 1rem;
+}
+
+.mascot-bob {
+  animation: mascot-bob 3.8s ease-in-out infinite;
+}
+
+@keyframes mascot-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
 }
 
 .blacksmile-eye,
@@ -131,5 +197,16 @@ body::after {
   }
   to {
     opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mascot-bob,
+  .blacksmile-wink,
+  .blacksmile-wink-loop,
+  .blacksmile-mouth-once,
+  .blacksmile-mouth-loop,
+  .blacksmile-intro-mark {
+    animation: none;
   }
 }

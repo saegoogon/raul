@@ -33,7 +33,7 @@ export function VoteButton({
           }
         });
       }}
-      className={`flex items-center gap-1.5 border px-2 py-0.5 text-sm ${
+      className={`flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-sm ${
         liked
           ? "border-smile bg-smile text-night"
           : "border-transparent text-mute hover:border-line hover:text-smile"

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { BrandMark } from "@/components/BrandMark";
-import { SmileMark } from "@/components/SmileMark";
+import { Mascot } from "@/components/Mascot";
 import { useAuth } from "@/components/Providers";
 import { signOut } from "@/actions/auth";
 
@@ -10,8 +10,8 @@ export function Header() {
   const { userId, username } = useAuth();
 
   return (
-    <header className="sticky top-0 z-10 border-b border-line bg-night text-paper">
-      <div className="mx-auto flex h-12 max-w-3xl items-center justify-between px-3">
+    <header className="sticky top-0 z-10 border-b border-line/80 bg-night/80 text-paper backdrop-blur-md">
+      <div className="mx-auto flex h-14 max-w-2xl items-center justify-between px-4">
         <a
           href="/"
           className="blacksmile-logo flex items-center gap-2 text-base"
@@ -20,7 +20,7 @@ export function Header() {
             window.location.href = "/";
           }}
         >
-          <SmileMark className="h-5 w-5 text-smile" wink="hover" />
+          <Mascot size="xs" />
           <BrandMark />
         </a>
 
@@ -37,7 +37,7 @@ export function Header() {
               )}
               <Link
                 href="/submit"
-                className="border border-smile bg-smile px-3 py-1 text-night"
+                className="btn-primary hidden px-3 py-1.5 text-sm md:inline-flex"
               >
                 Share
               </Link>
@@ -52,11 +52,7 @@ export function Header() {
               <Link href="/login" className="text-mute hover:text-paper">
                 Log in
               </Link>
-              <Link
-                href="/signup"
-                prefetch
-                className="border border-smile bg-smile px-3 py-1 text-night"
-              >
+              <Link href="/signup" prefetch className="btn-primary px-3 py-1.5 text-sm">
                 Join
               </Link>
             </>

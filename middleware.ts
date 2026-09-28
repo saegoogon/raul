@@ -1,8 +1,22 @@
-import { type NextRequest } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
+import { isLinkScraper } from "@/lib/browser";
 import { updateSession } from "@/lib/supabase/middleware";
 
 export async function middleware(request: NextRequest) {
-  return await updateSession(request);
+  const host = request.headers.get("host") ?? "";
+  if (host === "blacksmile.co.kr") {
+    return NextResponse.redirect(
+      `https://www.blacksmile.co.kr${request.nextUrl.pathname}${request.nextUrl.search}`,
+      301,
+    );
+  }
+
+  const ua = request.headers.get("user-agent") ?? "";
+  if (isLinkScraper(ua)) {
+    return NextResponse.next();
+  }
+
+  return updateSession(request);
 }
 
 export const config = {

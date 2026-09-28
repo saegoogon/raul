@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { createPost } from "@/actions/posts";
+import { Mascot } from "@/components/Mascot";
 import { useAuth } from "@/components/Providers";
 import { isVideoFile, MAX_FILE_MB } from "@/lib/media";
 import { uploadErrorMessage, uploadPostFile } from "@/lib/upload";
@@ -16,7 +17,7 @@ export function ShareForm() {
 
   return (
     <form
-      className="flex flex-col gap-4 border border-line bg-ink p-4"
+      className="surface flex flex-col gap-4 p-5"
       onSubmit={async (event) => {
         event.preventDefault();
         setError(null);
@@ -72,7 +73,7 @@ export function ShareForm() {
         }
       }}
     >
-      <label className="flex min-h-64 cursor-pointer flex-col items-center justify-center overflow-hidden border border-dashed border-line bg-night text-center">
+      <label className="flex min-h-64 cursor-pointer flex-col items-center justify-center overflow-hidden rounded-2xl border border-dashed border-line bg-night text-center">
         {preview && file && isVideoFile(file) ? (
           <video
             src={preview}
@@ -89,11 +90,12 @@ export function ShareForm() {
             className="max-h-[28rem] w-full object-contain"
           />
         ) : (
-          <span className="px-6 text-sm text-mute">
-            Photo or video
-            <br />
-            <span className="text-mute/70">
-              Photo or video, max 50MB
+          <span className="flex flex-col items-center gap-3 px-6 text-sm text-mute">
+            <Mascot size="md" />
+            <span>
+              Drop a photo from tonight
+              <br />
+              <span className="text-mute/70">Photo or video, max 50MB</span>
             </span>
           </span>
         )}
@@ -119,11 +121,11 @@ export function ShareForm() {
         rows={3}
         maxLength={500}
         placeholder="What happened today?"
-        className="w-full border border-line bg-night px-3 py-2 text-paper outline-none placeholder:text-mute focus:border-smile"
+        className="field placeholder:text-mute"
       />
 
       {error && (
-        <p className="rounded-md bg-red-950/50 px-3 py-2 text-sm text-red-300">
+        <p className="rounded-2xl bg-red-950/50 px-3 py-2 text-sm text-red-300">
           {error}
         </p>
       )}
@@ -131,7 +133,7 @@ export function ShareForm() {
       <button
         type="submit"
         disabled={pending}
-        className="border border-smile bg-smile py-2 text-night disabled:opacity-50"
+        className="btn-primary"
       >
         {pending
           ? progress > 0

@@ -6,7 +6,7 @@ export function SearchBar({ value = "" }: { value?: string }) {
         name="q"
         defaultValue={value}
         placeholder="Search tonight"
-        className="w-full border border-line bg-ink px-3 py-2 text-sm text-paper outline-none placeholder:text-mute focus:border-smile"
+        className="field text-sm placeholder:text-mute"
       />
     </form>
   );

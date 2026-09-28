@@ -2,14 +2,18 @@
 
 import { useEffect, useState } from "react";
 import { BrandMark } from "@/components/BrandMark";
-import { SmileMark } from "@/components/SmileMark";
+import { Mascot } from "@/components/Mascot";
+import { isInAppBrowser } from "@/lib/browser";
 
 export function WinkIntro() {
   const [gone, setGone] = useState(false);
   const [hiding, setHiding] = useState(false);
 
   useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    if (
+      isInAppBrowser(navigator.userAgent) ||
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    ) {
       setGone(true);
       return;
     }
@@ -38,9 +42,13 @@ export function WinkIntro() {
       className={`blacksmile-intro fixed inset-0 z-50 flex flex-col items-center justify-center bg-night ${
         hiding ? "invisible opacity-0" : "visible opacity-100"
       }`}
+      onClick={() => {
+        document.body.style.overflow = "";
+        setGone(true);
+      }}
     >
       <div className="blacksmile-intro-mark flex flex-col items-center">
-        <SmileMark className="h-24 w-24 text-smile" wink="once" />
+        <Mascot size="xl" bob priority />
         <p className="mt-4 text-xl">
           <BrandMark />
         </p>
