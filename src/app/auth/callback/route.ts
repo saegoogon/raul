@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { publicOrigin } from "@/lib/public-origin";
 import { createClient } from "@/lib/supabase/server";
 
 function safeNext(path: string | null) {
@@ -6,21 +7,12 @@ function safeNext(path: string | null) {
   return path;
 }
 
-function redirectBase(request: Request, origin: string) {
-  const host = request.headers.get("x-forwarded-host");
-  const proto = request.headers.get("x-forwarded-proto") ?? "https";
-  if (process.env.NODE_ENV !== "development" && host) {
-    return `${proto}://${host}`;
-  }
-  return origin;
-}
-
 export async function GET(request: Request) {
-  const { searchParams, origin } = new URL(request.url);
+  const { searchParams } = new URL(request.url);
   const code = searchParams.get("code");
   const next = safeNext(searchParams.get("next"));
   const oauthError = searchParams.get("error");
-  const base = redirectBase(request, origin);
+  const base = publicOrigin(request);
 
   if (oauthError) {
     return NextResponse.redirect(`${base}/login?error=oauth`);

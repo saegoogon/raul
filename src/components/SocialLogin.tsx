@@ -6,9 +6,8 @@ import { createClient } from "@/lib/supabase/client";
 
 type SocialProvider = "google" | "naver";
 
-const oauthProvider: Record<SocialProvider, Provider> = {
+const oauthProvider: Record<Exclude<SocialProvider, "naver">, Provider> = {
   google: "google",
-  naver: "custom:naver",
 };
 
 function GoogleMark() {
@@ -53,23 +52,21 @@ export function SocialLogin() {
     setError(null);
     setPending(provider);
     try {
+      if (provider === "naver") {
+        window.location.href = "/auth/naver";
+        return;
+      }
+
       const supabase = createClient();
       const { error: oauthError } = await supabase.auth.signInWithOAuth({
         provider: oauthProvider[provider],
         options: {
           redirectTo: `${window.location.origin}/auth/callback`,
-          queryParams:
-            provider === "google"
-              ? { access_type: "offline", prompt: "select_account" }
-              : undefined,
+          queryParams: { access_type: "offline", prompt: "select_account" },
         },
       });
       if (oauthError) {
-        setError(
-          provider === "naver"
-            ? "Naver login is not enabled yet."
-            : "Google login is not enabled yet.",
-        );
+        setError("Google login is not enabled yet.");
         setPending(null);
       }
     } catch {
