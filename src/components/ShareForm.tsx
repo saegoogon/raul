@@ -15,7 +15,7 @@ export function ShareForm() {
 
   return (
     <form
-      className="flex flex-col gap-4 rounded-2xl border border-zinc-200 bg-white p-6"
+      className="flex flex-col gap-4 rounded-2xl border border-line bg-ink p-6"
       onSubmit={async (event) => {
         event.preventDefault();
         setError(null);
@@ -75,7 +75,7 @@ export function ShareForm() {
         }
       }}
     >
-      <label className="flex min-h-64 cursor-pointer flex-col items-center justify-center overflow-hidden rounded-xl border border-dashed border-zinc-300 bg-zinc-50 text-center">
+      <label className="flex min-h-64 cursor-pointer flex-col items-center justify-center overflow-hidden rounded-xl border border-dashed border-line bg-night text-center">
         {preview && file && isVideoFile(file) ? (
           <video
             src={preview}
@@ -92,10 +92,10 @@ export function ShareForm() {
             className="max-h-[28rem] w-full object-contain"
           />
         ) : (
-          <span className="px-6 text-sm text-zinc-500">
+          <span className="px-6 text-sm text-mute">
             Photo or video
             <br />
-            <span className="text-zinc-400">
+            <span className="text-mute/70">
               사진이나 영상, 최대 50MB
             </span>
           </span>
@@ -122,11 +122,11 @@ export function ShareForm() {
         rows={3}
         maxLength={500}
         placeholder="What happened today? / 오늘 뭐 했나요?"
-        className="w-full rounded-xl border border-zinc-300 px-3 py-2 outline-none focus:border-zinc-900"
+        className="w-full rounded-xl border border-line bg-night px-3 py-2 text-paper outline-none placeholder:text-mute focus:border-smile"
       />
 
       {error && (
-        <p className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-600">
+        <p className="rounded-md bg-red-950/50 px-3 py-2 text-sm text-red-300">
           {error}
         </p>
       )}
@@ -134,7 +134,7 @@ export function ShareForm() {
       <button
         type="submit"
         disabled={pending}
-        className="rounded-full bg-zinc-950 py-2.5 font-medium text-white hover:bg-zinc-800 disabled:opacity-50"
+        className="rounded-full bg-smile py-2.5 font-medium text-night hover:bg-amber-200 disabled:opacity-50"
       >
         {pending
           ? progress > 0

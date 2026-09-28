@@ -29,7 +29,7 @@ export function BottomNav() {
     <Link
       href={href}
       className={`flex flex-1 flex-col items-center py-2 text-xs ${
-        active ? "text-amber-300" : "text-zinc-400"
+        active ? "text-smile" : "text-mute"
       }`}
     >
       {label}
@@ -37,7 +37,7 @@ export function BottomNav() {
   );
 
   return (
-    <nav className="fixed inset-x-0 bottom-0 z-20 border-t border-zinc-800 bg-zinc-950 text-white md:hidden">
+    <nav className="fixed inset-x-0 bottom-0 z-20 border-t border-line bg-night text-paper md:hidden">
       <div className="mx-auto flex max-w-5xl">
         {item("/", "Night", pathname === "/")}
         {item("/submit", "Share", pathname === "/submit")}

@@ -27,7 +27,7 @@ export function DeletePostButton({
       onClick={() => {
         if (confirm("Delete this post?")) void deletePost(postId);
       }}
-      className="text-xs text-zinc-400 hover:text-rose-500"
+      className="text-xs text-mute hover:text-rose-400"
     >
       Delete
     </button>

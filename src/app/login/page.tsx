@@ -10,23 +10,23 @@ export default function LoginPage() {
 
   return (
     <div className="mx-auto max-w-sm">
-      <p className="mb-1 text-sm font-medium text-zinc-500">
+      <p className="mb-1 text-sm font-semibold">
         <BrandMark />
       </p>
-      <h1 className="mb-6 text-2xl font-bold">Log in</h1>
+      <h1 className="font-display mb-6 text-3xl italic tracking-tight">Log in</h1>
 
       <form
         action={formAction}
-        className="flex flex-col gap-4 rounded-lg border border-zinc-200 bg-white p-6"
+        className="flex flex-col gap-4 rounded-2xl border border-line bg-ink p-6"
       >
         {state?.error && (
-          <p className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-600">
+          <p className="rounded-md bg-red-950/50 px-3 py-2 text-sm text-red-300">
             {state.error}
           </p>
         )}
 
         <div>
-          <label htmlFor="email" className="mb-1 block text-sm font-medium">
+          <label htmlFor="email" className="mb-1 block text-sm font-medium text-paper">
             Email
           </label>
           <input
@@ -34,12 +34,12 @@ export default function LoginPage() {
             name="email"
             type="email"
             required
-            className="w-full rounded-lg border border-zinc-300 px-3 py-2 outline-none focus:border-zinc-900"
+            className="w-full rounded-lg border border-line bg-night px-3 py-2 text-paper outline-none focus:border-smile"
           />
         </div>
 
         <div>
-          <label htmlFor="password" className="mb-1 block text-sm font-medium">
+          <label htmlFor="password" className="mb-1 block text-sm font-medium text-paper">
             Password
           </label>
           <input
@@ -48,22 +48,22 @@ export default function LoginPage() {
             type="password"
             required
             minLength={6}
-            className="w-full rounded-lg border border-zinc-300 px-3 py-2 outline-none focus:border-zinc-900"
+            className="w-full rounded-lg border border-line bg-night px-3 py-2 text-paper outline-none focus:border-smile"
           />
         </div>
 
         <button
           type="submit"
           disabled={pending}
-          className="rounded-full bg-zinc-950 py-2.5 font-medium text-white hover:bg-zinc-800 disabled:opacity-50"
+          className="rounded-full bg-smile py-2.5 font-medium text-night hover:bg-amber-200 disabled:opacity-50"
         >
           {pending ? "Logging in..." : "Log in"}
         </button>
       </form>
 
-      <p className="mt-4 text-center text-sm text-zinc-600">
+      <p className="mt-4 text-center text-sm text-mute">
         New here?{" "}
-        <Link href="/signup" className="font-medium text-zinc-950 hover:underline">
+        <Link href="/signup" className="font-medium text-smile hover:underline">
           Join
         </Link>
       </p>

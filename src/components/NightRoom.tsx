@@ -4,20 +4,20 @@ import type { Profile } from "@/lib/types";
 
 export function NightRoom({ people }: { people: Profile[] }) {
   return (
-    <section className="rounded-2xl bg-zinc-950 px-5 py-5 text-white">
-      <p className="text-xs font-medium uppercase tracking-wide text-amber-300">
-        :) tonight
+    <section className="rounded-2xl border border-line bg-ink px-5 py-5">
+      <p className="text-xs font-medium uppercase tracking-[0.18em] text-smile">
+        tonight
       </p>
-      <h2 className="mt-1 text-lg font-bold">Faces in the dark</h2>
-      <p className="mt-1 text-sm text-zinc-400">
-        No follow. Leave a black smile on a moment.
+      <h2 className="font-display mt-1 text-2xl italic">Faces in the dark</h2>
+      <p className="mt-1 text-sm text-mute">
+        No follow. One night only. Then it&apos;s gone.
         <br />
-        팔로우 없이, 오늘 밤의 순간에 검은 웃음만 남기세요.
+        팔로우 없이, 24시간이 지나면 사라져요.
       </p>
       <DarkPresence />
 
       {people.length === 0 ? (
-        <p className="mt-4 text-sm text-zinc-500">
+        <p className="mt-4 text-sm text-mute">
           The dark is still empty. Share and someone may smile back.
         </p>
       ) : (
@@ -26,7 +26,7 @@ export function NightRoom({ people }: { people: Profile[] }) {
             <Link
               key={person.id}
               href={`/u/${person.username}`}
-              className="rounded-full bg-zinc-800 px-3 py-1 text-sm text-amber-200 hover:bg-zinc-700"
+              className="rounded-full bg-night px-3 py-1 text-sm text-smile hover:bg-line"
             >
               {person.username}
             </Link>

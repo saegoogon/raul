@@ -16,12 +16,12 @@ export default async function ProfilePage({
 
   return (
     <div className="flex flex-col gap-5">
-      <section className="rounded-2xl bg-zinc-950 px-6 py-8 text-white">
-        <p className="text-sm text-amber-300">
+      <section className="rounded-2xl border border-line bg-ink px-6 py-8">
+        <p className="text-sm font-semibold">
           <BrandMark />
         </p>
-        <h1 className="mt-1 text-2xl font-bold">{profile.username}</h1>
-        <p className="mt-2 text-sm text-zinc-400">
+        <h1 className="font-display mt-1 text-3xl italic">{profile.username}</h1>
+        <p className="mt-2 text-sm text-mute">
           {posts.length} {posts.length === 1 ? "moment in the dark" : "moments in the dark"}
         </p>
       </section>

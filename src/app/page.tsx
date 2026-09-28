@@ -26,7 +26,7 @@ async function NightHome() {
       <PostFeed
         posts={posts}
         emptyTitle="Tonight is still dark"
-        emptyBody="Share a moment and leave the first black smile. 올리면 오늘 밤이 열려요."
+        emptyBody="Moments last 24 hours. Share one before the dark takes it. 하루면 사라져요."
       />
     </>
   );
@@ -58,7 +58,7 @@ export default async function HomePage({
       <SearchBar value={q} />
 
       <div className="flex items-center justify-between gap-3">
-        <h2 className="text-lg font-bold">
+        <h2 className="font-display text-2xl italic tracking-tight">
           {q
             ? `Search: ${q}`
             : mode === "night"
@@ -67,13 +67,13 @@ export default async function HomePage({
                 ? "Latest"
                 : "Popular"}
         </h2>
-        <div className="flex rounded-full border border-zinc-300 bg-white p-1 text-sm">
+        <div className="flex rounded-full border border-line bg-ink p-1 text-sm">
           <Link
             href="/"
             className={`rounded-full px-3 py-1 ${
               mode === "night" && !q
-                ? "bg-zinc-950 text-white"
-                : "text-zinc-600 hover:text-zinc-950"
+                ? "bg-smile text-night"
+                : "text-mute hover:text-paper"
             }`}
           >
             Night
@@ -82,8 +82,8 @@ export default async function HomePage({
             href={q ? `/?sort=hot&q=${encodeURIComponent(q)}` : "/?sort=hot"}
             className={`rounded-full px-3 py-1 ${
               mode === "hot"
-                ? "bg-zinc-950 text-white"
-                : "text-zinc-600 hover:text-zinc-950"
+                ? "bg-smile text-night"
+                : "text-mute hover:text-paper"
             }`}
           >
             Popular
@@ -92,8 +92,8 @@ export default async function HomePage({
             href={q ? `/?sort=new&q=${encodeURIComponent(q)}` : "/?sort=new"}
             className={`rounded-full px-3 py-1 ${
               mode === "new"
-                ? "bg-zinc-950 text-white"
-                : "text-zinc-600 hover:text-zinc-950"
+                ? "bg-smile text-night"
+                : "text-mute hover:text-paper"
             }`}
           >
             Latest

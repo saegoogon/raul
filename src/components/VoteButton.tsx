@@ -35,8 +35,8 @@ export function VoteButton({
       }}
       className={`flex items-center gap-1.5 rounded-full px-2 py-1 text-sm active:scale-95 ${
         liked
-          ? "bg-zinc-950 text-amber-300"
-          : "text-zinc-500 hover:bg-zinc-950 hover:text-amber-200"
+          ? "bg-smile text-night"
+          : "text-mute hover:bg-night hover:text-smile"
       }`}
       aria-label="Black smile"
     >

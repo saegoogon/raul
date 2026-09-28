@@ -1,30 +1,43 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #07070a;
+  --foreground: #f3efe6;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-night: #07070a;
+  --color-ink: #141416;
+  --color-line: #2c2c32;
+  --color-smile: #f5c84c;
+  --color-paper: #f3efe6;
+  --color-mute: #8c877e;
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-display: var(--font-serif);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+::selection {
+  background: #f5c84c;
+  color: #07070a;
 }
 
 body {
   font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  color: #f3efe6;
+  background-color: #07070a;
+  background-image: radial-gradient(
+    900px 480px at 50% -120px,
+    rgba(245, 200, 76, 0.09),
+    transparent 62%
+  );
 }
 
 .blacksmile-wink,
-.blacksmile-wink-loop {
+.blacksmile-wink-loop,
+.blacksmile-wink-hover {
   transform-box: fill-box;
   transform-origin: center;
 }
@@ -35,6 +48,10 @@ body {
 
 .blacksmile-wink-loop {
   animation: blacksmile-wink 1.4s ease-in-out infinite;
+}
+
+.blacksmile-logo:hover .blacksmile-wink-hover {
+  animation: blacksmile-wink 0.9s ease-in-out;
 }
 
 @keyframes blacksmile-wink {

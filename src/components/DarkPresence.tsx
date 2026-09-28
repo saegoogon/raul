@@ -50,7 +50,7 @@ export function DarkPresence() {
   const alone = n <= 1;
 
   return (
-    <p className="mt-4 text-sm text-amber-200">
+    <p className="mt-4 text-sm text-smile">
       {alone
         ? "You are alone in the dark. 지금 혼자 깨어 있어요."
         : `${n} people are awake in the dark. 지금 ${n}명이 깨어 있어요.`}

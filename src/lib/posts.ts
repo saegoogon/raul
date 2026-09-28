@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { tonightRange } from "@/lib/night";
+import { isAlive, livingSince } from "@/lib/life";
 import type { Comment, Post } from "@/lib/types";
 
 type RawPost = Post & {
@@ -32,6 +33,7 @@ export async function getPosts(
     let request = supabase
       .from("posts")
       .select(postSelect)
+      .gte("created_at", livingSince().toISOString())
       .order("created_at", { ascending: false })
       .limit(40);
 
@@ -72,7 +74,9 @@ export async function getPost(id: string): Promise<Post | null> {
     ]);
 
     if (error || !data) return null;
-    return toPost(data as RawPost, auth.user?.id);
+    const post = toPost(data as RawPost, auth.user?.id);
+    if (!isAlive(post.created_at)) return null;
+    return post;
   } catch {
     return null;
   }
@@ -141,6 +145,7 @@ export async function getPostsByUser(userId: string): Promise<Post[]> {
         .from("posts")
         .select(postSelect)
         .eq("user_id", userId)
+        .gte("created_at", livingSince().toISOString())
         .order("created_at", { ascending: false }),
     ]);
 

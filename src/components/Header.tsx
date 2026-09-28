@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { BrandMark } from "@/components/BrandMark";
+import { SmileMark } from "@/components/SmileMark";
 import { signOut } from "@/actions/auth";
 import { createClient } from "@/lib/supabase/client";
 import type { User } from "@supabase/supabase-js";
@@ -40,19 +41,17 @@ export function Header() {
   }, []);
 
   return (
-    <header className="sticky top-0 z-10 border-b border-zinc-800 bg-zinc-950/95 text-white backdrop-blur">
+    <header className="sticky top-0 z-10 border-b border-line bg-night/90 text-paper backdrop-blur">
       <div className="mx-auto flex h-14 max-w-5xl items-center justify-between px-4">
         <a
           href="/"
-          className="flex items-center gap-2 text-xl font-bold"
+          className="blacksmile-logo flex items-center gap-2 text-xl font-bold tracking-tight"
           onClick={(event) => {
             event.preventDefault();
             window.location.href = "/";
           }}
         >
-          <span aria-hidden className="text-amber-300">
-            :)
-          </span>
+          <SmileMark className="h-6 w-6 text-smile" wink="hover" />
           <BrandMark />
         </a>
 
@@ -62,21 +61,21 @@ export function Header() {
               {username && (
                 <Link
                   href={`/u/${username}`}
-                  className="hidden text-zinc-300 hover:text-white sm:inline"
+                  className="hidden text-mute hover:text-paper sm:inline"
                 >
                   @{username}
                 </Link>
               )}
               <Link
                 href="/submit"
-                className="rounded-full bg-amber-300 px-4 py-1.5 font-medium text-zinc-950 hover:bg-amber-200"
+                className="rounded-full bg-smile px-4 py-1.5 font-medium text-night hover:bg-amber-200"
               >
                 Share
               </Link>
               <form action={signOut}>
                 <button
                   type="submit"
-                  className="text-zinc-300 hover:text-white"
+                  className="text-mute hover:text-paper"
                 >
                   Log out
                 </button>
@@ -84,13 +83,13 @@ export function Header() {
             </>
           ) : (
             <>
-              <Link href="/login" className="text-zinc-300 hover:text-white">
+              <Link href="/login" className="text-mute hover:text-paper">
                 Log in
               </Link>
               <Link
                 href="/signup"
                 prefetch
-                className="rounded-full bg-amber-300 px-4 py-1.5 font-medium text-zinc-950 hover:bg-amber-200"
+                className="rounded-full bg-smile px-4 py-1.5 font-medium text-night hover:bg-amber-200"
               >
                 Join
               </Link>

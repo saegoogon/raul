@@ -27,7 +27,7 @@ export function CommentSection({
 
   return (
     <section className="mt-6">
-      <h3 className="mb-4 text-sm font-semibold text-zinc-700">
+      <h3 className="mb-4 text-sm font-semibold text-mute">
         Comments {items.length}
       </h3>
 
@@ -71,19 +71,19 @@ export function CommentSection({
             rows={2}
             placeholder="Say something nice..."
             required
-            className="w-full rounded-lg border border-zinc-300 px-3 py-2 text-sm outline-none focus:border-zinc-900"
+            className="w-full rounded-lg border border-line bg-night px-3 py-2 text-sm text-paper outline-none placeholder:text-mute focus:border-smile"
           />
           <button
             type="submit"
             disabled={pending}
-            className="mt-2 rounded-full bg-zinc-950 px-4 py-1.5 text-sm font-medium text-white hover:bg-zinc-800 disabled:opacity-50"
+            className="mt-2 rounded-full bg-smile px-4 py-1.5 text-sm font-medium text-night hover:bg-amber-200 disabled:opacity-50"
           >
             Reply
           </button>
         </form>
       ) : (
-        <p className="mb-6 text-sm text-zinc-500">
-          <Link href="/login" className="font-medium text-zinc-950 underline">
+        <p className="mb-6 text-sm text-mute">
+          <Link href="/login" className="font-medium text-smile underline">
             Log in
           </Link>{" "}
           to comment.
@@ -92,12 +92,12 @@ export function CommentSection({
 
       <ul className="flex flex-col gap-3">
         {items.map((comment) => (
-          <li key={comment.id} className="rounded-lg bg-zinc-50 px-4 py-3">
-            <p className="text-xs text-zinc-500">
+          <li key={comment.id} className="rounded-lg bg-night px-4 py-3">
+            <p className="text-xs text-mute">
               {comment.profiles?.username ?? "someone"} ·{" "}
               {timeAgo(comment.created_at)}
             </p>
-            <p className="mt-1 text-sm text-zinc-800">{comment.content}</p>
+            <p className="mt-1 text-sm text-paper">{comment.content}</p>
           </li>
         ))}
       </ul>

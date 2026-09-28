@@ -50,7 +50,7 @@ export function ShortsPlayer({ src }: { src: string; className?: string }) {
           preload="metadata"
         />
       ) : (
-        <div className="absolute inset-0 flex items-center justify-center text-zinc-500">
+        <div className="absolute inset-0 flex items-center justify-center text-mute">
           ▶
         </div>
       )}
