@@ -8,8 +8,8 @@ export default async function SubmitPage() {
 
   return (
     <div className="mx-auto max-w-xl">
-      <h1 className="font-display mb-2 text-3xl italic tracking-tight">
-        Share tonight
+      <h1 className="mb-2 text-3xl font-semibold tracking-tight">
+        오늘 밤 공유
       </h1>
       <p className="mb-6 text-sm text-mute">
         Photo or video, up to 50MB. It lasts 24 hours.

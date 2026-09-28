@@ -23,7 +23,9 @@ export default async function ProfilePage({
         <p className="text-sm font-semibold">
           <BrandMark />
         </p>
-        <h1 className="font-display mt-1 text-3xl italic">{profile.username}</h1>
+        <h1 className="mt-1 text-3xl font-semibold tracking-tight">
+          {profile.username}
+        </h1>
         <p className="mt-2 text-sm text-mute">
           {posts.length} {posts.length === 1 ? "moment in the dark" : "moments in the dark"}
         </p>

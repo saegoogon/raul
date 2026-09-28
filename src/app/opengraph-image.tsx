@@ -32,6 +32,7 @@ export default function OpenGraphImage() {
             color: "#f3efe6",
             fontSize: 56,
             letterSpacing: "-0.04em",
+            fontWeight: 700,
           }}
         >
           blacksmile
@@ -41,10 +42,10 @@ export default function OpenGraphImage() {
             marginTop: 16,
             color: "#8c877e",
             fontSize: 28,
-            fontStyle: "italic",
+            letterSpacing: "-0.02em",
           }}
         >
-          a smile in the dark · one night only
+          어둠 속의 미소 · 오늘 밤만
         </div>
       </div>
     ),

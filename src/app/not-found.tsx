@@ -8,8 +8,8 @@ export default function NotFound() {
       <p className="mt-6 text-sm font-semibold">
         <BrandMark />
       </p>
-      <h1 className="font-display mt-3 text-3xl italic tracking-tight sm:text-4xl">
-        Lost in the dark
+      <h1 className="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl">
+        길을 잃었어요
       </h1>
       <p className="mt-3 text-sm text-mute">
         This moment is gone.
@@ -20,7 +20,7 @@ export default function NotFound() {
         href="/"
         className="mt-8 rounded-full bg-smile px-5 py-2 text-sm font-semibold text-night hover:bg-amber-200"
       >
-        Back to tonight
+        오늘 밤으로
       </a>
     </div>
   );

@@ -16,17 +16,17 @@ export function PostFeed({
   if (posts.length === 0) {
     return (
       <div className="rounded-2xl border border-dashed border-line bg-ink px-6 py-16 text-center">
-        <p className="font-display text-2xl italic text-paper">
-          {emptyTitle ?? "The dark is quiet right now"}
+        <p className="text-2xl font-semibold tracking-tight text-paper">
+          {emptyTitle ?? "지금 어둠은 조용해요"}
         </p>
         <p className="mt-2 text-sm text-mute">
-          {emptyBody ?? "Moments last 24 hours. Share before the dark takes it."}
+          {emptyBody ?? "순간은 24시간만 남아요. 사라지기 전에 올려 보세요."}
         </p>
         <Link
           href={isLoggedIn ? "/submit" : "/signup"}
           className="mt-4 inline-block rounded-full bg-smile px-5 py-2 text-sm font-medium text-night hover:bg-amber-200"
         >
-          {isLoggedIn ? "Share your day" : "Join and share"}
+          {isLoggedIn ? "오늘 올리기" : "가입하고 올리기"}
         </Link>
       </div>
     );

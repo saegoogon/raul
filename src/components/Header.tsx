@@ -39,25 +39,25 @@ export function Header() {
                 href="/submit"
                 className="rounded-full bg-smile px-4 py-1.5 font-medium text-night hover:bg-amber-200"
               >
-                Share
+                올리기
               </Link>
               <form action={signOut}>
                 <button type="submit" className="text-mute hover:text-paper">
-                  Log out
+                  로그아웃
                 </button>
               </form>
             </>
           ) : (
             <>
               <Link href="/login" className="text-mute hover:text-paper">
-                Log in
+                로그인
               </Link>
               <Link
                 href="/signup"
                 prefetch
                 className="rounded-full bg-smile px-4 py-1.5 font-medium text-night hover:bg-amber-200"
               >
-                Join
+                가입
               </Link>
             </>
           )}

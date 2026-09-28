@@ -22,7 +22,7 @@ export function CommentSection({
   return (
     <section className="mt-6">
       <h3 className="mb-4 text-sm font-semibold text-mute">
-        Comments {items.length}
+        댓글 {items.length}
       </h3>
 
       {userId ? (
@@ -57,7 +57,7 @@ export function CommentSection({
             value={text}
             onChange={(event) => setText(event.target.value)}
             rows={2}
-            placeholder="Say something nice..."
+            placeholder="한마디 남겨 주세요"
             required
             className="w-full rounded-lg border border-line bg-night px-3 py-2 text-sm text-paper outline-none placeholder:text-mute focus:border-smile"
           />
@@ -66,15 +66,15 @@ export function CommentSection({
             disabled={pending}
             className="mt-2 rounded-full bg-smile px-4 py-1.5 text-sm font-medium text-night hover:bg-amber-200 disabled:opacity-50"
           >
-            Reply
+            달기
           </button>
         </form>
       ) : (
         <p className="mb-6 text-sm text-mute">
           <Link href="/login" className="font-medium text-smile underline">
-            Log in
+            로그인
           </Link>{" "}
-          to comment.
+          해야 댓글을 달 수 있어요.
         </p>
       )}
 

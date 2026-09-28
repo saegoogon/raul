@@ -26,8 +26,8 @@ async function NightHome({ isLoggedIn }: { isLoggedIn: boolean }) {
       <PostFeed
         posts={posts}
         isLoggedIn={isLoggedIn}
-        emptyTitle="Tonight is still dark"
-        emptyBody="Moments last 24 hours. Share one before the dark takes it. 하루면 사라져요."
+        emptyTitle="오늘 밤은 아직 어두워요"
+        emptyBody="순간은 24시간만 남아요. 사라지기 전에 하나 올려 보세요."
       />
     </>
   );
@@ -61,14 +61,14 @@ export default async function HomePage({
       <SearchBar value={q} />
 
       <div className="flex items-center justify-between gap-3">
-        <h2 className="font-display text-2xl italic tracking-tight">
+        <h2 className="text-2xl font-semibold tracking-tight">
           {q
-            ? `Search: ${q}`
+            ? `검색: ${q}`
             : mode === "night"
-              ? "Tonight"
+              ? "오늘 밤"
               : mode === "new"
-                ? "Latest"
-                : "Popular"}
+                ? "최신"
+                : "인기"}
         </h2>
         <div className="flex rounded-full border border-line bg-ink p-1 text-sm">
           <Link
@@ -79,7 +79,7 @@ export default async function HomePage({
                 : "text-mute hover:text-paper"
             }`}
           >
-            Night
+            오늘 밤
           </Link>
           <Link
             href={q ? `/?sort=hot&q=${encodeURIComponent(q)}` : "/?sort=hot"}
@@ -89,7 +89,7 @@ export default async function HomePage({
                 : "text-mute hover:text-paper"
             }`}
           >
-            Popular
+            인기
           </Link>
           <Link
             href={q ? `/?sort=new&q=${encodeURIComponent(q)}` : "/?sort=new"}
@@ -99,7 +99,7 @@ export default async function HomePage({
                 : "text-mute hover:text-paper"
             }`}
           >
-            Latest
+            최신
           </Link>
         </div>
       </div>

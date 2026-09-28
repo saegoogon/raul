@@ -14,8 +14,7 @@
   --color-smile: #f5c84c;
   --color-paper: #f3efe6;
   --color-mute: #8c877e;
-  --font-sans: var(--font-geist-sans);
-  --font-display: var(--font-serif);
+  --font-sans: var(--font-sans-face);
 }
 
 ::selection {
@@ -24,7 +23,7 @@
 }
 
 body {
-  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans-face), "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
   color: #f3efe6;
   background-color: #07070a;
   background-image: radial-gradient(
@@ -34,36 +33,98 @@ body {
   );
 }
 
-.blacksmile-wink,
-.blacksmile-wink-loop,
-.blacksmile-wink-hover {
+.blacksmile-eye,
+.blacksmile-mouth {
   transform-box: fill-box;
   transform-origin: center;
 }
 
 .blacksmile-wink {
-  animation: blacksmile-wink 1.1s ease-in-out 0.15s both;
+  animation: blacksmile-wink 1.7s cubic-bezier(0.45, 0.05, 0.2, 1) 0.35s both;
 }
 
 .blacksmile-wink-loop {
-  animation: blacksmile-wink 1.4s ease-in-out infinite;
+  animation: blacksmile-wink 2.2s cubic-bezier(0.45, 0.05, 0.2, 1) infinite;
 }
 
 .blacksmile-logo:hover .blacksmile-wink-hover {
-  animation: blacksmile-wink 0.9s ease-in-out;
+  animation: blacksmile-wink 1.15s cubic-bezier(0.45, 0.05, 0.2, 1);
+}
+
+.blacksmile-mouth-once {
+  animation: blacksmile-mouth 1.7s cubic-bezier(0.45, 0.05, 0.2, 1) 0.35s both;
+}
+
+.blacksmile-mouth-loop {
+  animation: blacksmile-mouth 2.2s cubic-bezier(0.45, 0.05, 0.2, 1) infinite;
+}
+
+.blacksmile-logo:hover .blacksmile-mouth-hover {
+  animation: blacksmile-mouth 1.15s cubic-bezier(0.45, 0.05, 0.2, 1);
 }
 
 @keyframes blacksmile-wink {
-  0%,
-  42% {
+  0% {
     transform: scaleY(1);
   }
-  50%,
-  62% {
-    transform: scaleY(0.08);
+  10% {
+    transform: scaleY(1.18);
   }
-  72%,
+  26% {
+    transform: scaleY(0.06);
+  }
+  40% {
+    transform: scaleY(0.06);
+  }
+  58% {
+    transform: scaleY(1.16);
+  }
+  72% {
+    transform: scaleY(0.9);
+  }
+  86% {
+    transform: scaleY(1.04);
+  }
   100% {
     transform: scaleY(1);
+  }
+}
+
+@keyframes blacksmile-mouth {
+  0%,
+  10% {
+    transform: translateY(0);
+  }
+  26%,
+  40% {
+    transform: translateY(0.7px);
+  }
+  58% {
+    transform: translateY(-0.35px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.blacksmile-intro {
+  transition:
+    opacity 0.75s cubic-bezier(0.4, 0, 0.2, 1),
+    visibility 0.75s;
+}
+
+.blacksmile-intro-mark {
+  animation: blacksmile-intro-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+  filter: drop-shadow(0 0 32px rgba(245, 200, 76, 0.22));
+}
+
+@keyframes blacksmile-intro-in {
+  from {
+    opacity: 0;
+    transform: scale(0.86) translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
   }
 }

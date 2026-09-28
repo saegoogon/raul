@@ -135,9 +135,9 @@ export function ShareForm() {
       >
         {pending
           ? progress > 0
-            ? `Uploading ${progress}%`
-            : "Uploading..."
-          : "Share"}
+            ? `올리는 중 ${progress}%`
+            : "올리는 중..."
+          : "올리기"}
       </button>
     </form>
   );

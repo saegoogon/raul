@@ -17,11 +17,11 @@ export function WinkIntro() {
     const previous = document.body.style.overflow;
     document.body.style.overflow = "hidden";
 
-    const hide = window.setTimeout(() => setHiding(true), 1150);
+    const hide = window.setTimeout(() => setHiding(true), 2100);
     const done = window.setTimeout(() => {
       document.body.style.overflow = previous;
       setGone(true);
-    }, 1550);
+    }, 2850);
 
     return () => {
       window.clearTimeout(hide);
@@ -35,17 +35,17 @@ export function WinkIntro() {
   return (
     <div
       aria-hidden
-      className={`fixed inset-0 z-50 flex flex-col items-center justify-center bg-night transition-opacity duration-300 ${
-        hiding ? "opacity-0" : "opacity-100"
+      className={`blacksmile-intro fixed inset-0 z-50 flex flex-col items-center justify-center bg-night ${
+        hiding ? "invisible opacity-0" : "visible opacity-100"
       }`}
     >
-      <SmileMark className="h-24 w-24 text-smile" wink="once" />
-      <p className="mt-5 text-2xl font-bold tracking-tight">
-        <BrandMark />
-      </p>
-      <p className="font-display mt-2 text-sm italic text-mute">
-        a smile in the dark
-      </p>
+      <div className="blacksmile-intro-mark flex flex-col items-center">
+        <SmileMark className="h-24 w-24 text-smile" wink="once" />
+        <p className="mt-5 text-2xl font-bold tracking-tight">
+          <BrandMark />
+        </p>
+        <p className="mt-2 text-sm tracking-tight text-mute">어둠 속의 미소</p>
+      </div>
     </div>
   );
 }

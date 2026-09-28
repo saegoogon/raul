@@ -79,8 +79,8 @@ export function PostCard({
           className="mt-2 inline-block text-xs text-mute hover:text-smile"
         >
           {post.comment_count
-            ? `View ${post.comment_count} comments`
-            : "Add a comment"}
+            ? `댓글 ${post.comment_count}`
+            : "댓글 달기"}
         </Link>
       </div>
     </article>
