@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 const SHARE_URL = "https://www.blacksmile.co.kr";
-const SHARE_TEXT = "blacksmile — 어둠 속의 미소. 팔로우 없이, 오늘 밤만.";
+const SHARE_TEXT = "blacksmile — a smile in the dark. One night only.";
 
 export function InviteNight({ className = "" }: { className?: string }) {
   const [copied, setCopied] = useState(false);
@@ -39,7 +39,7 @@ export function InviteNight({ className = "" }: { className?: string }) {
         }
       }}
     >
-      {copied ? "링크 복사됨" : "친구에게 오늘 밤 보내기"}
+      {copied ? "Copied" : "Send tonight to a friend"}
     </button>
   );
 }

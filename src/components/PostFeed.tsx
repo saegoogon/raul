@@ -15,18 +15,18 @@ export function PostFeed({
 }) {
   if (posts.length === 0) {
     return (
-      <div className="rounded-2xl border border-dashed border-line bg-ink px-6 py-16 text-center">
-        <p className="text-2xl font-semibold tracking-tight text-paper">
-          {emptyTitle ?? "지금 어둠은 조용해요"}
+      <div className="border border-dashed border-line bg-ink px-4 py-12 text-center">
+        <p className="text-paper">
+          {emptyTitle ?? "The dark is quiet right now"}
         </p>
         <p className="mt-2 text-sm text-mute">
-          {emptyBody ?? "순간은 24시간만 남아요. 사라지기 전에 올려 보세요."}
+          {emptyBody ?? "Moments last 24 hours. Share before they vanish."}
         </p>
         <Link
           href={isLoggedIn ? "/submit" : "/signup"}
-          className="mt-4 inline-block rounded-full bg-smile px-5 py-2 text-sm font-medium text-night hover:bg-amber-200"
+          className="mt-4 inline-block border border-smile bg-smile px-3 py-1.5 text-sm text-night"
         >
-          {isLoggedIn ? "오늘 올리기" : "가입하고 올리기"}
+          {isLoggedIn ? "Share tonight" : "Join and share"}
         </Link>
       </div>
     );

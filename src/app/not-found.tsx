@@ -3,24 +3,18 @@ import { BrandMark } from "@/components/BrandMark";
 
 export default function NotFound() {
   return (
-    <div className="flex flex-col items-center px-4 py-24 text-center">
-      <SmileMark className="h-16 w-16 text-smile" />
-      <p className="mt-6 text-sm font-semibold">
+    <div className="flex flex-col items-center px-4 py-20 text-center">
+      <SmileMark className="h-12 w-12 text-smile" />
+      <p className="mt-4">
         <BrandMark />
       </p>
-      <h1 className="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl">
-        길을 잃었어요
-      </h1>
-      <p className="mt-3 text-sm text-mute">
-        This moment is gone.
-        <br />
-        이 길은 어둠 속에서 끝났어요.
-      </p>
+      <h1 className="mt-2 text-xl">Page not found</h1>
+      <p className="mt-2 text-sm text-mute">This moment is gone, or the link is wrong.</p>
       <a
         href="/"
-        className="mt-8 rounded-full bg-smile px-5 py-2 text-sm font-semibold text-night hover:bg-amber-200"
+        className="mt-6 border border-smile bg-smile px-3 py-1.5 text-sm text-night"
       >
-        오늘 밤으로
+        Back to tonight
       </a>
     </div>
   );

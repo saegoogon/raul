@@ -55,8 +55,8 @@ export function DarkPresence() {
   return (
     <p className="mt-4 text-sm text-smile">
       {alone
-        ? "지금 혼자 깨어 있어요."
-        : `지금 ${n}명이 깨어 있어요.`}
+        ? "You are alone in the dark."
+        : `${n} people are awake in the dark.`}
     </p>
   );
 }

@@ -21,12 +21,12 @@ export function BottomNav() {
 
   return (
     <nav className="fixed inset-x-0 bottom-0 z-20 border-t border-line bg-night text-paper md:hidden">
-      <div className="mx-auto flex max-w-5xl">
-        {item("/", "오늘 밤", pathname === "/")}
-        {item("/submit", "올리기", pathname === "/submit")}
+      <div className="mx-auto flex max-w-3xl">
+        {item("/", "Night", pathname === "/")}
+        {item("/submit", "Share", pathname === "/submit")}
         {item(
           username ? `/u/${username}` : "/login",
-          "나",
+          "Me",
           pathname.startsWith("/u/"),
         )}
       </div>

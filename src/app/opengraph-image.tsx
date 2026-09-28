@@ -14,14 +14,13 @@ export default function OpenGraphImage() {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          background: "#07070a",
+          background: "#0b0b0b",
         }}
       >
         <div
           style={{
-            color: "#f5c84c",
+            color: "#e2b441",
             fontSize: 96,
-            letterSpacing: "-0.06em",
           }}
         >
           :)
@@ -29,10 +28,8 @@ export default function OpenGraphImage() {
         <div
           style={{
             marginTop: 28,
-            color: "#f3efe6",
-            fontSize: 56,
-            letterSpacing: "-0.04em",
-            fontWeight: 700,
+            color: "#ececec",
+            fontSize: 52,
           }}
         >
           blacksmile
@@ -40,12 +37,11 @@ export default function OpenGraphImage() {
         <div
           style={{
             marginTop: 16,
-            color: "#8c877e",
+            color: "#8a8a8a",
             fontSize: 28,
-            letterSpacing: "-0.02em",
           }}
         >
-          어둠 속의 미소 · 오늘 밤만
+          one night only
         </div>
       </div>
     ),

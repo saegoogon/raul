@@ -10,17 +10,17 @@ export function Header() {
   const { userId, username } = useAuth();
 
   return (
-    <header className="sticky top-0 z-10 border-b border-line bg-night/90 text-paper backdrop-blur">
-      <div className="mx-auto flex h-14 max-w-5xl items-center justify-between px-4">
+    <header className="sticky top-0 z-10 border-b border-line bg-night text-paper">
+      <div className="mx-auto flex h-12 max-w-3xl items-center justify-between px-3">
         <a
           href="/"
-          className="blacksmile-logo flex items-center gap-2 text-xl font-bold tracking-tight"
+          className="blacksmile-logo flex items-center gap-2 text-base"
           onClick={(event) => {
             event.preventDefault();
             window.location.href = "/";
           }}
         >
-          <SmileMark className="h-6 w-6 text-smile" wink="hover" />
+          <SmileMark className="h-5 w-5 text-smile" wink="hover" />
           <BrandMark />
         </a>
 
@@ -37,27 +37,27 @@ export function Header() {
               )}
               <Link
                 href="/submit"
-                className="rounded-full bg-smile px-4 py-1.5 font-medium text-night hover:bg-amber-200"
+                className="border border-smile bg-smile px-3 py-1 text-night"
               >
-                올리기
+                Share
               </Link>
               <form action={signOut}>
                 <button type="submit" className="text-mute hover:text-paper">
-                  로그아웃
+                  Log out
                 </button>
               </form>
             </>
           ) : (
             <>
               <Link href="/login" className="text-mute hover:text-paper">
-                로그인
+                Log in
               </Link>
               <Link
                 href="/signup"
                 prefetch
-                className="rounded-full bg-smile px-4 py-1.5 font-medium text-night hover:bg-amber-200"
+                className="border border-smile bg-smile px-3 py-1 text-night"
               >
-                가입
+                Join
               </Link>
             </>
           )}

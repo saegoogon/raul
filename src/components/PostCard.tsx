@@ -17,7 +17,7 @@ export function PostCard({
   const caption = post.content || post.title;
 
   return (
-    <article className="overflow-hidden rounded-2xl border border-line bg-ink">
+    <article className="overflow-hidden border border-line bg-ink">
       <div className="flex items-center justify-between px-4 py-3">
         <Link
           href={post.profiles?.username ? `/u/${post.profiles.username}` : "/"}
@@ -79,8 +79,8 @@ export function PostCard({
           className="mt-2 inline-block text-xs text-mute hover:text-smile"
         >
           {post.comment_count
-            ? `댓글 ${post.comment_count}`
-            : "댓글 달기"}
+            ? `${post.comment_count} comments`
+            : "Add a comment"}
         </Link>
       </div>
     </article>

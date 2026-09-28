@@ -26,8 +26,8 @@ async function NightHome({ isLoggedIn }: { isLoggedIn: boolean }) {
       <PostFeed
         posts={posts}
         isLoggedIn={isLoggedIn}
-        emptyTitle="오늘 밤은 아직 어두워요"
-        emptyBody="순간은 24시간만 남아요. 사라지기 전에 하나 올려 보세요."
+        emptyTitle="Tonight is still dark"
+        emptyBody="Moments last 24 hours. Share one before it is gone."
       />
     </>
   );
@@ -60,46 +60,46 @@ export default async function HomePage({
       <GuestHero isLoggedIn={!!user} />
       <SearchBar value={q} />
 
-      <div className="flex items-center justify-between gap-3">
-        <h2 className="text-2xl font-semibold tracking-tight">
+      <div className="flex items-end justify-between gap-3 border-b border-line">
+        <h2 className="pb-2 text-base">
           {q
-            ? `검색: ${q}`
+            ? `Search: ${q}`
             : mode === "night"
-              ? "오늘 밤"
+              ? "Tonight"
               : mode === "new"
-                ? "최신"
-                : "인기"}
+                ? "New"
+                : "Hot"}
         </h2>
-        <div className="flex rounded-full border border-line bg-ink p-1 text-sm">
+        <div className="flex gap-3 text-sm">
           <Link
             href="/"
-            className={`rounded-full px-3 py-1 ${
+            className={`pb-2 ${
               mode === "night" && !q
-                ? "bg-smile text-night"
+                ? "border-b-2 border-smile text-smile"
                 : "text-mute hover:text-paper"
             }`}
           >
-            오늘 밤
+            Night
           </Link>
           <Link
             href={q ? `/?sort=hot&q=${encodeURIComponent(q)}` : "/?sort=hot"}
-            className={`rounded-full px-3 py-1 ${
+            className={`pb-2 ${
               mode === "hot"
-                ? "bg-smile text-night"
+                ? "border-b-2 border-smile text-smile"
                 : "text-mute hover:text-paper"
             }`}
           >
-            인기
+            Hot
           </Link>
           <Link
             href={q ? `/?sort=new&q=${encodeURIComponent(q)}` : "/?sort=new"}
-            className={`rounded-full px-3 py-1 ${
+            className={`pb-2 ${
               mode === "new"
-                ? "bg-smile text-night"
+                ? "border-b-2 border-smile text-smile"
                 : "text-mute hover:text-paper"
             }`}
           >
-            최신
+            New
           </Link>
         </div>
       </div>

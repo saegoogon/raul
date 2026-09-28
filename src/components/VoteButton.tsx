@@ -33,10 +33,10 @@ export function VoteButton({
           }
         });
       }}
-      className={`flex items-center gap-1.5 rounded-full px-2 py-1 text-sm active:scale-95 ${
+      className={`flex items-center gap-1.5 border px-2 py-0.5 text-sm ${
         liked
-          ? "bg-smile text-night"
-          : "text-mute hover:bg-night hover:text-smile"
+          ? "border-smile bg-smile text-night"
+          : "border-transparent text-mute hover:border-line hover:text-smile"
       }`}
       aria-label="Black smile"
     >

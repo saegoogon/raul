@@ -16,7 +16,7 @@ export function ShareForm() {
 
   return (
     <form
-      className="flex flex-col gap-4 rounded-2xl border border-line bg-ink p-6"
+      className="flex flex-col gap-4 border border-line bg-ink p-4"
       onSubmit={async (event) => {
         event.preventDefault();
         setError(null);
@@ -36,7 +36,7 @@ export function ShareForm() {
         try {
           if (file) {
             if (file.size > MAX_FILE_MB * 1024 * 1024) {
-              setError("파일이 50MB보다 커요. 영상을 작게 저장한 뒤 올려 주세요.");
+              setError("File is over 50MB. Compress the video and try again.");
               setPending(false);
               return;
             }
@@ -72,7 +72,7 @@ export function ShareForm() {
         }
       }}
     >
-      <label className="flex min-h-64 cursor-pointer flex-col items-center justify-center overflow-hidden rounded-xl border border-dashed border-line bg-night text-center">
+      <label className="flex min-h-64 cursor-pointer flex-col items-center justify-center overflow-hidden border border-dashed border-line bg-night text-center">
         {preview && file && isVideoFile(file) ? (
           <video
             src={preview}
@@ -93,7 +93,7 @@ export function ShareForm() {
             Photo or video
             <br />
             <span className="text-mute/70">
-              사진이나 영상, 최대 50MB
+              Photo or video, max 50MB
             </span>
           </span>
         )}
@@ -106,7 +106,7 @@ export function ShareForm() {
             setFile(next);
             setPreview(next ? URL.createObjectURL(next) : null);
             if (next && next.size > MAX_FILE_MB * 1024 * 1024) {
-              setError("파일이 50MB보다 커요. 영상을 작게 저장한 뒤 올려 주세요.");
+              setError("File is over 50MB. Compress the video and try again.");
             } else {
               setError(null);
             }
@@ -118,8 +118,8 @@ export function ShareForm() {
         name="caption"
         rows={3}
         maxLength={500}
-        placeholder="What happened today? / 오늘 뭐 했나요?"
-        className="w-full rounded-xl border border-line bg-night px-3 py-2 text-paper outline-none placeholder:text-mute focus:border-smile"
+        placeholder="What happened today?"
+        className="w-full border border-line bg-night px-3 py-2 text-paper outline-none placeholder:text-mute focus:border-smile"
       />
 
       {error && (
@@ -131,13 +131,13 @@ export function ShareForm() {
       <button
         type="submit"
         disabled={pending}
-        className="rounded-full bg-smile py-2.5 font-medium text-night hover:bg-amber-200 disabled:opacity-50"
+        className="border border-smile bg-smile py-2 text-night disabled:opacity-50"
       >
         {pending
           ? progress > 0
-            ? `올리는 중 ${progress}%`
-            : "올리는 중..."
-          : "올리기"}
+            ? `Uploading ${progress}%`
+            : "Uploading..."
+          : "Share"}
       </button>
     </form>
   );

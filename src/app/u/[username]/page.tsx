@@ -1,5 +1,4 @@
 import { notFound } from "next/navigation";
-import { BrandMark } from "@/components/BrandMark";
 import { PostFeed } from "@/components/PostFeed";
 import { getCurrentUser, getPostsByUser, getProfile } from "@/lib/posts";
 
@@ -19,15 +18,10 @@ export default async function ProfilePage({
 
   return (
     <div className="flex flex-col gap-5">
-      <section className="rounded-2xl border border-line bg-ink px-6 py-8">
-        <p className="text-sm font-semibold">
-          <BrandMark />
-        </p>
-        <h1 className="mt-1 text-3xl font-semibold tracking-tight">
-          {profile.username}
-        </h1>
-        <p className="mt-2 text-sm text-mute">
-          {posts.length} {posts.length === 1 ? "moment in the dark" : "moments in the dark"}
+      <section className="border border-line bg-ink p-4">
+        <h1 className="text-xl">{profile.username}</h1>
+        <p className="mt-1 text-sm text-mute">
+          {posts.length} {posts.length === 1 ? "moment" : "moments"}
         </p>
       </section>
       <PostFeed posts={posts} />

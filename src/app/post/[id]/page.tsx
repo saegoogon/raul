@@ -23,7 +23,7 @@ export default async function PostPage({
   const caption = post.content || post.title;
 
   return (
-    <article className="overflow-hidden rounded-2xl border border-line bg-ink">
+    <article className="overflow-hidden border border-line bg-ink">
       {post.image_url && isVideoUrl(post.image_url) ? (
         <ShortsPlayer src={post.image_url} />
       ) : post.image_url ? (

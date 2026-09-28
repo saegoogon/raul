@@ -1,35 +1,45 @@
 @import "tailwindcss";
 
 :root {
-  --background: #07070a;
-  --foreground: #f3efe6;
+  --background: #0b0b0b;
+  --foreground: #ececec;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-night: #07070a;
-  --color-ink: #141416;
-  --color-line: #2c2c32;
-  --color-smile: #f5c84c;
-  --color-paper: #f3efe6;
-  --color-mute: #8c877e;
-  --font-sans: var(--font-sans-face);
+  --color-night: #0b0b0b;
+  --color-ink: #161616;
+  --color-line: #3a3a3a;
+  --color-smile: #e2b441;
+  --color-paper: #ececec;
+  --color-mute: #8a8a8a;
+  --font-sans: "Malgun Gothic", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
 }
 
 ::selection {
-  background: #f5c84c;
-  color: #07070a;
+  background: #e2b441;
+  color: #0b0b0b;
 }
 
 body {
-  font-family: var(--font-sans-face), "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
-  color: #f3efe6;
-  background-color: #07070a;
-  background-image: radial-gradient(
-    900px 480px at 50% -120px,
-    rgba(245, 200, 76, 0.09),
-    transparent 62%
+  font-family: "Malgun Gothic", "Apple SD Gothic Neo", sans-serif;
+  color: #ececec;
+  background-color: #0b0b0b;
+}
+
+body::after {
+  content: "";
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  opacity: 0.045;
+  background-image: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(255, 255, 255, 0.35) 3px
   );
 }
 
@@ -108,23 +118,18 @@ body {
 }
 
 .blacksmile-intro {
-  transition:
-    opacity 0.75s cubic-bezier(0.4, 0, 0.2, 1),
-    visibility 0.75s;
+  transition: opacity 0.5s linear;
 }
 
 .blacksmile-intro-mark {
-  animation: blacksmile-intro-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
-  filter: drop-shadow(0 0 32px rgba(245, 200, 76, 0.22));
+  animation: blacksmile-intro-in 0.4s linear both;
 }
 
 @keyframes blacksmile-intro-in {
   from {
     opacity: 0;
-    transform: scale(0.86) translateY(12px);
   }
   to {
     opacity: 1;
-    transform: scale(1) translateY(0);
   }
 }

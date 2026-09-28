@@ -67,13 +67,13 @@ export function SocialLogin() {
       if (oauthError) {
         setError(
           provider === "naver"
-            ? "네이버 로그인이 아직 꺼져 있어요. Supabase에서 custom:naver를 켜 주세요."
-            : "구글 로그인이 아직 꺼져 있어요. Supabase Authentication에서 Google을 켜 주세요.",
+            ? "Naver login is not enabled yet."
+            : "Google login is not enabled yet.",
         );
         setPending(null);
       }
     } catch {
-      setError("소셜 로그인을 시작하지 못했어요. 잠시 후 다시 시도해 주세요.");
+      setError("Could not start social login. Try again.");
       setPending(null);
     }
   };
@@ -89,19 +89,19 @@ export function SocialLogin() {
         type="button"
         disabled={pending !== null}
         onClick={() => void start("google")}
-        className="flex items-center justify-center gap-2 rounded-full border border-line bg-paper px-4 py-2.5 text-sm font-medium text-night hover:bg-amber-100 disabled:opacity-50"
+        className="flex items-center justify-center gap-2 border border-line bg-paper px-3 py-2 text-sm text-night disabled:opacity-50"
       >
         <GoogleMark />
-        {pending === "google" ? "구글로 이동 중..." : "구글로 계속하기"}
+        {pending === "google" ? "Opening Google..." : "Continue with Google"}
       </button>
       <button
         type="button"
         disabled={pending !== null}
         onClick={() => void start("naver")}
-        className="flex items-center justify-center gap-2 rounded-full bg-[#03C75A] px-4 py-2.5 text-sm font-medium text-white hover:bg-[#02b351] disabled:opacity-50"
+        className="flex items-center justify-center gap-2 border border-[#03C75A] bg-[#03C75A] px-3 py-2 text-sm text-white disabled:opacity-50"
       >
         <NaverMark />
-        {pending === "naver" ? "네이버로 이동 중..." : "네이버로 계속하기"}
+        {pending === "naver" ? "Opening Naver..." : "Continue with Naver"}
       </button>
     </div>
   );

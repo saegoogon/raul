@@ -22,7 +22,7 @@ export function CommentSection({
   return (
     <section className="mt-6">
       <h3 className="mb-4 text-sm font-semibold text-mute">
-        댓글 {items.length}
+        Comments {items.length}
       </h3>
 
       {userId ? (
@@ -57,30 +57,30 @@ export function CommentSection({
             value={text}
             onChange={(event) => setText(event.target.value)}
             rows={2}
-            placeholder="한마디 남겨 주세요"
+            placeholder="Say something"
             required
-            className="w-full rounded-lg border border-line bg-night px-3 py-2 text-sm text-paper outline-none placeholder:text-mute focus:border-smile"
+            className="w-full border border-line bg-night px-3 py-2 text-sm text-paper outline-none placeholder:text-mute focus:border-smile"
           />
           <button
             type="submit"
             disabled={pending}
-            className="mt-2 rounded-full bg-smile px-4 py-1.5 text-sm font-medium text-night hover:bg-amber-200 disabled:opacity-50"
+            className="mt-2 border border-smile bg-smile px-3 py-1.5 text-sm text-night disabled:opacity-50"
           >
-            달기
+            Reply
           </button>
         </form>
       ) : (
         <p className="mb-6 text-sm text-mute">
           <Link href="/login" className="font-medium text-smile underline">
-            로그인
+            Log in
           </Link>{" "}
-          해야 댓글을 달 수 있어요.
+          to comment.
         </p>
       )}
 
       <ul className="flex flex-col gap-3">
         {items.map((comment) => (
-          <li key={comment.id} className="rounded-lg bg-night px-4 py-3">
+          <li key={comment.id} className="border border-line bg-night px-3 py-2">
             <p className="text-xs text-mute">
               {comment.profiles?.username ?? "someone"} ·{" "}
               {timeAgo(comment.created_at)}

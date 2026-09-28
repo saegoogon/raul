@@ -41,10 +41,10 @@ export function WinkIntro() {
     >
       <div className="blacksmile-intro-mark flex flex-col items-center">
         <SmileMark className="h-24 w-24 text-smile" wink="once" />
-        <p className="mt-5 text-2xl font-bold tracking-tight">
+        <p className="mt-4 text-xl">
           <BrandMark />
         </p>
-        <p className="mt-2 text-sm tracking-tight text-mute">어둠 속의 미소</p>
+        <p className="mt-2 text-sm text-mute">blacksmile</p>
       </div>
     </div>
   );
