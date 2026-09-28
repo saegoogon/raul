@@ -5,7 +5,7 @@ import { NightRoom } from "@/components/NightRoom";
 import { PostFeed } from "@/components/PostFeed";
 import { SearchBar } from "@/components/SearchBar";
 import { WinkLoader } from "@/components/WinkLoader";
-import { getCurrentUser, getTonightPosts, getPosts } from "@/lib/posts";
+import { getCurrentUser, getPosts } from "@/lib/posts";
 import type { Post } from "@/lib/types";
 
 function peopleFromPosts(posts: Post[]) {
@@ -18,13 +18,14 @@ function peopleFromPosts(posts: Post[]) {
   });
 }
 
-async function NightHome() {
-  const posts = await getTonightPosts();
+async function NightHome({ isLoggedIn }: { isLoggedIn: boolean }) {
+  const posts = await getPosts("new");
   return (
     <>
       <NightRoom people={peopleFromPosts(posts)} />
       <PostFeed
         posts={posts}
+        isLoggedIn={isLoggedIn}
         emptyTitle="Tonight is still dark"
         emptyBody="Moments last 24 hours. Share one before the dark takes it. 하루면 사라져요."
       />
@@ -35,12 +36,14 @@ async function NightHome() {
 async function HomeFeed({
   mode,
   query,
+  isLoggedIn,
 }: {
   mode: "hot" | "new";
   query?: string;
+  isLoggedIn: boolean;
 }) {
   const posts = await getPosts(mode, query);
-  return <PostFeed posts={posts} />;
+  return <PostFeed posts={posts} isLoggedIn={isLoggedIn} />;
 }
 
 export default async function HomePage({
@@ -103,9 +106,13 @@ export default async function HomePage({
 
       <Suspense fallback={<WinkLoader />}>
         {mode === "night" && !q ? (
-          <NightHome />
+          <NightHome isLoggedIn={!!user} />
         ) : (
-          <HomeFeed mode={mode === "night" ? "new" : mode} query={q} />
+          <HomeFeed
+            mode={mode === "night" ? "new" : mode}
+            query={q}
+            isLoggedIn={!!user}
+          />
         )}
       </Suspense>
     </div>

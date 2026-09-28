@@ -1,7 +1,7 @@
 import { NIGHT_MS } from "@/lib/life";
 
-export function timeAgo(dateStr: string) {
-  const diff = Date.now() - new Date(dateStr).getTime();
+export function timeAgo(dateStr: string, now = Date.now()) {
+  const diff = now - new Date(dateStr).getTime();
   const minutes = Math.floor(diff / 60000);
   if (minutes < 1) return "just now";
   if (minutes < 60) return `${minutes}m`;
@@ -12,8 +12,8 @@ export function timeAgo(dateStr: string) {
   return `${Math.floor(days / 7)}w`;
 }
 
-export function timeLeft(dateStr: string) {
-  const remaining = NIGHT_MS - (Date.now() - new Date(dateStr).getTime());
+export function timeLeft(dateStr: string, now = Date.now()) {
+  const remaining = NIGHT_MS - (now - new Date(dateStr).getTime());
   if (remaining <= 0) return "gone";
   const minutes = Math.floor(remaining / 60000);
   if (minutes < 1) return "almost gone";

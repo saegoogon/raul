@@ -1,5 +1,5 @@
+import { cache } from "react";
 import { createClient } from "@/lib/supabase/server";
-import { tonightRange } from "@/lib/night";
 import { isAlive, livingSince } from "@/lib/life";
 import type { Comment, Post } from "@/lib/types";
 
@@ -24,10 +24,22 @@ function toPost(raw: RawPost, userId?: string): Post {
 const postSelect =
   "*, profiles(username), votes(value, user_id), comments(count)";
 
-export async function getPosts(
+export const getCurrentUser = cache(async () => {
+  try {
+    const supabase = await createClient();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    return user;
+  } catch {
+    return null;
+  }
+});
+
+export const getPosts = cache(async (
   sort: "hot" | "new" = "hot",
   query?: string,
-): Promise<Post[]> {
+): Promise<Post[]> => {
   try {
     const supabase = await createClient();
     let request = supabase
@@ -42,16 +54,14 @@ export async function getPosts(
       request = request.or(`title.ilike.%${q}%,content.ilike.%${q}%`);
     }
 
-    const [{ data: auth }, { data, error }] = await Promise.all([
-      supabase.auth.getUser(),
+    const [user, { data, error }] = await Promise.all([
+      getCurrentUser(),
       request,
     ]);
 
     if (error || !data) return [];
 
-    const posts = (data as RawPost[]).map((row) =>
-      toPost(row, auth.user?.id),
-    );
+    const posts = (data as RawPost[]).map((row) => toPost(row, user?.id));
     if (sort === "new") return posts;
 
     return [...posts].sort((a, b) => {
@@ -63,26 +73,31 @@ export async function getPosts(
   } catch {
     return [];
   }
-}
+});
 
-export async function getPost(id: string): Promise<Post | null> {
+export const getPost = cache(async (id: string): Promise<Post | null> => {
   try {
     const supabase = await createClient();
-    const [{ data: auth }, { data, error }] = await Promise.all([
-      supabase.auth.getUser(),
-      supabase.from("posts").select(postSelect).eq("id", id).single(),
+    const [user, { data, error }] = await Promise.all([
+      getCurrentUser(),
+      supabase
+        .from("posts")
+        .select(postSelect)
+        .eq("id", id)
+        .gte("created_at", livingSince().toISOString())
+        .single(),
     ]);
 
     if (error || !data) return null;
-    const post = toPost(data as RawPost, auth.user?.id);
+    const post = toPost(data as RawPost, user?.id);
     if (!isAlive(post.created_at)) return null;
     return post;
   } catch {
     return null;
   }
-}
+});
 
-export async function getComments(postId: string): Promise<Comment[]> {
+export const getComments = cache(async (postId: string): Promise<Comment[]> => {
   try {
     const supabase = await createClient();
     const { data, error } = await supabase
@@ -96,31 +111,9 @@ export async function getComments(postId: string): Promise<Comment[]> {
   } catch {
     return [];
   }
-}
+});
 
-export async function getTonightPosts(): Promise<Post[]> {
-  try {
-    const { start, end } = tonightRange();
-    const supabase = await createClient();
-    const [{ data: auth }, { data, error }] = await Promise.all([
-      supabase.auth.getUser(),
-      supabase
-        .from("posts")
-        .select(postSelect)
-        .gte("created_at", start.toISOString())
-        .lt("created_at", end.toISOString())
-        .order("created_at", { ascending: false })
-        .limit(60),
-    ]);
-
-    if (error || !data) return [];
-    return (data as RawPost[]).map((row) => toPost(row, auth.user?.id));
-  } catch {
-    return [];
-  }
-}
-
-export async function getProfile(username: string) {
+export const getProfile = cache(async (username: string) => {
   try {
     const supabase = await createClient();
     const { data, error } = await supabase
@@ -134,13 +127,13 @@ export async function getProfile(username: string) {
   } catch {
     return null;
   }
-}
+});
 
-export async function getPostsByUser(userId: string): Promise<Post[]> {
+export const getPostsByUser = cache(async (userId: string): Promise<Post[]> => {
   try {
     const supabase = await createClient();
-    const [{ data: auth }, { data, error }] = await Promise.all([
-      supabase.auth.getUser(),
+    const [user, { data, error }] = await Promise.all([
+      getCurrentUser(),
       supabase
         .from("posts")
         .select(postSelect)
@@ -150,20 +143,8 @@ export async function getPostsByUser(userId: string): Promise<Post[]> {
     ]);
 
     if (error || !data) return [];
-    return (data as RawPost[]).map((row) => toPost(row, auth.user?.id));
+    return (data as RawPost[]).map((row) => toPost(row, user?.id));
   } catch {
     return [];
   }
-}
-
-export async function getCurrentUser() {
-  try {
-    const supabase = await createClient();
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-    return user;
-  } catch {
-    return null;
-  }
-}
+});

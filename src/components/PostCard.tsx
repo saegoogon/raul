@@ -7,7 +7,13 @@ import { TimeAgo } from "@/components/TimeAgo";
 import { isVideoUrl } from "@/lib/media";
 import type { Post } from "@/lib/types";
 
-export function PostCard({ post }: { post: Post }) {
+export function PostCard({
+  post,
+  priority = false,
+}: {
+  post: Post;
+  priority?: boolean;
+}) {
   const caption = post.content || post.title;
 
   return (
@@ -34,6 +40,8 @@ export function PostCard({ post }: { post: Post }) {
                 fill
                 className="object-cover"
                 sizes="(max-width: 768px) 100vw, 420px"
+                quality={70}
+                priority={priority}
               />
             </div>
           ) : (

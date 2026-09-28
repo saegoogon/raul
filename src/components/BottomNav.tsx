@@ -1,29 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-import { createClient } from "@/lib/supabase/client";
+import { useAuth } from "@/components/Providers";
 
 export function BottomNav() {
   const pathname = usePathname();
-  const [me, setMe] = useState<string | null>(null);
-
-  useEffect(() => {
-    const supabase = createClient();
-    supabase.auth.getUser().then(async ({ data }) => {
-      if (!data.user) {
-        setMe(null);
-        return;
-      }
-      const { data: profile } = await supabase
-        .from("profiles")
-        .select("username")
-        .eq("id", data.user.id)
-        .single();
-      setMe(profile?.username ?? null);
-    });
-  }, []);
+  const { username } = useAuth();
 
   const item = (href: string, label: string, active: boolean) => (
     <Link
@@ -41,7 +24,11 @@ export function BottomNav() {
       <div className="mx-auto flex max-w-5xl">
         {item("/", "Night", pathname === "/")}
         {item("/submit", "Share", pathname === "/submit")}
-        {item(me ? `/u/${me}` : "/login", "Me", pathname.startsWith("/u/"))}
+        {item(
+          username ? `/u/${username}` : "/login",
+          "Me",
+          pathname.startsWith("/u/"),
+        )}
       </div>
     </nav>
   );

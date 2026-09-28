@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { BrandMark } from "@/components/BrandMark";
 import { PostFeed } from "@/components/PostFeed";
-import { getPostsByUser, getProfile } from "@/lib/posts";
+import { getCurrentUser, getPostsByUser, getProfile } from "@/lib/posts";
 
 export default async function ProfilePage({
   params,
@@ -9,7 +9,10 @@ export default async function ProfilePage({
   params: Promise<{ username: string }>;
 }) {
   const { username } = await params;
-  const profile = await getProfile(username);
+  const [profile] = await Promise.all([
+    getProfile(username),
+    getCurrentUser(),
+  ]);
   if (!profile) notFound();
 
   const posts = await getPostsByUser(profile.id);

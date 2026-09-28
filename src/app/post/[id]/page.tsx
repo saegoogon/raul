@@ -34,6 +34,8 @@ export default async function PostPage({
             fill
             className="object-contain"
             sizes="(max-width: 768px) 100vw, 768px"
+            quality={70}
+            priority
           />
         </div>
       ) : null}

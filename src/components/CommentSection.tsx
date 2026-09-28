@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { useAuth } from "@/components/Providers";
 import { createClient } from "@/lib/supabase/client";
 import { timeAgo } from "@/lib/timeAgo";
 import type { Comment } from "@/lib/types";
@@ -12,18 +13,11 @@ export function CommentSection({
 }: {
   postId: string;
   comments: Comment[];
-  isLoggedIn?: boolean;
 }) {
+  const { userId } = useAuth();
   const [items, setItems] = useState(comments);
   const [text, setText] = useState("");
   const [pending, setPending] = useState(false);
-  const [isLoggedIn, setLoggedIn] = useState(false);
-
-  useEffect(() => {
-    createClient()
-      .auth.getUser()
-      .then(({ data }) => setLoggedIn(!!data.user));
-  }, []);
 
   return (
     <section className="mt-6">
@@ -31,7 +25,7 @@ export function CommentSection({
         Comments {items.length}
       </h3>
 
-      {isLoggedIn ? (
+      {userId ? (
         <form
           className="mb-6"
           onSubmit={async (event) => {
@@ -43,25 +37,19 @@ export function CommentSection({
             const optimistic: Comment = {
               id: `local-${Date.now()}`,
               post_id: postId,
-              user_id: "me",
+              user_id: userId,
               content,
               created_at: new Date().toISOString(),
-              profiles: { id: "me", username: "you", created_at: "" },
+              profiles: { id: userId, username: "you", created_at: "" },
             };
             setItems((current) => [...current, optimistic]);
             setText("");
 
-            const supabase = createClient();
-            const {
-              data: { user },
-            } = await supabase.auth.getUser();
-            if (user) {
-              await supabase.from("comments").insert({
-                post_id: postId,
-                user_id: user.id,
-                content,
-              });
-            }
+            await createClient().from("comments").insert({
+              post_id: postId,
+              user_id: userId,
+              content,
+            });
             setPending(false);
           }}
         >

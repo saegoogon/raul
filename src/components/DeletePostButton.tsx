@@ -1,8 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { deletePost } from "@/actions/posts";
-import { createClient } from "@/lib/supabase/client";
+import { useAuth } from "@/components/Providers";
 
 export function DeletePostButton({
   postId,
@@ -11,15 +10,8 @@ export function DeletePostButton({
   postId: string;
   authorId: string;
 }) {
-  const [mine, setMine] = useState(false);
-
-  useEffect(() => {
-    createClient()
-      .auth.getUser()
-      .then(({ data }) => setMine(data.user?.id === authorId));
-  }, [authorId]);
-
-  if (!mine) return null;
+  const { userId } = useAuth();
+  if (!userId || userId !== authorId) return null;
 
   return (
     <button

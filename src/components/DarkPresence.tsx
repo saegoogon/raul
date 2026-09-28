@@ -22,6 +22,7 @@ export function DarkPresence() {
     let cancelled = false;
 
     const beat = async () => {
+      if (document.hidden) return;
       const since = new Date(Date.now() - WINDOW_MS).toISOString();
       try {
         await supabase.from("presence").upsert({
@@ -39,10 +40,12 @@ export function DarkPresence() {
     };
 
     void beat();
-    const id = window.setInterval(beat, 20_000);
+    const id = window.setInterval(beat, 45_000);
+    document.addEventListener("visibilitychange", beat);
     return () => {
       cancelled = true;
       window.clearInterval(id);
+      document.removeEventListener("visibilitychange", beat);
     };
   }, []);
 

@@ -2,11 +2,12 @@
 
 import { useState } from "react";
 import { createPost } from "@/actions/posts";
-import { createClient } from "@/lib/supabase/client";
+import { useAuth } from "@/components/Providers";
 import { isVideoFile, MAX_FILE_MB } from "@/lib/media";
 import { uploadErrorMessage, uploadPostFile } from "@/lib/upload";
 
 export function ShareForm() {
+  const { userId } = useAuth();
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -40,18 +41,14 @@ export function ShareForm() {
               return;
             }
 
-            const supabase = createClient();
-            const {
-              data: { user },
-            } = await supabase.auth.getUser();
-            if (!user) {
+            if (!userId) {
               setError("Please log in again.");
               setPending(false);
               return;
             }
 
             const ext = file.name.split(".").pop() || "bin";
-            const path = `${user.id}/${Date.now()}.${ext}`;
+            const path = `${userId}/${Date.now()}.${ext}`;
             mediaUrl = await uploadPostFile(path, file, setProgress);
           }
 
