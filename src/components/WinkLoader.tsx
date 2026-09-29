@@ -1,4 +1,4 @@
-import { NightBuddy } from "@/components/NightBuddy";
+import { Mascot } from "@/components/Mascot";
 
 export function WinkLoader() {
   return (
@@ -7,7 +7,7 @@ export function WinkLoader() {
       aria-busy
       aria-label="Loading"
     >
-      <NightBuddy play="loop" className="h-36 w-36" />
+      <Mascot size="xl" bob />
       <p className="buddy-caption mt-4 text-sm text-mute">one night only</p>
     </div>
   );

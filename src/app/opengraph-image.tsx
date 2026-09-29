@@ -9,7 +9,7 @@ export default async function OpenGraphImage() {
   let mascot: string | null = null;
   try {
     const bytes = await readFile(
-      join(process.cwd(), "public/brand/blacksmile-logo.png"),
+      join(process.cwd(), "public/brand/blacksmile-hero.png"),
     );
     mascot = `data:image/png;base64,${Buffer.from(bytes).toString("base64")}`;
   } catch {
@@ -29,7 +29,7 @@ export default async function OpenGraphImage() {
           background: "#0b0b0b",
         }}
       >
-        {mascot ? <img src={mascot} width={220} height={220} alt="" /> : null}
+        {mascot ? <img src={mascot} width={280} height={280} alt="" /> : null}
         <div
           style={{
             marginTop: 18,

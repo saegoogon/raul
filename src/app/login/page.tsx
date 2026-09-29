@@ -20,7 +20,7 @@ export default function LoginPage() {
   return (
     <div className="mx-auto max-w-sm">
       <div className="mb-5 flex flex-col items-center text-center">
-        <Mascot size="md" bob />
+        <Mascot size="md" bob priority />
         <p className="mt-2 text-sm font-semibold">
           <BrandMark />
         </p>

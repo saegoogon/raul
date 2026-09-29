@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { BrandMark } from "@/components/BrandMark";
-import { NightBuddy } from "@/components/NightBuddy";
+import { Mascot } from "@/components/Mascot";
 import { isInAppBrowser } from "@/lib/browser";
 
 export function WinkIntro() {
@@ -48,7 +48,7 @@ export function WinkIntro() {
       }}
     >
       <div className="blacksmile-intro-mark flex flex-col items-center">
-        <NightBuddy play="once" className="h-40 w-40" />
+        <Mascot size="xl" pose="sit" className="buddy-once mx-auto" />
         <p className="mt-4 text-xl">
           <BrandMark />
         </p>

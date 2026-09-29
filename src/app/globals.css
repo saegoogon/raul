@@ -95,62 +95,37 @@ body::after {
   padding: 0.55rem 1rem;
 }
 
+.bs-hero {
+  position: relative;
+  background:
+    radial-gradient(ellipse 70% 55% at 70% 18%, rgba(255, 255, 255, 0.06), transparent 58%),
+    #121212;
+}
+
 .buddy {
   overflow: visible;
 }
 
-.buddy-wink,
-.buddy-open-eye,
-.buddy-mouth,
+.buddy-loop {
+  animation: buddy-float 3.2s cubic-bezier(0.37, 0, 0.63, 1) infinite;
+}
+
+.buddy-once {
+  animation: buddy-float-in 2.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
 .buddy-float,
-.buddy-face {
+.buddy-mouth {
   transform-box: fill-box;
   transform-origin: center;
 }
 
-.buddy-squash {
-  transform-box: fill-box;
-  transform-origin: 50% 80%;
-}
-
 .buddy-loop .buddy-float {
-  animation: buddy-float 3.6s cubic-bezier(0.37, 0, 0.63, 1) infinite;
-}
-
-.buddy-loop .buddy-squash {
-  animation: buddy-squash 3.6s cubic-bezier(0.45, 0.05, 0.2, 1) infinite;
-}
-
-.buddy-loop .buddy-wink {
-  animation: buddy-wink 3.6s cubic-bezier(0.22, 1, 0.36, 1) infinite;
-}
-
-.buddy-loop .buddy-open-eye {
-  animation: buddy-open-eye 3.6s cubic-bezier(0.22, 1, 0.36, 1) infinite;
-}
-
-.buddy-loop .buddy-mouth {
-  animation: buddy-smile 3.6s cubic-bezier(0.45, 0.05, 0.2, 1) infinite;
+  animation: buddy-float 3.2s cubic-bezier(0.37, 0, 0.63, 1) infinite;
 }
 
 .buddy-once .buddy-float {
   animation: buddy-float-in 2.4s cubic-bezier(0.16, 1, 0.3, 1) both;
-}
-
-.buddy-once .buddy-squash {
-  animation: buddy-land 2.4s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-.buddy-once .buddy-wink {
-  animation: buddy-wink 2.4s cubic-bezier(0.22, 1, 0.36, 1) 0.2s both;
-}
-
-.buddy-once .buddy-open-eye {
-  animation: buddy-open-eye 2.4s cubic-bezier(0.22, 1, 0.36, 1) 0.2s both;
-}
-
-.buddy-once .buddy-mouth {
-  animation: buddy-smile 2.4s cubic-bezier(0.45, 0.05, 0.2, 1) 0.2s both;
 }
 
 @keyframes buddy-float {
@@ -159,101 +134,22 @@ body::after {
     transform: translate3d(0, 0, 0);
   }
   40% {
-    transform: translate3d(0, -6px, 0);
+    transform: translate3d(0, -7px, 0);
   }
 }
 
 @keyframes buddy-float-in {
   0% {
     opacity: 0;
-    transform: translate3d(0, 14px, 0) scale(0.88);
+    transform: translate3d(0, 16px, 0) scale(0.9);
   }
   55% {
     opacity: 1;
-    transform: translate3d(0, -5px, 0) scale(1.04);
+    transform: translate3d(0, -6px, 0) scale(1.03);
   }
   100% {
     opacity: 1;
     transform: translate3d(0, 0, 0) scale(1);
-  }
-}
-
-@keyframes buddy-squash {
-  0%,
-  100% {
-    transform: scale(1, 1);
-  }
-  20% {
-    transform: scale(1.03, 0.96);
-  }
-  32% {
-    transform: scale(0.98, 1.03);
-  }
-}
-
-@keyframes buddy-land {
-  0% {
-    transform: scale(0.9, 1.08);
-  }
-  28% {
-    transform: scale(1.06, 0.92);
-  }
-  100% {
-    transform: scale(1, 1);
-  }
-}
-
-@keyframes buddy-wink {
-  0%,
-  14% {
-    transform: scaleY(1);
-  }
-  20% {
-    transform: scaleY(1.2);
-  }
-  28% {
-    transform: scaleY(0.1);
-  }
-  42% {
-    transform: scaleY(0.1);
-  }
-  50% {
-    transform: scaleY(1.16);
-  }
-  60%,
-  100% {
-    transform: scaleY(1);
-  }
-}
-
-@keyframes buddy-open-eye {
-  0%,
-  62% {
-    transform: scaleY(1);
-  }
-  70% {
-    transform: scaleY(0.12);
-  }
-  78% {
-    transform: scaleY(1.1);
-  }
-  86%,
-  100% {
-    transform: scaleY(1);
-  }
-}
-
-@keyframes buddy-smile {
-  0%,
-  18% {
-    transform: translateY(0) scaleX(1);
-  }
-  30%,
-  42% {
-    transform: translateY(1.2px) scaleX(1.06);
-  }
-  100% {
-    transform: translateY(0) scaleX(1);
   }
 }
 
@@ -271,16 +167,8 @@ body::after {
   }
 }
 
-.blacksmile-logo:hover .buddy-wink {
-  animation: buddy-wink 1.15s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.blacksmile-logo:hover .buddy-open-eye {
-  animation: buddy-open-eye 1.15s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.blacksmile-logo:hover .buddy-mouth {
-  animation: buddy-smile 1.15s cubic-bezier(0.45, 0.05, 0.2, 1);
+.blacksmile-logo:hover .buddy {
+  animation: buddy-float 1.1s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .blacksmile-intro {
@@ -340,16 +228,10 @@ body::after {
 
 @media (prefers-reduced-motion: reduce) {
   .blacksmile-intro-mark,
+  .buddy-loop,
+  .buddy-once,
   .buddy-loop .buddy-float,
-  .buddy-loop .buddy-squash,
-  .buddy-loop .buddy-wink,
-  .buddy-loop .buddy-open-eye,
-  .buddy-loop .buddy-mouth,
   .buddy-once .buddy-float,
-  .buddy-once .buddy-squash,
-  .buddy-once .buddy-wink,
-  .buddy-once .buddy-open-eye,
-  .buddy-once .buddy-mouth,
   .buddy-caption,
   .blacksmile-intro-mark p:first-of-type,
   .blacksmile-intro-mark p:last-of-type {
