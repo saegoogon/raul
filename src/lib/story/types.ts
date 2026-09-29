@@ -68,6 +68,9 @@ export type StoryNode = {
     survive?: { turns: number; next: string };
     boss?: boolean;
     spareText?: string;
+    hp?: number;
+    defeat?: StoryChoice;
+    defeatText?: string;
   };
   shop?: boolean;
   paid?: boolean;

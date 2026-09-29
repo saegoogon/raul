@@ -68,6 +68,54 @@ class NightSound {
     osc.stop(now + seconds);
   }
 
+  private noise(seconds: number, volume: number, from: number, to: number) {
+    if (this.muted || quiet() || !this.ctx) return;
+    const ctx = this.ctx;
+    const now = ctx.currentTime;
+    const buffer = ctx.createBuffer(1, Math.ceil(ctx.sampleRate * seconds), ctx.sampleRate);
+    const data = buffer.getChannelData(0);
+    for (let i = 0; i < data.length; i += 1) data[i] = Math.random() * 2 - 1;
+    const src = ctx.createBufferSource();
+    src.buffer = buffer;
+    const filter = ctx.createBiquadFilter();
+    filter.type = "bandpass";
+    filter.Q.value = 1.2;
+    filter.frequency.setValueAtTime(from, now);
+    filter.frequency.exponentialRampToValueAtTime(to, now + seconds);
+    const gain = ctx.createGain();
+    gain.gain.setValueAtTime(volume, now);
+    gain.gain.exponentialRampToValueAtTime(0.0001, now + seconds);
+    src.connect(filter).connect(gain).connect(ctx.destination);
+    src.start(now);
+  }
+
+  slash(crit: boolean) {
+    this.noise(0.18, 0.22, 5200, 600);
+    this.tone(crit ? 240 : 160, 0.3, "square", 0.05, 40);
+    if (crit) {
+      window.setTimeout(() => this.noise(0.16, 0.2, 6000, 900), 90);
+      window.setTimeout(() => this.noise(0.16, 0.2, 4000, 500), 180);
+    }
+  }
+
+  whiff() {
+    this.noise(0.22, 0.08, 1800, 400);
+  }
+
+  windup() {
+    this.tone(120, 0.6, "sawtooth", 0.025, 520);
+  }
+
+  defeat() {
+    this.tone(400, 0.9, "square", 0.04, 50);
+    this.noise(0.8, 0.1, 2000, 100);
+  }
+
+  bossIntro() {
+    this.tone(55, 1.2, "sawtooth", 0.05, 110);
+    this.noise(0.5, 0.12, 300, 4000);
+  }
+
   blip() {
     this.tone(540, 0.05, "square", 0.02);
   }

@@ -176,8 +176,19 @@ function spawn(pattern: Pattern, index: number, soul: Point): Bullet[] {
   }
 }
 
+type Spark = { x: number; y: number; vx: number; vy: number; life: number };
+
 export class Wave {
   bullets: Bullet[] = [];
+  sparks: Spark[] = [];
+
+  burst(at: Point) {
+    for (let i = 0; i < 12; i += 1) {
+      const a = (i / 12) * Math.PI * 2 + rand(-0.2, 0.2);
+      const speed = rand(60, 140);
+      this.sparks.push({ x: at.x, y: at.y, vx: Math.cos(a) * speed, vy: Math.sin(a) * speed, life: 0 });
+    }
+  }
   private fired: Partial<Record<Pattern, number>> = {};
 
   constructor(
@@ -199,6 +210,15 @@ export class Wave {
       }
       this.fired[pattern] = Math.max(done, due);
     }
+
+    this.sparks = this.sparks.filter((s) => {
+      s.life += dt;
+      s.x += s.vx * dt;
+      s.y += s.vy * dt;
+      s.vx *= 0.9;
+      s.vy *= 0.9;
+      return s.life < 0.45;
+    });
 
     const margin = 150;
     this.bullets = this.bullets.filter((b) => {
@@ -238,8 +258,43 @@ export function draw(
   wave: Wave,
   soul: Point,
   blink: boolean,
+  progress: number,
 ) {
   ctx.clearRect(0, 0, ARENA, ARENA);
+
+  ctx.fillStyle = "#333";
+  ctx.fillRect(0, ARENA - 2, ARENA, 2);
+  ctx.fillStyle = "#aaa";
+  ctx.fillRect(0, ARENA - 2, ARENA * Math.min(1, progress), 2);
+
+  for (const b of wave.bullets) {
+    if (b.kind !== "beam" && b.life < 0.18) {
+      const k = b.life / 0.18;
+      ctx.beginPath();
+      ctx.arc(b.x, b.y, b.r + 2 + k * 8, 0, Math.PI * 2);
+      ctx.strokeStyle = `rgba(255, 255, 255, ${0.6 * (1 - k)})`;
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+    }
+    const speed = Math.hypot(b.vx, b.vy);
+    if (b.kind !== "beam" && b.kind !== "blob" && speed > 60) {
+      const tail = 0.08;
+      ctx.beginPath();
+      ctx.moveTo(b.x, b.y);
+      ctx.lineTo(b.x - b.vx * tail, b.y - b.vy * tail);
+      ctx.strokeStyle = "rgba(255, 255, 255, 0.28)";
+      ctx.lineWidth = b.r * 1.4;
+      ctx.lineCap = "round";
+      ctx.stroke();
+    }
+  }
+
+  for (const s of wave.sparks) {
+    const k = 1 - s.life / 0.45;
+    ctx.fillStyle = `rgba(255, 255, 255, ${k})`;
+    ctx.fillRect(s.x - 1.5, s.y - 1.5, 3 * k + 1, 3 * k + 1);
+  }
+
   for (const b of wave.bullets) {
     if (b.kind === "beam") {
       const w = b.w ?? 0;
@@ -252,8 +307,12 @@ export function draw(
         ctx.strokeRect(b.x - w / 2 + 0.5, 0.5, w - 1, ARENA - 1);
         ctx.setLineDash([]);
       } else {
+        const fade = 1 - (b.life - (b.wait ?? 0)) / ((b.ttl ?? 1) - (b.wait ?? 0));
+        const grow = Math.min(1, (b.life - (b.wait ?? 0)) / 0.06);
+        ctx.fillStyle = `rgba(255, 255, 255, ${0.35 * fade})`;
+        ctx.fillRect(b.x - w / 2 - 6, 0, w + 12, ARENA);
         ctx.fillStyle = "#fff";
-        ctx.fillRect(b.x - w / 2, 0, w, ARENA);
+        ctx.fillRect(b.x - (w / 2) * grow, 0, w * grow, ARENA);
       }
       continue;
     }
