@@ -1,3 +1,10 @@
+const stroke = {
+  stroke: "#e2b441",
+  strokeWidth: 3.4,
+  strokeLinecap: "round" as const,
+  strokeLinejoin: "round" as const,
+};
+
 export function NightBuddy({
   play = "loop",
   className = "h-28 w-28",
@@ -7,78 +14,57 @@ export function NightBuddy({
 }) {
   return (
     <svg
-      viewBox="0 0 200 248"
+      viewBox="0 0 280 200"
       className={`buddy buddy-${play} ${className}`}
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden
     >
-      <defs>
-        <radialGradient id="buddy-shade" cx="42%" cy="28%" r="72%">
-          <stop offset="0%" stopColor="#2a2a2a" />
-          <stop offset="55%" stopColor="#141414" />
-          <stop offset="100%" stopColor="#0c0c0c" />
-        </radialGradient>
-      </defs>
-
-      <ellipse
-        className="buddy-shadow"
-        cx="100"
-        cy="232"
-        rx="46"
-        ry="7"
-        fill="#000"
-      />
-
       <g className="buddy-float">
         <g className="buddy-squash">
+          <g className="buddy-arm-left">
+            <path d="M86 108 C58 106 34 102 22 108" {...stroke} />
+            <path d="M22 108 C14 98 24 92 36 100 C28 108 18 112 22 108" {...stroke} />
+          </g>
+          <g className="buddy-arm-right">
+            <path d="M196 106 C224 102 248 96 260 102" {...stroke} />
+            <path d="M260 102 C270 94 264 112 250 108 C256 102 264 98 260 102" {...stroke} />
+          </g>
+
           <path
-            className="buddy-sticker"
-            d="M100 16c40.2 0 74 32.4 76 76.2 1.2 27.6-13.2 51.4-36.8 64.2 6.4 9.4 12.2 26.8 4.4 39.4-7.6 12.4-25.8 22.2-43.6 22.2s-36-9.8-43.6-22.2c-7.8-12.6-2-30 4.4-39.4C39.2 143.6 24.8 119.8 26 92.2 28 48.4 59.8 16 100 16z"
-            fill="#f4efe6"
-          />
-          <path
-            d="M100 28c34.4 0 62.4 27.2 64 64.6 1 23.4-11.4 43.6-31.4 54.4 5.4 8 10.2 22.4 3.6 32.8-6.4 10.2-21.6 18.4-36.2 18.4s-29.8-8.2-36.2-18.4c-6.6-10.4-1.8-24.8 3.6-32.8-20-10.8-32.4-31-31.4-54.4C37.6 55.2 65.6 28 100 28z"
-            fill="url(#buddy-shade)"
+            d="M92 46 C108 28 176 26 200 54 C218 78 216 128 192 148 C172 164 110 166 90 148 C68 128 70 70 92 46 Z"
+            {...stroke}
           />
 
           <g className="buddy-face">
             <g className="buddy-wink">
-              <path
-                d="M54 96c8.4-12.2 26.8-13.4 36.6 1.2"
-                stroke="#e2b441"
-                strokeWidth="6.4"
-                strokeLinecap="round"
-              />
+              <path d="M102 72 L126 98" {...stroke} />
+              <path d="M126 70 L100 100" {...stroke} />
             </g>
-
-            <g className="buddy-open-eye">
-              <ellipse
-                cx="132"
-                cy="96"
-                rx="11.4"
-                ry="15.2"
-                fill="#e2b441"
-                transform="rotate(-18 132 96)"
-              />
-              <ellipse
-                className="buddy-shine"
-                cx="136"
-                cy="90"
-                rx="3.4"
-                ry="4.8"
-                fill="#fff6d4"
-                transform="rotate(-18 136 90)"
-              />
-            </g>
-
+            <ellipse
+              className="buddy-open-eye"
+              cx="164"
+              cy="84"
+              rx="13"
+              ry="16"
+              {...stroke}
+            />
             <path
               className="buddy-mouth"
-              d="M72 126q28 26 56 0"
-              stroke="#e2b441"
-              strokeWidth="6.2"
-              strokeLinecap="round"
+              d="M118 118 C132 130 146 122 152 116 C158 128 170 122 176 114"
+              {...stroke}
             />
+          </g>
+
+          <g className="buddy-leg-left">
+            <path d="M118 150 L118 170" {...stroke} />
+            <path d="M118 170 L98 174" {...stroke} />
+            <path d="M118 170 L132 176" {...stroke} />
+          </g>
+          <g className="buddy-leg-right">
+            <path d="M164 150 L164 170" {...stroke} />
+            <path d="M164 170 L184 176" {...stroke} />
+            <path d="M164 170 L150 174" {...stroke} />
           </g>
         </g>
       </g>

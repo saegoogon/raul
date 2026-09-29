@@ -115,7 +115,6 @@ body::after {
 
 .buddy-wink,
 .buddy-open-eye,
-.buddy-shine,
 .buddy-mouth,
 .buddy-float,
 .buddy-face {
@@ -125,89 +124,117 @@ body::after {
 
 .buddy-squash {
   transform-box: fill-box;
-  transform-origin: 50% 92%;
+  transform-origin: 50% 88%;
 }
 
-.buddy-shadow {
-  transform-origin: 100px 232px;
+.buddy-arm-left,
+.buddy-arm-right,
+.buddy-leg-left,
+.buddy-leg-right {
+  transform-box: fill-box;
+}
+
+.buddy-arm-left {
+  transform-origin: 100% 50%;
+}
+
+.buddy-arm-right {
+  transform-origin: 0% 50%;
+}
+
+.buddy-leg-left,
+.buddy-leg-right {
+  transform-origin: 50% 0%;
 }
 
 .buddy-loop .buddy-float {
-  animation: buddy-float 4.2s cubic-bezier(0.37, 0, 0.63, 1) infinite;
+  animation: buddy-float 3.8s cubic-bezier(0.37, 0, 0.63, 1) infinite;
 }
 
 .buddy-loop .buddy-squash {
-  animation: buddy-squash 4.2s cubic-bezier(0.45, 0.05, 0.2, 1) infinite;
+  animation: buddy-squash 3.8s cubic-bezier(0.45, 0.05, 0.2, 1) infinite;
 }
 
-.buddy-loop .buddy-shadow {
-  animation: buddy-shadow 4.2s cubic-bezier(0.45, 0.05, 0.2, 1) infinite;
+.buddy-loop .buddy-arm-left {
+  animation: buddy-arm-left 3.8s cubic-bezier(0.45, 0.05, 0.2, 1) infinite;
+}
+
+.buddy-loop .buddy-arm-right {
+  animation: buddy-arm-right 3.8s cubic-bezier(0.45, 0.05, 0.2, 1) infinite;
+}
+
+.buddy-loop .buddy-leg-left {
+  animation: buddy-leg-left 3.8s cubic-bezier(0.45, 0.05, 0.2, 1) infinite;
+}
+
+.buddy-loop .buddy-leg-right {
+  animation: buddy-leg-right 3.8s cubic-bezier(0.45, 0.05, 0.2, 1) infinite;
 }
 
 .buddy-loop .buddy-wink {
-  animation: buddy-wink 4.2s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+  animation: buddy-wink 3.8s cubic-bezier(0.22, 1, 0.36, 1) infinite;
 }
 
 .buddy-loop .buddy-open-eye {
-  animation: buddy-open-eye 4.2s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+  animation: buddy-open-eye 3.8s cubic-bezier(0.22, 1, 0.36, 1) infinite;
 }
 
 .buddy-loop .buddy-mouth {
-  animation: buddy-smile 4.2s cubic-bezier(0.45, 0.05, 0.2, 1) infinite;
-}
-
-.buddy-loop .buddy-face {
-  animation: buddy-face 4.2s ease-in-out infinite;
+  animation: buddy-smile 3.8s cubic-bezier(0.45, 0.05, 0.2, 1) infinite;
 }
 
 .buddy-once .buddy-float {
-  animation: buddy-float-in 2.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: buddy-float-in 2.5s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 .buddy-once .buddy-squash {
-  animation: buddy-land 2.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: buddy-land 2.5s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-.buddy-once .buddy-shadow {
-  animation: buddy-shadow-in 2.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+.buddy-once .buddy-arm-left {
+  animation: buddy-arm-left 2.5s cubic-bezier(0.45, 0.05, 0.2, 1) both;
+}
+
+.buddy-once .buddy-arm-right {
+  animation: buddy-arm-right 2.5s cubic-bezier(0.45, 0.05, 0.2, 1) both;
 }
 
 .buddy-once .buddy-wink {
-  animation: buddy-wink 2.6s cubic-bezier(0.22, 1, 0.36, 1) 0.2s both;
+  animation: buddy-wink 2.5s cubic-bezier(0.22, 1, 0.36, 1) 0.18s both;
 }
 
 .buddy-once .buddy-open-eye {
-  animation: buddy-open-eye 2.6s cubic-bezier(0.22, 1, 0.36, 1) 0.2s both;
+  animation: buddy-open-eye 2.5s cubic-bezier(0.22, 1, 0.36, 1) 0.18s both;
 }
 
 .buddy-once .buddy-mouth {
-  animation: buddy-smile 2.6s cubic-bezier(0.45, 0.05, 0.2, 1) 0.2s both;
+  animation: buddy-smile 2.5s cubic-bezier(0.45, 0.05, 0.2, 1) 0.18s both;
 }
 
 @keyframes buddy-float {
   0%,
   100% {
-    transform: translate3d(0, 0, 0) rotate(-0.8deg);
+    transform: translate3d(0, 0, 0) rotate(-1deg);
   }
-  28% {
-    transform: translate3d(0, -9px, 0) rotate(1.1deg);
+  35% {
+    transform: translate3d(0, -7px, 0) rotate(1.2deg);
   }
-  62% {
-    transform: translate3d(0, -4px, 0) rotate(-0.3deg);
+  68% {
+    transform: translate3d(0, -3px, 0) rotate(-0.4deg);
   }
 }
 
 @keyframes buddy-float-in {
   0% {
     opacity: 0;
-    transform: translate3d(0, 22px, 0) scale(0.84);
+    transform: translate3d(0, 18px, 0) scale(0.86);
   }
-  42% {
+  40% {
     opacity: 1;
-    transform: translate3d(0, -8px, 0) scale(1.05);
+    transform: translate3d(0, -7px, 0) scale(1.04);
   }
-  68% {
-    transform: translate3d(0, 3px, 0) scale(0.98);
+  70% {
+    transform: translate3d(0, 2px, 0) scale(0.98);
   }
   100% {
     opacity: 1;
@@ -220,113 +247,107 @@ body::after {
   100% {
     transform: scale(1, 1);
   }
-  14% {
-    transform: scale(0.975, 1.03);
+  22% {
+    transform: scale(1.04, 0.95);
   }
-  24% {
-    transform: scale(1.05, 0.94);
-  }
-  34% {
-    transform: scale(0.985, 1.02);
+  40% {
+    transform: scale(0.97, 1.04);
   }
   72% {
-    transform: scale(1.02, 0.985);
+    transform: scale(1.02, 0.98);
   }
 }
 
 @keyframes buddy-land {
   0% {
-    transform: scale(0.88, 1.1);
+    transform: scale(0.9, 1.08);
   }
-  18% {
+  22% {
     transform: scale(1.08, 0.9);
   }
-  34% {
-    transform: scale(0.96, 1.05);
-  }
-  52% {
-    transform: scale(1.03, 0.97);
+  48% {
+    transform: scale(0.97, 1.04);
   }
   100% {
     transform: scale(1, 1);
   }
 }
 
-@keyframes buddy-shadow {
+@keyframes buddy-arm-left {
   0%,
   100% {
-    opacity: 0.28;
-    transform: scale(1, 1);
+    transform: rotate(8deg);
   }
-  24% {
-    opacity: 0.16;
-    transform: scale(0.82, 0.85);
+  40% {
+    transform: rotate(-14deg);
   }
-  72% {
-    opacity: 0.22;
-    transform: scale(0.92, 0.92);
+  70% {
+    transform: rotate(4deg);
   }
 }
 
-@keyframes buddy-shadow-in {
-  0% {
-    opacity: 0;
-    transform: scale(0.6, 0.6);
-  }
-  18% {
-    opacity: 0.18;
-    transform: scale(1.12, 1);
-  }
+@keyframes buddy-arm-right {
+  0%,
   100% {
-    opacity: 0.28;
-    transform: scale(1, 1);
+    transform: rotate(-6deg);
+  }
+  40% {
+    transform: rotate(12deg);
+  }
+  70% {
+    transform: rotate(-3deg);
+  }
+}
+
+@keyframes buddy-leg-left {
+  0%,
+  100% {
+    transform: rotate(4deg);
+  }
+  50% {
+    transform: rotate(-8deg);
+  }
+}
+
+@keyframes buddy-leg-right {
+  0%,
+  100% {
+    transform: rotate(-4deg);
+  }
+  50% {
+    transform: rotate(8deg);
   }
 }
 
 @keyframes buddy-wink {
   0%,
-  10% {
-    transform: scaleY(1) rotate(0deg);
+  18% {
+    transform: rotate(0deg) scale(1);
   }
-  16% {
-    transform: scaleY(1.18) rotate(-4deg);
-  }
-  24% {
-    transform: scaleY(0.12) rotate(6deg);
+  26% {
+    transform: rotate(-18deg) scale(0.86, 1.1);
   }
   38% {
-    transform: scaleY(0.12) rotate(6deg);
+    transform: rotate(12deg) scale(1.08);
   }
-  46% {
-    transform: scaleY(1.14) rotate(-2deg);
-  }
-  56% {
-    transform: scaleY(0.94) rotate(1deg);
-  }
-  66%,
+  52%,
   100% {
-    transform: scaleY(1) rotate(0deg);
+    transform: rotate(0deg) scale(1);
   }
 }
 
 @keyframes buddy-open-eye {
   0%,
-  46% {
-    transform: scale(1);
-  }
-  54% {
-    transform: scale(1.06, 0.94);
-  }
-  78% {
+  58% {
     transform: scaleY(1);
   }
-  84% {
-    transform: scaleY(0.1);
+  66% {
+    transform: scaleY(0.12);
   }
-  90% {
+  74% {
     transform: scaleY(1.12);
   }
-  96%,
+  82%,
   100% {
     transform: scaleY(1);
   }
@@ -334,47 +355,28 @@ body::after {
 
 @keyframes buddy-smile {
   0%,
-  14% {
-    transform: translateY(0) scaleX(1);
-  }
-  24%,
-  38% {
-    transform: translateY(2px) scaleX(1.06);
-  }
-  50% {
-    transform: translateY(-0.5px) scaleX(0.98);
-  }
-  100% {
-    transform: translateY(0) scaleX(1);
-  }
-}
-
-@keyframes buddy-face {
-  0%,
-  100% {
+  20% {
     transform: translateY(0);
   }
-  24% {
-    transform: translateY(1.4px);
+  36% {
+    transform: translateY(2px) scaleX(1.04);
   }
-  50% {
-    transform: translateY(-0.8px);
+  100% {
+    transform: translateY(0);
   }
 }
 
 .buddy-caption {
-  animation: buddy-caption 4.2s ease-in-out infinite;
+  animation: buddy-caption 3.8s ease-in-out infinite;
 }
 
 @keyframes buddy-caption {
   0%,
   100% {
     opacity: 0.32;
-    letter-spacing: 0.02em;
   }
   40% {
     opacity: 0.88;
-    letter-spacing: 0.06em;
   }
 }
 
@@ -516,14 +518,17 @@ body::after {
   .blacksmile-intro-mark,
   .buddy-loop .buddy-float,
   .buddy-loop .buddy-squash,
-  .buddy-loop .buddy-shadow,
+  .buddy-loop .buddy-arm-left,
+  .buddy-loop .buddy-arm-right,
+  .buddy-loop .buddy-leg-left,
+  .buddy-loop .buddy-leg-right,
   .buddy-loop .buddy-wink,
   .buddy-loop .buddy-open-eye,
   .buddy-loop .buddy-mouth,
-  .buddy-loop .buddy-face,
   .buddy-once .buddy-float,
   .buddy-once .buddy-squash,
-  .buddy-once .buddy-shadow,
+  .buddy-once .buddy-arm-left,
+  .buddy-once .buddy-arm-right,
   .buddy-once .buddy-wink,
   .buddy-once .buddy-open-eye,
   .buddy-once .buddy-mouth,

@@ -7,7 +7,7 @@ export function WinkLoader() {
       aria-busy
       aria-label="Loading"
     >
-      <NightBuddy play="loop" className="h-44 w-44" />
+      <NightBuddy play="loop" className="h-40 w-64" />
       <p className="buddy-caption mt-2 text-sm text-mute">one night only</p>
     </div>
   );
