@@ -1,12 +1,5 @@
-const stroke = {
-  stroke: "#e2b441",
-  strokeWidth: 3.4,
-  strokeLinecap: "round" as const,
-  strokeLinejoin: "round" as const,
-};
-
 export function NightBuddy({
-  play = "loop",
+  play,
   className = "h-28 w-28",
 }: {
   play?: "loop" | "once";
@@ -14,57 +7,44 @@ export function NightBuddy({
 }) {
   return (
     <svg
-      viewBox="0 0 280 200"
-      className={`buddy buddy-${play} ${className}`}
+      viewBox="0 0 64 64"
+      className={`buddy ${play ? `buddy-${play}` : ""} ${className}`}
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden
     >
       <g className="buddy-float">
         <g className="buddy-squash">
-          <g className="buddy-arm-left">
-            <path d="M86 108 C58 106 34 102 22 108" {...stroke} />
-            <path d="M22 108 C14 98 24 92 36 100 C28 108 18 112 22 108" {...stroke} />
-          </g>
-          <g className="buddy-arm-right">
-            <path d="M196 106 C224 102 248 96 260 102" {...stroke} />
-            <path d="M260 102 C270 94 264 112 250 108 C256 102 264 98 260 102" {...stroke} />
-          </g>
-
           <path
-            d="M92 46 C108 28 176 26 200 54 C218 78 216 128 192 148 C172 164 110 166 90 148 C68 128 70 70 92 46 Z"
-            {...stroke}
+            d="M32 8.1C46.6 7.5 55.9 16.9 56.4 32.1 56.7 46.9 47.6 56.3 32.3 56.6 16.9 56.2 7.6 46.6 7.4 31.7 7.8 16.9 17.8 8.7 32 8.1Z"
+            fill="#141414"
+            stroke="#e2b441"
+            strokeWidth="2.3"
+            strokeLinejoin="round"
           />
-
           <g className="buddy-face">
-            <g className="buddy-wink">
-              <path d="M102 72 L126 98" {...stroke} />
-              <path d="M126 70 L100 100" {...stroke} />
-            </g>
+            <path
+              className="buddy-wink"
+              d="M20.2 31.6c2.6-3 7.6-3.4 10.6.8"
+              stroke="#e2b441"
+              strokeWidth="2.4"
+              strokeLinecap="round"
+            />
             <ellipse
               className="buddy-open-eye"
-              cx="164"
-              cy="84"
-              rx="13"
-              ry="16"
-              {...stroke}
+              cx="42.4"
+              cy="31.2"
+              rx="3.7"
+              ry="5.3"
+              fill="#e2b441"
             />
             <path
               className="buddy-mouth"
-              d="M118 118 C132 130 146 122 152 116 C158 128 170 122 176 114"
-              {...stroke}
+              d="M23.4 40.6c3.4 4.8 7.6 6.8 8.6 6.8s5.2-2 8.6-6.8"
+              stroke="#e2b441"
+              strokeWidth="2.3"
+              strokeLinecap="round"
             />
-          </g>
-
-          <g className="buddy-leg-left">
-            <path d="M118 150 L118 170" {...stroke} />
-            <path d="M118 170 L98 174" {...stroke} />
-            <path d="M118 170 L132 176" {...stroke} />
-          </g>
-          <g className="buddy-leg-right">
-            <path d="M164 150 L164 170" {...stroke} />
-            <path d="M164 170 L184 176" {...stroke} />
-            <path d="M164 170 L150 174" {...stroke} />
           </g>
         </g>
       </g>

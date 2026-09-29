@@ -9,7 +9,7 @@ export default async function OpenGraphImage() {
   let mascot: string | null = null;
   try {
     const bytes = await readFile(
-      join(process.cwd(), "public/brand/blacksmile-character.png"),
+      join(process.cwd(), "public/brand/blacksmile-logo.png"),
     );
     mascot = `data:image/png;base64,${Buffer.from(bytes).toString("base64")}`;
   } catch {

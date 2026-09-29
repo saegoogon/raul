@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { NightBuddy } from "@/components/NightBuddy";
 
 export function Avatar({
   size = 32,
@@ -8,12 +8,11 @@ export function Avatar({
   className?: string;
 }) {
   return (
-    <Image
-      src="/brand/blacksmile-character.png"
-      alt=""
-      width={size}
-      height={size}
-      className={`shrink-0 rounded-full bg-night object-cover ${className}`}
-    />
+    <span
+      className={`inline-flex shrink-0 ${className}`}
+      style={{ width: size, height: size }}
+    >
+      <NightBuddy className="h-full w-full" />
+    </span>
   );
 }

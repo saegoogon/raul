@@ -95,20 +95,6 @@ body::after {
   padding: 0.55rem 1rem;
 }
 
-.mascot-bob {
-  animation: mascot-bob 3.8s ease-in-out infinite;
-}
-
-@keyframes mascot-bob {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-5px);
-  }
-}
-
 .buddy {
   overflow: visible;
 }
@@ -124,117 +110,67 @@ body::after {
 
 .buddy-squash {
   transform-box: fill-box;
-  transform-origin: 50% 88%;
-}
-
-.buddy-arm-left,
-.buddy-arm-right,
-.buddy-leg-left,
-.buddy-leg-right {
-  transform-box: fill-box;
-}
-
-.buddy-arm-left {
-  transform-origin: 100% 50%;
-}
-
-.buddy-arm-right {
-  transform-origin: 0% 50%;
-}
-
-.buddy-leg-left,
-.buddy-leg-right {
-  transform-origin: 50% 0%;
+  transform-origin: 50% 80%;
 }
 
 .buddy-loop .buddy-float {
-  animation: buddy-float 3.8s cubic-bezier(0.37, 0, 0.63, 1) infinite;
+  animation: buddy-float 3.6s cubic-bezier(0.37, 0, 0.63, 1) infinite;
 }
 
 .buddy-loop .buddy-squash {
-  animation: buddy-squash 3.8s cubic-bezier(0.45, 0.05, 0.2, 1) infinite;
-}
-
-.buddy-loop .buddy-arm-left {
-  animation: buddy-arm-left 3.8s cubic-bezier(0.45, 0.05, 0.2, 1) infinite;
-}
-
-.buddy-loop .buddy-arm-right {
-  animation: buddy-arm-right 3.8s cubic-bezier(0.45, 0.05, 0.2, 1) infinite;
-}
-
-.buddy-loop .buddy-leg-left {
-  animation: buddy-leg-left 3.8s cubic-bezier(0.45, 0.05, 0.2, 1) infinite;
-}
-
-.buddy-loop .buddy-leg-right {
-  animation: buddy-leg-right 3.8s cubic-bezier(0.45, 0.05, 0.2, 1) infinite;
+  animation: buddy-squash 3.6s cubic-bezier(0.45, 0.05, 0.2, 1) infinite;
 }
 
 .buddy-loop .buddy-wink {
-  animation: buddy-wink 3.8s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+  animation: buddy-wink 3.6s cubic-bezier(0.22, 1, 0.36, 1) infinite;
 }
 
 .buddy-loop .buddy-open-eye {
-  animation: buddy-open-eye 3.8s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+  animation: buddy-open-eye 3.6s cubic-bezier(0.22, 1, 0.36, 1) infinite;
 }
 
 .buddy-loop .buddy-mouth {
-  animation: buddy-smile 3.8s cubic-bezier(0.45, 0.05, 0.2, 1) infinite;
+  animation: buddy-smile 3.6s cubic-bezier(0.45, 0.05, 0.2, 1) infinite;
 }
 
 .buddy-once .buddy-float {
-  animation: buddy-float-in 2.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: buddy-float-in 2.4s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 .buddy-once .buddy-squash {
-  animation: buddy-land 2.5s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-.buddy-once .buddy-arm-left {
-  animation: buddy-arm-left 2.5s cubic-bezier(0.45, 0.05, 0.2, 1) both;
-}
-
-.buddy-once .buddy-arm-right {
-  animation: buddy-arm-right 2.5s cubic-bezier(0.45, 0.05, 0.2, 1) both;
+  animation: buddy-land 2.4s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 .buddy-once .buddy-wink {
-  animation: buddy-wink 2.5s cubic-bezier(0.22, 1, 0.36, 1) 0.18s both;
+  animation: buddy-wink 2.4s cubic-bezier(0.22, 1, 0.36, 1) 0.2s both;
 }
 
 .buddy-once .buddy-open-eye {
-  animation: buddy-open-eye 2.5s cubic-bezier(0.22, 1, 0.36, 1) 0.18s both;
+  animation: buddy-open-eye 2.4s cubic-bezier(0.22, 1, 0.36, 1) 0.2s both;
 }
 
 .buddy-once .buddy-mouth {
-  animation: buddy-smile 2.5s cubic-bezier(0.45, 0.05, 0.2, 1) 0.18s both;
+  animation: buddy-smile 2.4s cubic-bezier(0.45, 0.05, 0.2, 1) 0.2s both;
 }
 
 @keyframes buddy-float {
   0%,
   100% {
-    transform: translate3d(0, 0, 0) rotate(-1deg);
+    transform: translate3d(0, 0, 0);
   }
-  35% {
-    transform: translate3d(0, -7px, 0) rotate(1.2deg);
-  }
-  68% {
-    transform: translate3d(0, -3px, 0) rotate(-0.4deg);
+  40% {
+    transform: translate3d(0, -6px, 0);
   }
 }
 
 @keyframes buddy-float-in {
   0% {
     opacity: 0;
-    transform: translate3d(0, 18px, 0) scale(0.86);
+    transform: translate3d(0, 14px, 0) scale(0.88);
   }
-  40% {
+  55% {
     opacity: 1;
-    transform: translate3d(0, -7px, 0) scale(1.04);
-  }
-  70% {
-    transform: translate3d(0, 2px, 0) scale(0.98);
+    transform: translate3d(0, -5px, 0) scale(1.04);
   }
   100% {
     opacity: 1;
@@ -247,14 +183,11 @@ body::after {
   100% {
     transform: scale(1, 1);
   }
-  22% {
-    transform: scale(1.04, 0.95);
+  20% {
+    transform: scale(1.03, 0.96);
   }
-  40% {
-    transform: scale(0.97, 1.04);
-  }
-  72% {
-    transform: scale(1.02, 0.98);
+  32% {
+    transform: scale(0.98, 1.03);
   }
 }
 
@@ -262,92 +195,49 @@ body::after {
   0% {
     transform: scale(0.9, 1.08);
   }
-  22% {
-    transform: scale(1.08, 0.9);
-  }
-  48% {
-    transform: scale(0.97, 1.04);
+  28% {
+    transform: scale(1.06, 0.92);
   }
   100% {
     transform: scale(1, 1);
   }
 }
 
-@keyframes buddy-arm-left {
-  0%,
-  100% {
-    transform: rotate(8deg);
-  }
-  40% {
-    transform: rotate(-14deg);
-  }
-  70% {
-    transform: rotate(4deg);
-  }
-}
-
-@keyframes buddy-arm-right {
-  0%,
-  100% {
-    transform: rotate(-6deg);
-  }
-  40% {
-    transform: rotate(12deg);
-  }
-  70% {
-    transform: rotate(-3deg);
-  }
-}
-
-@keyframes buddy-leg-left {
-  0%,
-  100% {
-    transform: rotate(4deg);
-  }
-  50% {
-    transform: rotate(-8deg);
-  }
-}
-
-@keyframes buddy-leg-right {
-  0%,
-  100% {
-    transform: rotate(-4deg);
-  }
-  50% {
-    transform: rotate(8deg);
-  }
-}
-
 @keyframes buddy-wink {
   0%,
-  18% {
-    transform: rotate(0deg) scale(1);
+  14% {
+    transform: scaleY(1);
   }
-  26% {
-    transform: rotate(-18deg) scale(0.86, 1.1);
+  20% {
+    transform: scaleY(1.2);
   }
-  38% {
-    transform: rotate(12deg) scale(1.08);
+  28% {
+    transform: scaleY(0.1);
   }
-  52%,
+  42% {
+    transform: scaleY(0.1);
+  }
+  50% {
+    transform: scaleY(1.16);
+  }
+  60%,
   100% {
-    transform: rotate(0deg) scale(1);
+    transform: scaleY(1);
   }
 }
 
 @keyframes buddy-open-eye {
   0%,
-  58% {
+  62% {
     transform: scaleY(1);
   }
-  66% {
+  70% {
     transform: scaleY(0.12);
   }
-  74% {
-    transform: scaleY(1.12);
+  78% {
+    transform: scaleY(1.1);
   }
-  82%,
+  86%,
   100% {
     transform: scaleY(1);
   }
@@ -355,19 +245,20 @@ body::after {
 
 @keyframes buddy-smile {
   0%,
-  20% {
-    transform: translateY(0);
+  18% {
+    transform: translateY(0) scaleX(1);
   }
-  36% {
-    transform: translateY(2px) scaleX(1.04);
+  30%,
+  42% {
+    transform: translateY(1.2px) scaleX(1.06);
   }
   100% {
-    transform: translateY(0);
+    transform: translateY(0) scaleX(1);
   }
 }
 
 .buddy-caption {
-  animation: buddy-caption 3.8s ease-in-out infinite;
+  animation: buddy-caption 3.6s ease-in-out infinite;
 }
 
 @keyframes buddy-caption {
@@ -380,78 +271,16 @@ body::after {
   }
 }
 
-.blacksmile-eye,
-.blacksmile-mouth {
-  transform-box: fill-box;
-  transform-origin: center;
+.blacksmile-logo:hover .buddy-wink {
+  animation: buddy-wink 1.15s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.blacksmile-wink {
-  animation: blacksmile-wink 1.7s cubic-bezier(0.45, 0.05, 0.2, 1) 0.35s both;
+.blacksmile-logo:hover .buddy-open-eye {
+  animation: buddy-open-eye 1.15s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.blacksmile-wink-loop {
-  animation: blacksmile-wink 2.2s cubic-bezier(0.45, 0.05, 0.2, 1) infinite;
-}
-
-.blacksmile-logo:hover .blacksmile-wink-hover {
-  animation: blacksmile-wink 1.15s cubic-bezier(0.45, 0.05, 0.2, 1);
-}
-
-.blacksmile-mouth-once {
-  animation: blacksmile-mouth 1.7s cubic-bezier(0.45, 0.05, 0.2, 1) 0.35s both;
-}
-
-.blacksmile-mouth-loop {
-  animation: blacksmile-mouth 2.2s cubic-bezier(0.45, 0.05, 0.2, 1) infinite;
-}
-
-.blacksmile-logo:hover .blacksmile-mouth-hover {
-  animation: blacksmile-mouth 1.15s cubic-bezier(0.45, 0.05, 0.2, 1);
-}
-
-@keyframes blacksmile-wink {
-  0% {
-    transform: scaleY(1);
-  }
-  10% {
-    transform: scaleY(1.18);
-  }
-  26% {
-    transform: scaleY(0.06);
-  }
-  40% {
-    transform: scaleY(0.06);
-  }
-  58% {
-    transform: scaleY(1.16);
-  }
-  72% {
-    transform: scaleY(0.9);
-  }
-  86% {
-    transform: scaleY(1.04);
-  }
-  100% {
-    transform: scaleY(1);
-  }
-}
-
-@keyframes blacksmile-mouth {
-  0%,
-  10% {
-    transform: translateY(0);
-  }
-  26%,
-  40% {
-    transform: translateY(0.7px);
-  }
-  58% {
-    transform: translateY(-0.35px);
-  }
-  100% {
-    transform: translateY(0);
-  }
+.blacksmile-logo:hover .buddy-mouth {
+  animation: buddy-smile 1.15s cubic-bezier(0.45, 0.05, 0.2, 1);
 }
 
 .blacksmile-intro {
@@ -510,25 +339,14 @@ body::after {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .mascot-bob,
-  .blacksmile-wink,
-  .blacksmile-wink-loop,
-  .blacksmile-mouth-once,
-  .blacksmile-mouth-loop,
   .blacksmile-intro-mark,
   .buddy-loop .buddy-float,
   .buddy-loop .buddy-squash,
-  .buddy-loop .buddy-arm-left,
-  .buddy-loop .buddy-arm-right,
-  .buddy-loop .buddy-leg-left,
-  .buddy-loop .buddy-leg-right,
   .buddy-loop .buddy-wink,
   .buddy-loop .buddy-open-eye,
   .buddy-loop .buddy-mouth,
   .buddy-once .buddy-float,
   .buddy-once .buddy-squash,
-  .buddy-once .buddy-arm-left,
-  .buddy-once .buddy-arm-right,
   .buddy-once .buddy-wink,
   .buddy-once .buddy-open-eye,
   .buddy-once .buddy-mouth,

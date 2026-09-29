@@ -7,7 +7,7 @@ export function GuestHero() {
   return (
     <section className="surface overflow-hidden px-5 py-6 sm:px-6">
       <div className="flex items-center gap-4">
-        <Mascot size="lg" bob priority />
+        <Mascot size="lg" bob />
         <div>
           <p className="text-xl">
             blacksmile
