@@ -29,6 +29,7 @@ export async function createPost(formData: FormData) {
   if (error) return { error: error.message };
 
   revalidatePath("/");
+  revalidatePath("/rank");
   redirect("/");
 }
 
@@ -49,5 +50,6 @@ export async function deletePost(postId: string) {
   if (error) return { error: error.message };
 
   revalidatePath("/");
+  revalidatePath("/rank");
   redirect("/");
 }

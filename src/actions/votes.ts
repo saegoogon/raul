@@ -1,5 +1,6 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
 
 export async function setLike(postId: string, liked: boolean) {
@@ -31,5 +32,7 @@ export async function setLike(postId: string, liked: boolean) {
     await supabase.from("votes").delete().eq("id", existing.id);
   }
 
+  revalidatePath("/");
+  revalidatePath("/rank");
   return { ok: true as const };
 }

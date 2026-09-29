@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Crown } from "@/components/Crown";
 import { useAuth } from "@/components/Providers";
 
 export function BottomNav() {
@@ -14,21 +15,22 @@ export function BottomNav() {
         <Link
           href="/"
           className={`flex flex-1 flex-col items-center rounded-2xl py-2 text-xs ${
-            pathname === "/" ? "text-smile" : "text-mute"
+            pathname === "/" ? "text-paper" : "text-mute"
           }`}
         >
           Night
         </Link>
         <Link
-          href="/submit"
-          className="flex h-11 w-11 items-center justify-center rounded-full bg-smile text-sm text-night"
+          href="/rank"
+          className="flex h-11 w-11 items-center justify-center rounded-full bg-smile text-night"
+          aria-label="Tonight ranking"
         >
-          +
+          <Crown className="h-5 w-5" />
         </Link>
         <Link
           href={username ? `/u/${username}` : "/login"}
           className={`flex flex-1 flex-col items-center rounded-2xl py-2 text-xs ${
-            pathname.startsWith("/u/") ? "text-smile" : "text-mute"
+            pathname.startsWith("/u/") ? "text-paper" : "text-mute"
           }`}
         >
           Me

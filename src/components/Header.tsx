@@ -25,6 +25,9 @@ export function Header() {
         </a>
 
         <nav className="flex items-center gap-3 text-sm">
+          <Link href="/rank" className="text-mute hover:text-paper">
+            Rank
+          </Link>
           {userId ? (
             <>
               {username && (
@@ -37,9 +40,15 @@ export function Header() {
               )}
               <Link
                 href="/submit"
-                className="btn-primary hidden px-3 py-1.5 text-sm md:inline-flex"
+                className="hidden text-mute hover:text-paper md:inline"
               >
                 Share
+              </Link>
+              <Link
+                href="/rank"
+                className="btn-primary hidden px-3 py-1.5 text-sm md:inline-flex"
+              >
+                Play
               </Link>
               <form action={signOut}>
                 <button type="submit" className="text-mute hover:text-paper">

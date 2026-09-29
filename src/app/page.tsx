@@ -4,8 +4,10 @@ import { GuestHero } from "@/components/GuestHero";
 import { NightRoom } from "@/components/NightRoom";
 import { PostFeed } from "@/components/PostFeed";
 import { SearchBar } from "@/components/SearchBar";
+import { TonightRank } from "@/components/TonightRank";
 import { WinkLoader } from "@/components/WinkLoader";
 import { getCurrentUser, getPosts } from "@/lib/posts";
+import { getTonightRank } from "@/lib/rank";
 import type { Post } from "@/lib/types";
 
 function peopleFromPosts(posts: Post[]) {
@@ -40,7 +42,10 @@ export default async function HomePage({
   const mode = sort === "new" || sort === "hot" ? sort : "night";
   const user = await getCurrentUser();
   const needTonight = !!user || (mode === "night" && !q);
-  const tonight = needTonight ? await getPosts("new") : [];
+  const [tonight, ranking] = await Promise.all([
+    needTonight ? getPosts("new") : Promise.resolve([]),
+    getTonightRank(),
+  ]);
 
   return (
     <div className="flex flex-col gap-5">
@@ -49,6 +54,7 @@ export default async function HomePage({
       ) : (
         <GuestHero />
       )}
+      <TonightRank board={ranking.board} mine={ranking.mine} compact />
       <SearchBar value={q} />
 
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">

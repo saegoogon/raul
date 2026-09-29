@@ -15,8 +15,8 @@ export function NightRoom({ people }: { people: Profile[] }) {
             <DarkPresence />
           </div>
         </div>
-        <Link href="/submit" className="btn-primary shrink-0 px-3 py-1.5 text-sm">
-          Share
+        <Link href="/rank" className="btn-primary shrink-0 px-3 py-1.5 text-sm">
+          Rank
         </Link>
       </div>
 
@@ -36,7 +36,12 @@ export function NightRoom({ people }: { people: Profile[] }) {
         </div>
       )}
 
-      <InviteNight className="mt-3 text-sm text-mute underline hover:text-smile" />
+      <div className="mt-3 flex flex-wrap gap-4">
+        <Link href="/submit" className="text-sm text-mute underline hover:text-paper">
+          Share a moment
+        </Link>
+        <InviteNight className="text-sm text-mute underline hover:text-paper" />
+      </div>
     </section>
   );
 }

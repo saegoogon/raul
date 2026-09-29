@@ -17,6 +17,16 @@ export type Post = {
   comment_count?: number;
 };
 
+export type RankEntry = {
+  userId: string;
+  username: string;
+  rank: number;
+  score: number;
+  smiles: number;
+  posts: number;
+  winks: number;
+};
+
 export type Comment = {
   id: string;
   post_id: string;
