@@ -15,14 +15,14 @@ export const metadata: Metadata = {
     default: "BlackSmile",
     template: "%s · BlackSmile",
   },
-  description: "BlackSmile — a small smile can change your world.",
+  description: "BlackSmile — find why you are smiling.",
   applicationName: "BlackSmile",
   alternates: {
     canonical: "https://www.blacksmile.co.kr",
   },
   openGraph: {
     title: "BlackSmile",
-    description: "A small smile can change your world.",
+    description: "A small smile can change your world. Find why you are smiling.",
     siteName: "BlackSmile",
     type: "website",
     locale: "en_US",
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "BlackSmile",
-    description: "A small smile can change your world.",
+    description: "A small smile can change your world. Find why you are smiling.",
     images: ["/brand/blacksmile-logo.png"],
   },
 };

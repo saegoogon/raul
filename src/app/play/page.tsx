@@ -4,7 +4,7 @@ import { getStorySave, hasTrueNight } from "@/lib/story/progress";
 import { emptySave } from "@/lib/story/types";
 
 export const metadata = {
-  title: "One night",
+  title: "Chapter 1",
 };
 
 export default async function PlayPage({
