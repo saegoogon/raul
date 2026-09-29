@@ -1,5 +1,7 @@
 export type Pose = "sit" | "stand" | "wait" | "sleep" | "none";
 
+export type Scene = "wake" | "alley" | "stair" | "after";
+
 export type CastId =
   | "player"
   | "nyang"
@@ -33,6 +35,7 @@ export type StoryAct = {
 export type StoryNode = {
   id: string;
   pose?: Pose;
+  scene?: Scene;
   who?: CastId;
   speaker?: string;
   text: string;
@@ -60,3 +63,7 @@ export type StorySave = {
 export const STORY_START = "n1";
 export const SAVE_KEY = "blacksmile-story-v2";
 export const TRUE_NIGHT_PRODUCT = "true-night";
+
+export function emptySave(): StorySave {
+  return { nodeId: STORY_START, flags: [], meter: 0 };
+}

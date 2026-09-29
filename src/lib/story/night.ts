@@ -1,4 +1,4 @@
-import type { StoryNode } from "@/lib/story/types";
+import type { Scene, StoryNode } from "@/lib/story/types";
 
 export const STORY: Record<string, StoryNode> = {
   n1: {
@@ -229,6 +229,35 @@ export const STORY: Record<string, StoryNode> = {
   },
 };
 
+const SCENES: Record<string, Scene> = {
+  n1: "wake",
+  n2: "wake",
+  n3: "alley",
+  n4: "alley",
+  n5a: "alley",
+  n5b: "alley",
+  n5c: "alley",
+  n6: "alley",
+  n7: "alley",
+  n8: "alley",
+  n9: "stair",
+  n10: "stair",
+  n11: "stair",
+  "fight-1": "stair",
+  "spare-1": "after",
+  "spare-2": "after",
+  "flee-1": "after",
+  "end-stay": "after",
+  "end-empty": "after",
+  "gate-1": "after",
+  "shop-1": "after",
+  "c2-1": "after",
+  "c2-2": "after",
+  "c2-3": "after",
+  "c2-end": "after",
+};
+
 export function getNode(id: string): StoryNode {
-  return STORY[id] ?? STORY.n1;
+  const node = STORY[id] ?? STORY.n1;
+  return { ...node, scene: node.scene ?? SCENES[node.id] ?? "wake" };
 }

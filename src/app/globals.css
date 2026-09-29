@@ -412,6 +412,62 @@ body {
   }
 }
 
+.title-stage {
+  position: relative;
+  display: flex;
+  min-height: 100dvh;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1.25rem 2.5rem;
+  background:
+    radial-gradient(ellipse 70% 50% at 50% 28%, rgba(255, 255, 255, 0.06), transparent 60%),
+    #000;
+}
+
+.title-mark {
+  margin-top: 0.7rem;
+  font-size: 1.55rem;
+}
+
+.title-tag {
+  margin-top: 0.4rem;
+  color: #a7aaaa;
+  font-size: 0.9rem;
+}
+
+.title-menu {
+  display: flex;
+  width: min(22rem, 100%);
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 1.8rem;
+}
+
+.title-menu .story-choice {
+  display: block;
+  width: 100%;
+  text-align: center;
+  text-decoration: none;
+}
+
+.auth-shell {
+  display: flex;
+  min-height: 100dvh;
+  flex-direction: column;
+  background: #000;
+}
+
+.auth-back {
+  padding: 1rem 1.25rem;
+  color: #a7aaaa;
+  font-size: 0.85rem;
+}
+
+.auth-back:hover {
+  color: #fff;
+}
+
 .story-stage {
   position: relative;
   display: flex;
@@ -419,6 +475,48 @@ body {
   flex-direction: column;
   background: #000;
   padding: 1.25rem 1rem 1.5rem;
+  overflow: hidden;
+}
+
+.story-stage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-position: center 30%;
+  background-repeat: no-repeat;
+  background-size: min(420px, 80vw);
+  opacity: 0.14;
+  pointer-events: none;
+}
+
+.scene-wake::before {
+  background-image: url("/brand/blacksmile-sleep.png");
+}
+
+.scene-alley::before {
+  background-image: url("/brand/blacksmile-hero.png");
+}
+
+.scene-stair::before {
+  background-image: url("/brand/blacksmile-wait.png");
+}
+
+.scene-after::before {
+  background-image: url("/brand/blacksmile-character.png");
+}
+
+.story-veil {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  background: #000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.24s ease;
+}
+
+.story-veil.on {
+  opacity: 1;
 }
 
 .story-exit {
@@ -428,6 +526,18 @@ body {
   z-index: 2;
   color: #a7aaaa;
   font-size: 0.8rem;
+  background: none;
+  border: 0;
+}
+
+.story-sprite {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  min-height: 12rem;
 }
 
 .story-cast {
@@ -437,11 +547,14 @@ body {
 }
 
 .story-box {
+  position: relative;
+  z-index: 1;
   border: 3px solid #fff;
   padding: 0.9rem 1rem 1.1rem;
   min-height: 7.5rem;
   text-align: left;
   cursor: pointer;
+  background: #000;
 }
 
 .story-speaker {
@@ -462,6 +575,8 @@ body {
 }
 
 .story-menu {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -471,11 +586,13 @@ body {
 .story-enemy {
   font-size: 0.8rem;
   letter-spacing: 0.18em;
+  margin-bottom: 0.35rem;
 }
 
 .story-meter {
   display: flex;
   gap: 6px;
+  margin-top: 0.7rem;
 }
 
 .story-meter i {
@@ -503,7 +620,8 @@ body {
 }
 
 .story-choice:hover,
-.story-choice:focus-visible {
+.story-choice:focus-visible,
+.story-choice.is-on {
   background: #fff;
   color: #000;
 }
@@ -515,6 +633,19 @@ body {
 .story-error {
   color: #a7aaaa;
   font-size: 0.85rem;
+}
+
+.story-pause {
+  position: relative;
+  z-index: 4;
+  margin-top: auto;
+  border: 3px solid #fff;
+  background: #000;
+  padding: 1rem;
+}
+
+.story-pause .story-enemy {
+  margin-bottom: 0.75rem;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -531,7 +662,12 @@ body {
   .buddy-once .buddy-float,
   .buddy-caption,
   .blacksmile-intro-mark p:first-of-type,
-  .blacksmile-intro-mark p:last-of-type {
+  .blacksmile-intro-mark p:last-of-type,
+  .story-veil {
     animation: none;
+  }
+
+  .story-veil {
+    transition: none;
   }
 }

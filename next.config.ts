@@ -11,6 +11,7 @@ const nextConfig: NextConfig = {
     return [
       { source: "/submit", destination: "/play", permanent: true },
       { source: "/post/:id", destination: "/play", permanent: true },
+      { source: "/rank", destination: "/", permanent: true },
     ];
   },
   images: {
