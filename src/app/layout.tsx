@@ -10,25 +10,25 @@ import "./globals.css";
 export const preferredRegion = ["icn1"];
 
 export const viewport: Viewport = {
-  themeColor: "#0b0b0b",
+  themeColor: "#000000",
   colorScheme: "dark",
 };
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.blacksmile.co.kr"),
   title: {
-    default: "blacksmile",
-    template: "%s · blacksmile",
+    default: "BlackSmile",
+    template: "%s · BlackSmile",
   },
-  description: "blacksmile — a smile in the dark. One night only.",
-  applicationName: "blacksmile",
+  description: "BlackSmile — more fun together. One night only.",
+  applicationName: "BlackSmile",
   alternates: {
     canonical: "https://www.blacksmile.co.kr",
   },
   openGraph: {
-    title: "blacksmile",
-    description: "A smile in the dark. One night only.",
-    siteName: "blacksmile",
+    title: "BlackSmile",
+    description: "More fun together. One night only.",
+    siteName: "BlackSmile",
     type: "website",
     locale: "en_US",
     url: "https://www.blacksmile.co.kr",
@@ -37,14 +37,14 @@ export const metadata: Metadata = {
         url: "/brand/blacksmile-logo.png",
         width: 1024,
         height: 1024,
-        alt: "blacksmile",
+        alt: "BlackSmile",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "blacksmile",
-    description: "A smile in the dark. One night only.",
+    title: "BlackSmile",
+    description: "More fun together. One night only.",
     images: ["/brand/blacksmile-logo.png"],
   },
 };
@@ -66,7 +66,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           <p className="mt-2 text-sm">
             <BrandMark />
           </p>
-          <p className="mt-1">one night only</p>
+          <p className="mt-1">More fun together</p>
         </footer>
       </body>
     </html>

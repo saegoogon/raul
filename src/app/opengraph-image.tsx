@@ -26,27 +26,27 @@ export default async function OpenGraphImage() {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          background: "#0b0b0b",
+          background: "#000000",
         }}
       >
         {mascot ? <img src={mascot} width={280} height={280} alt="" /> : null}
         <div
           style={{
             marginTop: 18,
-            color: "#ececec",
+            color: "#ffffff",
             fontSize: 52,
           }}
         >
-          blacksmile
+          BlackSmile
         </div>
         <div
           style={{
             marginTop: 12,
-            color: "#8a8a8a",
+            color: "#e8e6e6",
             fontSize: 28,
           }}
         >
-          one night only
+          More fun together
         </div>
       </div>
     ),

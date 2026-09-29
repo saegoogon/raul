@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { BrandMark } from "@/components/BrandMark";
 import { InviteNight } from "@/components/InviteNight";
 import { Mascot } from "@/components/Mascot";
 
@@ -8,11 +9,9 @@ export function GuestHero() {
       <div className="relative">
         <Mascot size="xl" pose="sit" bob priority className="mx-auto" />
         <p className="text-2xl font-semibold tracking-tight">
-          black<span className="text-smile">smile</span>
+          <BrandMark />
         </p>
-        <p className="mt-1 text-[11px] uppercase tracking-[0.32em] text-mute">
-          one night only
-        </p>
+        <p className="mt-1 text-sm text-mute">More fun together</p>
         <p className="mx-auto mt-3 max-w-sm text-sm leading-relaxed text-mute">
           Post a photo. It vanishes in 24 hours. No follow.
         </p>

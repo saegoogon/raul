@@ -12,6 +12,13 @@ const bodyPx = {
   xl: 240,
 } as const;
 
+const poses = {
+  stand: "/brand/blacksmile-character.png",
+  sit: "/brand/blacksmile-hero.png",
+  wait: "/brand/blacksmile-wait.png",
+  sleep: "/brand/blacksmile-sleep.png",
+} as const;
+
 export function Mascot({
   size = "md",
   bob = false,
@@ -21,7 +28,7 @@ export function Mascot({
 }: {
   size?: "xs" | "sm" | "md" | "lg" | "xl";
   bob?: boolean;
-  pose?: "stand" | "sit";
+  pose?: keyof typeof poses;
   priority?: boolean;
   className?: string;
 }) {
@@ -37,11 +44,7 @@ export function Mascot({
   const px = bodyPx[size];
   return (
     <Image
-      src={
-        pose === "sit"
-          ? "/brand/blacksmile-hero.png"
-          : "/brand/blacksmile-character.png"
-      }
+      src={poses[pose]}
       alt=""
       width={px}
       height={px}

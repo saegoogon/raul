@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 const SHARE_URL = "https://www.blacksmile.co.kr";
-const SHARE_TEXT = `blacksmile — a smile in the dark.\n${SHARE_URL}`;
+const SHARE_TEXT = `BlackSmile — more fun together.\n${SHARE_URL}`;
 
 export function InviteNight({ className = "" }: { className?: string }) {
   const [copied, setCopied] = useState(false);
@@ -16,7 +16,7 @@ export function InviteNight({ className = "" }: { className?: string }) {
         try {
           if (navigator.share) {
             await navigator.share({
-              title: "blacksmile",
+              title: "BlackSmile",
               text: SHARE_TEXT,
               url: SHARE_URL,
             });
