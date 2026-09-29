@@ -48,7 +48,7 @@ export function WinkIntro() {
       }}
     >
       <div className="blacksmile-intro-mark flex flex-col items-center">
-        <NightBuddy play="once" className="h-40 w-40" />
+        <NightBuddy play="once" className="h-52 w-52" />
         <p className="mt-4 text-xl">
           <BrandMark />
         </p>
