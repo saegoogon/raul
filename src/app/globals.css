@@ -648,6 +648,366 @@ body {
   margin-bottom: 0.75rem;
 }
 
+.story-stage.is-map {
+  --t: min(calc((100vw - 1.5rem) / 15), calc((100dvh - 17rem) / 11), 44px);
+  align-items: center;
+  padding-top: 2.75rem;
+}
+
+.story-stage.is-map .story-pause {
+  width: calc(var(--t) * 15 + 6px);
+  max-width: 100%;
+  margin-top: 0.75rem;
+}
+
+.ow {
+  display: flex;
+  width: calc(var(--t) * 15 + 6px);
+  max-width: 100%;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ow-map {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(var(--cols), var(--t));
+  grid-auto-rows: var(--t);
+  border: 3px solid #fff;
+  background: #111515;
+  overflow: hidden;
+  touch-action: none;
+  user-select: none;
+}
+
+.ow-tile {
+  display: block;
+  width: var(--t);
+  height: var(--t);
+}
+
+.t-floor {
+  background:
+    radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.07) 0 1px, transparent 1.5px),
+    #151a1a;
+}
+
+.map-under .t-floor {
+  background:
+    radial-gradient(circle at 70% 60%, rgba(255, 255, 255, 0.05) 0 1px, transparent 1.5px),
+    #0b0e0e;
+}
+
+.map-stair .t-floor {
+  background: linear-gradient(180deg, #111515 0 78%, #2a3131 78% 100%);
+}
+
+.t-wall {
+  background: #202b2b;
+  box-shadow: inset 0 -4px 0 #0a0d0d, inset 0 1px 0 #3a4141;
+}
+
+.map-under .t-wall,
+.map-stair .t-wall {
+  background: #141b1b;
+  box-shadow: inset 0 -4px 0 #050707;
+}
+
+.t-house {
+  background:
+    linear-gradient(rgba(232, 230, 230, 0.28), rgba(232, 230, 230, 0.28)) 50% 42% / 34% 30% no-repeat,
+    #2a3333;
+  box-shadow: inset 0 -4px 0 #111616;
+}
+
+.t-lamp {
+  background:
+    radial-gradient(circle at 50% 26%, #6b6f6f 0 14%, transparent 15%),
+    linear-gradient(#a7aaaa, #a7aaaa) 50% 100% / 10% 62% no-repeat,
+    #151a1a;
+}
+
+.t-well {
+  background:
+    radial-gradient(circle, #000 0 36%, #a7aaaa 38% 46%, transparent 48%),
+    #0b0e0e;
+}
+
+.t-dust {
+  background: #1d2323;
+}
+
+.t-crack {
+  background:
+    radial-gradient(ellipse 22% 44% at 50% 50%, #000 0 64%, #fff 68%, transparent 76%),
+    #1d2323;
+  animation: ow-crack 1.8s ease-in-out infinite;
+}
+
+@keyframes ow-crack {
+  50% {
+    filter: brightness(1.6);
+  }
+}
+
+.t-stair {
+  background: repeating-linear-gradient(180deg, #3a4141 0 3px, #0b0e0e 3px 8px);
+}
+
+.ow-actor {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--t);
+  height: var(--t);
+  transform: translate(calc(var(--t) * var(--x)), calc(var(--t) * var(--y)));
+  pointer-events: none;
+}
+
+.ow-player {
+  transition: transform 150ms linear;
+}
+
+.ow-sprite {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: calc(var(--t) * 1.3);
+  height: calc(var(--t) * 1.45);
+  object-fit: contain;
+  object-position: bottom;
+  transform: translateX(-50%);
+  animation: ow-idle 2.4s ease-in-out infinite;
+}
+
+.ow-player .ow-sprite {
+  height: calc(var(--t) * 1.6);
+  animation: none;
+  filter: drop-shadow(1px 0 0 #e8e6e6) drop-shadow(-1px 0 0 #e8e6e6) drop-shadow(0 -1px 0 #e8e6e6);
+}
+
+.ow-player.face-left .ow-sprite {
+  transform: translateX(-50%) scaleX(-1);
+}
+
+.ow-player.is-walking .ow-sprite {
+  animation: ow-walk 0.3s steps(2) infinite;
+}
+
+@keyframes ow-idle {
+  50% {
+    bottom: 2px;
+  }
+}
+
+@keyframes ow-walk {
+  50% {
+    bottom: 3px;
+  }
+}
+
+.ow-hider {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  display: block;
+  width: calc(var(--t, 40px) * 1.05);
+  height: calc(var(--t, 40px) * 1.35);
+  transform: translateX(-50%);
+  border: 2px solid #3a4141;
+  border-radius: 50% 50% 18% 18% / 58% 58% 18% 18%;
+  background:
+    radial-gradient(circle at 36% 44%, #fff 0 6%, transparent 7%),
+    radial-gradient(circle at 64% 44%, #fff 0 6%, transparent 7%),
+    #000;
+  animation: ow-idle 3s ease-in-out infinite;
+}
+
+.story-hider {
+  position: relative;
+  left: auto;
+  width: 150px;
+  height: 196px;
+  transform: none;
+}
+
+.ow-banner {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  z-index: 60;
+  transform: translateX(-50%);
+  border: 2px solid #fff;
+  background: #000;
+  padding: 0.3rem 0.8rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  animation: ow-banner 1.8s ease both;
+}
+
+@keyframes ow-banner {
+  0% {
+    opacity: 0;
+  }
+  15%,
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.ow-controls {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 0.9rem;
+}
+
+.ow-pad {
+  display: grid;
+  grid-template-columns: repeat(3, 48px);
+  grid-template-rows: repeat(3, 48px);
+  touch-action: none;
+}
+
+.ow-key {
+  position: relative;
+  border: 2px solid #fff;
+  background: #000;
+  touch-action: none;
+}
+
+.ow-key:active {
+  background: #fff;
+}
+
+.ow-key::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border: 7px solid transparent;
+  transform: translate(-50%, -50%);
+}
+
+.k-up {
+  grid-area: 1 / 2;
+}
+
+.k-left {
+  grid-area: 2 / 1;
+}
+
+.k-right {
+  grid-area: 2 / 3;
+}
+
+.k-down {
+  grid-area: 3 / 2;
+}
+
+.k-up::after {
+  border-bottom-color: #fff;
+  margin-top: -3px;
+}
+
+.k-down::after {
+  border-top-color: #fff;
+  margin-top: 3px;
+}
+
+.k-left::after {
+  border-right-color: #fff;
+  margin-left: -3px;
+}
+
+.k-right::after {
+  border-left-color: #fff;
+  margin-left: 3px;
+}
+
+.ow-key:active::after {
+  filter: invert(1);
+}
+
+.ow-act {
+  width: 68px;
+  height: 68px;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  background: #000;
+  font-size: 1.1rem;
+  touch-action: none;
+}
+
+.ow-act:active {
+  background: #fff;
+  color: #000;
+}
+
+.ow-hint {
+  width: 100%;
+  color: #a7aaaa;
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .ow-pad,
+  .ow-act {
+    display: none;
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .ow-hint {
+    display: none;
+  }
+}
+
+.ow-dialogue {
+  width: calc(var(--t) * 15 + 6px);
+  max-width: 100%;
+  margin-top: 0.75rem;
+}
+
+.story-box.has-face {
+  display: flex;
+  gap: 0.85rem;
+}
+
+.story-face {
+  position: relative;
+  display: grid;
+  flex: none;
+  width: 64px;
+  height: 64px;
+  place-items: center;
+  overflow: hidden;
+  border: 2px solid #fff;
+}
+
+.story-face-img {
+  width: 58px;
+  height: 58px;
+  object-fit: contain;
+}
+
+.story-face .ow-hider {
+  --t: 40px;
+  bottom: -4px;
+}
+
+.story-text {
+  min-width: 0;
+  flex: 1;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .blacksmile-intro-mark,
   .buddy-loop,
@@ -663,8 +1023,16 @@ body {
   .buddy-caption,
   .blacksmile-intro-mark p:first-of-type,
   .blacksmile-intro-mark p:last-of-type,
-  .story-veil {
+  .story-veil,
+  .t-crack,
+  .ow-sprite,
+  .ow-hider,
+  .ow-player.is-walking .ow-sprite {
     animation: none;
+  }
+
+  .ow-player {
+    transition: none;
   }
 
   .story-veil {

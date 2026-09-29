@@ -2,8 +2,16 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Mascot } from "@/components/Mascot";
+import { Overworld, Sprite, type Talk } from "@/components/story/Overworld";
 import { saveStory } from "@/actions/story";
 import { CAST } from "@/lib/story/cast";
+import {
+  decodePlace,
+  encodePlace,
+  isMapId,
+  spawnOf,
+  type Place,
+} from "@/lib/story/maps";
 import { getNode } from "@/lib/story/night";
 import { readLocal, writeLocal } from "@/lib/story/save";
 import { nightSound } from "@/lib/story/sound";
@@ -14,6 +22,8 @@ import {
   type Pose,
   type StorySave,
 } from "@/lib/story/types";
+
+const ON_MAP = "@";
 
 function CastSprite({
   who,
@@ -33,6 +43,7 @@ function CastSprite({
       />
     );
   }
+  if (who === "hider") return <span className="ow-hider story-hider" />;
 
   const cast = CAST[who];
   if (!cast) return null;
@@ -60,9 +71,13 @@ export function StoryPlay({
   loggedIn: boolean;
   fresh?: boolean;
 }) {
-  const [nodeId, setNodeId] = useState(
-    fresh ? STORY_START : (initial?.nodeId ?? STORY_START),
+  const start = useMemo(
+    () => decodePlace(fresh ? undefined : initial?.nodeId, STORY_START),
+    [fresh, initial],
   );
+  const [nodeId, setNodeId] = useState(start.nodeId);
+  const [place, setPlace] = useState<Place>(start.place);
+  const [overlay, setOverlay] = useState(false);
   const [flags, setFlags] = useState<string[]>(fresh ? [] : (initial?.flags ?? []));
   const [meter, setMeter] = useState(fresh ? 0 : (initial?.meter ?? 0));
   const [shown, setShown] = useState("");
@@ -75,13 +90,16 @@ export function StoryPlay({
   const [cursor, setCursor] = useState(0);
   const [veil, setVeil] = useState(false);
   const skip = useRef(false);
-  const sceneRef = useRef<string>("wake");
+  const stageRef = useRef<string>("");
 
-  const node = useMemo(() => getNode(nodeId), [nodeId]);
+  const onMap = nodeId === ON_MAP;
+  const showMap = onMap || overlay;
+  const node = useMemo(() => getNode(onMap ? STORY_START : nodeId), [nodeId, onMap]);
   const pose = (node.pose ?? "sit") as Pose;
-  const full = phase === "act" ? actText : node.text;
+  const full = onMap ? "" : phase === "act" ? actText : node.text;
   const scene = node.scene ?? "wake";
   const typing = shown.length < full.length;
+  const stageKey = showMap ? `map-${place.map}` : `scene-${scene}`;
 
   useEffect(() => {
     nightSound.load();
@@ -101,7 +119,9 @@ export function StoryPlay({
     if (!initial) {
       const local = readLocal();
       if (local) {
-        setNodeId(local.nodeId);
+        const restored = decodePlace(local.nodeId, STORY_START);
+        setNodeId(restored.nodeId);
+        setPlace(restored.place);
         setFlags(local.flags ?? []);
         setMeter(local.meter ?? 0);
       }
@@ -109,27 +129,28 @@ export function StoryPlay({
   }, [fresh, initial, loggedIn]);
 
   useEffect(() => {
-    const save: StorySave = { nodeId, flags, meter };
+    const save: StorySave = { nodeId: encodePlace(nodeId, place), flags, meter };
     writeLocal(save);
-    if (loggedIn) void saveStory(save);
-  }, [nodeId, flags, meter, loggedIn]);
+    if (!loggedIn) return;
+    const push = window.setTimeout(() => void saveStory(save), 600);
+    return () => window.clearTimeout(push);
+  }, [nodeId, place, flags, meter, loggedIn]);
 
   useEffect(() => {
-    if (sceneRef.current !== scene) {
+    if (stageRef.current && stageRef.current !== stageKey) {
       setVeil(true);
-      const wait = window.setTimeout(() => {
-        sceneRef.current = scene;
-        setVeil(false);
-      }, 240);
+      const wait = window.setTimeout(() => setVeil(false), 240);
+      stageRef.current = stageKey;
       return () => window.clearTimeout(wait);
     }
-  }, [scene]);
+    stageRef.current = stageKey;
+  }, [stageKey]);
 
   useEffect(() => {
     skip.current = false;
     setShown("");
-    setPhase("line");
     setCursor(0);
+    if (!full) return;
     let i = 0;
     const text = full;
     const tick = window.setInterval(() => {
@@ -146,24 +167,56 @@ export function StoryPlay({
     return () => window.clearInterval(tick);
   }, [nodeId, full]);
 
+  const addFlag = useCallback((flag?: string) => {
+    if (!flag) return;
+    setFlags((current) => (current.includes(flag) ? current : [...current, flag]));
+  }, []);
+
   const go = useCallback(
     (next: string, flag?: string) => {
-      const target = getNode(next);
-      if (target.paid && !paid) {
-        setNodeId("shop-1");
-        setActText("");
-        setPhase("line");
-        return;
-      }
-      setFlags((current) =>
-        flag && !current.includes(flag) ? [...current, flag] : current,
-      );
-      if (target.encounter) setMeter(0);
-      setNodeId(next);
+      addFlag(flag);
       setActText("");
       setPhase("line");
+
+      if (next === STORY_START) {
+        setFlags([]);
+        setMeter(0);
+        setPlace(spawnOf("village"));
+        setOverlay(false);
+        setNodeId(STORY_START);
+        return;
+      }
+
+      if (next.startsWith(ON_MAP)) {
+        const target = next.slice(1);
+        if (isMapId(target)) setPlace(spawnOf(target));
+        setOverlay(false);
+        setNodeId(ON_MAP);
+        return;
+      }
+
+      const target = getNode(next);
+      if (target.paid && !paid) {
+        setOverlay(false);
+        setNodeId("shop-1");
+        return;
+      }
+      if (target.encounter) {
+        setMeter(0);
+        setOverlay(false);
+      }
+      setNodeId(next);
     },
-    [paid],
+    [paid, addFlag],
+  );
+
+  const talk = useCallback(
+    ({ node: next, overlay: over, flag }: Talk) => {
+      addFlag(flag);
+      setOverlay(over);
+      go(next);
+    },
+    [addFlag, go],
   );
 
   const buy = useCallback(async () => {
@@ -203,9 +256,7 @@ export function StoryPlay({
             const save = emptySave();
             writeLocal(save);
             if (loggedIn) void saveStory(save);
-            setNodeId(STORY_START);
-            setFlags([]);
-            setMeter(0);
+            go(STORY_START);
             setPaused(false);
           },
         },
@@ -226,6 +277,7 @@ export function StoryPlay({
         },
       ];
     }
+    if (onMap) return [];
     if (phase === "menu" && node.encounter) {
       return [
         ...node.encounter.acts.map((act) => ({
@@ -235,11 +287,7 @@ export function StoryPlay({
             setActText(act.text);
             setPhase("act");
             if (act.meter) setMeter((value) => value + act.meter!);
-            if (act.set) {
-              setFlags((current) =>
-                current.includes(act.set!) ? current : [...current, act.set!],
-              );
-            }
+            addFlag(act.set);
           },
         })),
         {
@@ -289,6 +337,7 @@ export function StoryPlay({
     paused,
     muted,
     loggedIn,
+    onMap,
     phase,
     node,
     spareReady,
@@ -297,27 +346,24 @@ export function StoryPlay({
     paid,
     busy,
     go,
+    addFlag,
     buy,
   ]);
 
   const advance = useCallback(() => {
-    if (paused) return;
+    if (paused || onMap) return;
     if (typing) {
       skip.current = true;
       setShown(full);
       return;
     }
-    if (node.encounter && phase === "line") {
-      setPhase("menu");
-      return;
-    }
-    if (node.encounter && phase === "act") {
+    if (node.encounter && phase !== "menu") {
       setPhase("menu");
       return;
     }
     if (node.choices?.length || node.encounter || node.shop) return;
-    if (node.next) go(node.next);
-  }, [paused, typing, full, node, phase, go]);
+    go(node.next ?? ON_MAP);
+  }, [paused, onMap, typing, full, node, phase, go]);
 
   const back = useCallback(() => {
     if (paused) {
@@ -329,9 +375,7 @@ export function StoryPlay({
       setShown(full);
       return;
     }
-    if (phase === "act") {
-      setPhase("menu");
-    }
+    if (phase === "act") setPhase("menu");
   }, [paused, typing, full, phase]);
 
   useEffect(() => {
@@ -343,6 +387,7 @@ export function StoryPlay({
         setPaused((value) => !value);
         return;
       }
+      if (onMap && !paused) return;
       if (key === "x" || key === "X") {
         event.preventDefault();
         back();
@@ -362,6 +407,7 @@ export function StoryPlay({
         }
         if (key === "Enter" || key === "z" || key === "Z") {
           event.preventDefault();
+          if (event.repeat) return;
           const item = items[Math.min(cursor, items.length - 1)];
           if (item && !item.disabled) item.run();
           return;
@@ -369,23 +415,103 @@ export function StoryPlay({
       }
       if (key === "Enter" || key === "z" || key === "Z") {
         event.preventDefault();
+        if (event.repeat) return;
         advance();
       }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [items, cursor, typing, advance, back, paused]);
+  }, [items, cursor, typing, advance, back, paused, onMap]);
 
   useEffect(() => {
     setCursor(0);
   }, [items.length, paused, phase]);
 
+  const who = node.encounter?.who ?? node.who;
+
+  const pauseMenu = (
+    <div className="story-pause" onClick={(event) => event.stopPropagation()}>
+      <p className="story-enemy">Paused</p>
+      <div className="story-menu">
+        {items.map((item, index) => (
+          <button
+            key={item.id}
+            type="button"
+            className={`story-choice${index === cursor ? " is-on" : ""}`}
+            disabled={item.disabled}
+            onClick={item.run}
+          >
+            {item.label}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+
+  const dialogue = (
+    <>
+      <div
+        className={`story-box${overlay ? " has-face" : ""}`}
+        role="button"
+        tabIndex={0}
+        onClick={(event) => {
+          event.stopPropagation();
+          advance();
+        }}
+      >
+        {overlay && who && who !== "player" ? (
+          <span className="story-face" aria-hidden>
+            <Sprite who={who} className="story-face-img" />
+          </span>
+        ) : null}
+        <div className="story-text">
+          {node.speaker ? <p className="story-speaker">{node.speaker}</p> : null}
+          {node.encounter && phase !== "line" ? (
+            <p className="story-enemy">{node.encounter.name}</p>
+          ) : null}
+          <p className="story-line">
+            <span aria-hidden>* </span>
+            {shown}
+            {typing ? <span className="story-caret">_</span> : null}
+          </p>
+          {node.encounter && phase === "menu" ? (
+            <p className="story-meter" aria-label="understanding">
+              {Array.from({ length: node.encounter.spareAt }, (_, index) => (
+                <i key={index} className={index < meter ? "on" : ""} />
+              ))}
+            </p>
+          ) : null}
+        </div>
+      </div>
+
+      {items.length > 0 ? (
+        <div
+          className={`story-menu${node.encounter && phase === "menu" ? " story-acts" : ""}`}
+          onClick={(event) => event.stopPropagation()}
+        >
+          {items.map((item, index) => (
+            <button
+              key={item.id}
+              type="button"
+              className={`story-choice${index === cursor ? " is-on" : ""}`}
+              disabled={item.disabled}
+              onClick={item.run}
+            >
+              {item.label}
+            </button>
+          ))}
+          {shopError ? <p className="story-error">{shopError}</p> : null}
+        </div>
+      ) : null}
+    </>
+  );
+
   return (
     <div
-      className={`story-stage scene-${scene}${paused ? " is-paused" : ""}`}
+      className={`story-stage ${showMap ? "is-map" : `scene-${scene}`}${paused ? " is-paused" : ""}`}
       onClick={() => {
         nightSound.unlock();
-        if (!paused && items.length === 0) advance();
+        if (!paused && !onMap && items.length === 0) advance();
       }}
     >
       <div className={`story-veil${veil ? " on" : ""}`} />
@@ -400,75 +526,23 @@ export function StoryPlay({
         Menu
       </button>
 
-      <div className="story-sprite" aria-hidden>
-        <CastSprite who={node.encounter?.who ?? node.who} pose={pose} />
-      </div>
-
-      {paused ? (
-        <div className="story-pause" onClick={(event) => event.stopPropagation()}>
-          <p className="story-enemy">Paused</p>
-          <div className="story-menu">
-            {items.map((item, index) => (
-              <button
-                key={item.id}
-                type="button"
-                className={`story-choice${index === cursor ? " is-on" : ""}`}
-                disabled={item.disabled}
-                onClick={item.run}
-              >
-                {item.label}
-              </button>
-            ))}
-          </div>
-        </div>
+      {showMap ? (
+        <>
+          <Overworld
+            place={place}
+            flags={flags}
+            active={onMap && !paused}
+            onMove={setPlace}
+            onTalk={talk}
+          />
+          {paused ? pauseMenu : onMap ? null : <div className="ow-dialogue">{dialogue}</div>}
+        </>
       ) : (
         <>
-          <div
-            className="story-box"
-            role="button"
-            tabIndex={0}
-            onClick={(event) => {
-              event.stopPropagation();
-              advance();
-            }}
-          >
-            {node.speaker ? <p className="story-speaker">{node.speaker}</p> : null}
-            {node.encounter && phase !== "line" ? (
-              <p className="story-enemy">{node.encounter.name}</p>
-            ) : null}
-            <p className="story-line">
-              <span aria-hidden>* </span>
-              {shown}
-              {typing ? <span className="story-caret">_</span> : null}
-            </p>
-            {node.encounter && phase === "menu" ? (
-              <p className="story-meter" aria-label="understanding">
-                {Array.from({ length: node.encounter.spareAt }, (_, index) => (
-                  <i key={index} className={index < meter ? "on" : ""} />
-                ))}
-              </p>
-            ) : null}
+          <div className="story-sprite" aria-hidden>
+            <CastSprite who={who} pose={pose} />
           </div>
-
-          {items.length > 0 && !paused ? (
-            <div
-              className={`story-menu${node.encounter && phase === "menu" ? " story-acts" : ""}`}
-              onClick={(event) => event.stopPropagation()}
-            >
-              {items.map((item, index) => (
-                <button
-                  key={item.id}
-                  type="button"
-                  className={`story-choice${index === cursor ? " is-on" : ""}`}
-                  disabled={item.disabled}
-                  onClick={item.run}
-                >
-                  {item.label}
-                </button>
-              ))}
-              {shopError ? <p className="story-error">{shopError}</p> : null}
-            </div>
-          ) : null}
+          {paused ? pauseMenu : dialogue}
         </>
       )}
     </div>
