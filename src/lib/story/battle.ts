@@ -3,7 +3,7 @@ import type { Pattern } from "@/lib/story/types";
 export const ARENA = 200;
 export const SOUL_R = 4;
 
-export type Kind = "drop" | "blob" | "shard" | "void";
+export type Kind = "drop" | "blob" | "shard" | "void" | "beam";
 
 export type Bullet = {
   x: number;
@@ -15,6 +15,9 @@ export type Bullet = {
   life: number;
   bounce?: boolean;
   wobble?: number;
+  w?: number;
+  wait?: number;
+  ttl?: number;
 };
 
 type Point = { x: number; y: number };
@@ -26,6 +29,9 @@ const EVERY: Record<Pattern, number> = {
   bounce: 2.2,
   rise: 0.32,
   close: 1.5,
+  pillars: 1.1,
+  rows: 0.95,
+  spiral: 0.07,
 };
 
 const rand = (min: number, max: number) => min + Math.random() * (max - min);
@@ -115,6 +121,46 @@ function spawn(pattern: Pattern, index: number, soul: Point): Bullet[] {
     }
     case "bounce":
       return index < 4 ? [blob(soul)] : [];
+    case "pillars": {
+      const lanes = [20, 60, 100, 140, 180];
+      const near = lanes.reduce((best, x) =>
+        Math.abs(x - soul.x) < Math.abs(best - soul.x) ? x : best,
+      );
+      const other = lanes.filter((x) => x !== near)[Math.floor(rand(0, 4))];
+      return [near, other].map((x) => ({
+        x,
+        y: ARENA / 2,
+        vx: 0,
+        vy: 0,
+        r: 0,
+        w: 30,
+        kind: "beam" as const,
+        life: 0,
+        wait: 0.6,
+        ttl: 0.95,
+      }));
+    }
+    case "rows": {
+      const out: Bullet[] = [];
+      const gap = index % 2 === 0 ? rand(10, 70) : rand(110, 170);
+      for (let x = 8; x < ARENA; x += 16) {
+        if (x > gap && x < gap + 40) continue;
+        out.push({ x, y: -6, vx: 0, vy: 70, r: 4, kind: "shard", life: 0 });
+      }
+      return out;
+    }
+    case "spiral": {
+      const a = index * 0.5;
+      const from = { x: ARENA / 2, y: 26 };
+      return [0, Math.PI].map((turn) => ({
+        ...from,
+        vx: Math.cos(a + turn) * 62,
+        vy: Math.sin(a + turn) * 62,
+        r: 4,
+        kind: "void" as const,
+        life: 0,
+      }));
+    }
     case "close": {
       const out: Bullet[] = [];
       const count = 14;
@@ -170,7 +216,7 @@ export class Wave {
           b.y = Math.min(ARENA - b.r, Math.max(b.r, b.y));
         }
       }
-      if (b.life > 7) return false;
+      if (b.life > (b.ttl ?? 7)) return false;
       return (
         b.x > -margin && b.x < ARENA + margin && b.y > -margin && b.y < ARENA + margin
       );
@@ -178,9 +224,12 @@ export class Wave {
   }
 
   hits(soul: Point) {
-    return this.bullets.some(
-      (b) => Math.hypot(b.x - soul.x, b.y - soul.y) < b.r + SOUL_R - 1,
-    );
+    return this.bullets.some((b) => {
+      if (b.kind === "beam") {
+        return b.life >= (b.wait ?? 0) && Math.abs(b.x - soul.x) < (b.w ?? 0) / 2 + SOUL_R - 2;
+      }
+      return Math.hypot(b.x - soul.x, b.y - soul.y) < b.r + SOUL_R - 1;
+    });
   }
 }
 
@@ -192,6 +241,22 @@ export function draw(
 ) {
   ctx.clearRect(0, 0, ARENA, ARENA);
   for (const b of wave.bullets) {
+    if (b.kind === "beam") {
+      const w = b.w ?? 0;
+      if (b.life < (b.wait ?? 0)) {
+        ctx.fillStyle = "rgba(255, 255, 255, 0.12)";
+        ctx.fillRect(b.x - w / 2, 0, w, ARENA);
+        ctx.strokeStyle = "#888";
+        ctx.lineWidth = 1;
+        ctx.setLineDash([4, 4]);
+        ctx.strokeRect(b.x - w / 2 + 0.5, 0.5, w - 1, ARENA - 1);
+        ctx.setLineDash([]);
+      } else {
+        ctx.fillStyle = "#fff";
+        ctx.fillRect(b.x - w / 2, 0, w, ARENA);
+      }
+      continue;
+    }
     if (b.x < -10 || b.x > ARENA + 10 || b.y < -10 || b.y > ARENA + 10) continue;
     ctx.beginPath();
     if (b.kind === "shard") {

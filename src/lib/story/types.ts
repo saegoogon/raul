@@ -20,7 +20,16 @@ export type CastId =
   | "black-queen"
   | "null";
 
-export type Pattern = "rain" | "sweep" | "ring" | "bounce" | "rise" | "close";
+export type Pattern =
+  | "rain"
+  | "sweep"
+  | "ring"
+  | "bounce"
+  | "rise"
+  | "close"
+  | "pillars"
+  | "rows"
+  | "spiral";
 
 export type StoryChoice = {
   label: string;
@@ -57,6 +66,8 @@ export type StoryNode = {
     damage?: number;
     seconds?: number;
     survive?: { turns: number; next: string };
+    boss?: boolean;
+    spareText?: string;
   };
   shop?: boolean;
   paid?: boolean;

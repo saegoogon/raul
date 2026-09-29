@@ -49,6 +49,10 @@ const TILE_CLASS: Record<string, string> = {
   ",": "t-dust",
   "*": "t-crack",
   "=": "t-stair",
+  _: "t-white",
+  "~": "t-seam",
+  K: "t-throne-w",
+  Q: "t-throne-b",
 };
 
 export type Talk = { node: string; overlay: boolean; flag?: string };
@@ -152,8 +156,13 @@ export function Overworld({
     const ty = current.y + dy;
     const npc = here.npcs.find((n) => n.x === tx && n.y === ty);
     if (npc) {
-      const met = flagsRef.current.includes(npc.flag);
+      const has = (flag: string) => flagsRef.current.includes(flag);
       setHold(null);
+      if (npc.requires && !npc.requires.every(has)) {
+        if (npc.early) talkRef.current({ node: npc.early, overlay: true });
+        return;
+      }
+      const met = has(npc.flag);
       talkRef.current({
         node: met ? npc.again : npc.talk,
         overlay: npc.overlay ?? true,

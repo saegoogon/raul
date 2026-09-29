@@ -1,6 +1,6 @@
 import type { CastId } from "@/lib/story/types";
 
-export type MapId = "village" | "under" | "stair";
+export type MapId = "village" | "under" | "stair" | "court";
 export type Face = "up" | "down" | "left" | "right";
 export type Place = { map: MapId; x: number; y: number; face: Face };
 
@@ -13,6 +13,8 @@ type Npc = {
   again: string;
   flag: string;
   overlay?: boolean;
+  requires?: string[];
+  early?: string;
 };
 
 type Spot = {
@@ -46,7 +48,7 @@ export type MapDef = {
   onEnter?: Spot & { once: string };
 };
 
-export const SOLID = new Set(["#", "h", "o", "w"]);
+export const SOLID = new Set(["#", "h", "o", "w", "K", "Q"]);
 
 export const MAPS: Record<MapId, MapDef> = {
   village: {
@@ -190,6 +192,55 @@ export const MAPS: Record<MapId, MapDef> = {
       { x: 8, y: 0, to: "under", tx: 7, ty: 9, face: "up" },
     ],
     onEnter: { x: 7, y: 1, node: "stair-enter", overlay: true, once: "seen-stair" },
+  },
+  court: {
+    id: "court",
+    name: "The Split Court",
+    tiles: [
+      "###############",
+      "#____K_~.Q....#",
+      "#______~......#",
+      "#______~......#",
+      "#______~......#",
+      "#______~......#",
+      "#______~......#",
+      "#______~......#",
+      "#______~......#",
+      "#______~......#",
+      "###############",
+    ],
+    spawn: { x: 7, y: 9, face: "up" },
+    npcs: [
+      {
+        id: "white-king",
+        who: "white-king",
+        x: 5,
+        y: 2,
+        talk: "king-1",
+        again: "king-again",
+        flag: "met-king",
+        overlay: false,
+      },
+      {
+        id: "black-queen",
+        who: "black-queen",
+        x: 9,
+        y: 2,
+        talk: "queen-1",
+        again: "queen-again",
+        flag: "met-queen",
+        overlay: false,
+        requires: ["beat-king"],
+        early: "queen-early",
+      },
+    ],
+    triggers: [],
+    looks: [
+      { x: 7, y: 1, node: "look-seam", overlay: true },
+      { x: 7, y: 2, node: "look-seam", overlay: true },
+    ],
+    exits: [],
+    onEnter: { x: 7, y: 9, node: "court-enter", overlay: true, once: "seen-court" },
   },
 };
 

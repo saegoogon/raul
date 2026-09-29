@@ -754,6 +754,46 @@ body {
   background: repeating-linear-gradient(180deg, #3a4141 0 3px, #0b0e0e 3px 8px);
 }
 
+.map-court .t-floor {
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px) 0 0 / 50% 50%,
+    #050505;
+}
+
+.t-white {
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.07) 1px, transparent 1px) 0 0 / 50% 50%,
+    linear-gradient(rgba(0, 0, 0, 0.07) 1px, transparent 1px) 0 0 / 50% 50%,
+    #dcdcdc;
+}
+
+.t-seam {
+  background: linear-gradient(90deg, #dcdcdc 0 44%, #777 44% 56%, #050505 56% 100%);
+}
+
+.t-throne-w,
+.t-throne-b {
+  background:
+    linear-gradient(currentColor, currentColor) 50% 18% / 70% 60% no-repeat,
+    linear-gradient(currentColor, currentColor) 50% 100% / 90% 30% no-repeat,
+    var(--floor);
+  box-shadow: inset 0 -3px 0 rgba(0, 0, 0, 0.3);
+}
+
+.t-throne-w {
+  --floor: #dcdcdc;
+  color: #fff;
+  outline: 2px solid #111;
+  outline-offset: -4px;
+}
+
+.t-throne-b {
+  --floor: #050505;
+  color: #111;
+  outline: 2px solid #ddd;
+  outline-offset: -4px;
+}
+
 .ow-actor {
   position: absolute;
   top: 0;
@@ -1126,6 +1166,17 @@ body {
   max-height: 11rem;
   object-fit: contain;
   image-rendering: auto;
+}
+
+.bt-enemy.is-boss .bt-enemy-img {
+  width: min(200px, 46vw);
+  max-height: 14rem;
+}
+
+.bt-boss {
+  border: 1px solid #fff;
+  padding: 0.1rem 0.4rem;
+  font-size: 0.65rem;
 }
 
 .bt-null {

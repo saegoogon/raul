@@ -7,7 +7,7 @@ import { nightSound } from "@/lib/story/sound";
 import type { StoryNode } from "@/lib/story/types";
 
 type Phase = "text" | "menu" | "sub" | "taunt" | "dodge";
-type Then = "menu" | "taunt" | "restart" | { end: string };
+type Then = "menu" | "taunt" | "restart" | { end: string; set?: string };
 type Tab = "act" | "item" | "mercy";
 type Option = { id: string; label: string; disabled?: boolean; run: () => void };
 
@@ -34,7 +34,7 @@ export function Battle({
   node: StoryNode;
   paused: boolean;
   onFlag: (flag?: string) => void;
-  onEnd: (next: string) => void;
+  onEnd: (next: string, flag?: string) => void;
 }) {
   const enc = node.encounter!;
   const [phase, setPhase] = useState<Phase>("text");
@@ -116,7 +116,7 @@ export function Battle({
     if (then === "menu") setPhase("menu");
     else if (then === "taunt") setPhase("taunt");
     else if (then === "restart") restart();
-    else onEnd(then.end);
+    else onEnd(then.end, then.set);
   }, [msg, onEnd, restart]);
 
   const endTurn = useCallback(() => {
@@ -173,8 +173,9 @@ export function Battle({
         disabled: !spareReady,
         run: () => {
           nightSound.spare();
-          say(`You spare ${enc.name}. It stops wobbling and starts listening.`, {
+          say(enc.spareText ?? `You spare ${enc.name}. It stops wobbling and starts listening.`, {
             end: enc.spare.next,
+            set: enc.spare.set,
           });
         },
       },
@@ -379,7 +380,10 @@ export function Battle({
       onClick={(event) => event.stopPropagation()}
     >
       <div className="bt-foe">
-        <div key={`hop-${hop}`} className={`bt-enemy${hop ? " is-hop" : ""}`}>
+        <div
+          key={`hop-${hop}`}
+          className={`bt-enemy${hop ? " is-hop" : ""}${enc.boss ? " is-boss" : ""}`}
+        >
           {enc.who === "null" ? (
             <span className="bt-null" aria-hidden />
           ) : enc.who ? (
@@ -394,6 +398,7 @@ export function Battle({
       </div>
 
       <div className="bt-status">
+        {enc.boss ? <span className="bt-boss">BOSS</span> : null}
         <span className="bt-name">{enc.name}</span>
         {enc.spareAt < 99 ? (
           <span className="story-meter bt-meter" aria-label="understanding">
