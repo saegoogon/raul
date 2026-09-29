@@ -10,9 +10,10 @@ export function GuestHero() {
         <p className="text-2xl font-semibold tracking-tight">
           <BrandMark />
         </p>
-        <p className="mt-1 text-sm text-mute">One night only</p>
+        <p className="mt-1 text-sm text-mute">A small smile can change your world</p>
         <p className="mx-auto mt-3 max-w-sm text-sm leading-relaxed text-mute">
-          A story in the dark. Talk, wait, spare. Do not grind.
+          You are BlackSmile. Talk to Nyang, Jenny, Flower. Spare the slime.
+          Do not grind.
         </p>
         <div className="mt-5 flex flex-wrap justify-center gap-2">
           <Link href="/play" className="btn-primary text-sm">

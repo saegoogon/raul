@@ -3,8 +3,42 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Mascot } from "@/components/Mascot";
 import { saveStory } from "@/actions/story";
+import { CAST } from "@/lib/story/cast";
 import { getNode } from "@/lib/story/night";
-import { SAVE_KEY, STORY_START, type Pose, type StorySave } from "@/lib/story/types";
+import {
+  SAVE_KEY,
+  STORY_START,
+  type CastId,
+  type Pose,
+  type StorySave,
+} from "@/lib/story/types";
+
+function CastSprite({
+  who,
+  pose,
+}: {
+  who?: CastId;
+  pose?: Pose;
+}) {
+  if (!who || who === "player") {
+    if (pose === "none") return null;
+    return (
+      <Mascot
+        size="xl"
+        pose={pose ?? "sit"}
+        bob={pose === "wait"}
+        className="mx-auto"
+      />
+    );
+  }
+
+  const cast = CAST[who];
+  if (!cast) return null;
+  return (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img src={cast.src} alt="" className="story-cast" />
+  );
+}
 
 function readLocal(): StorySave | null {
   try {
@@ -155,14 +189,10 @@ export function StoryPlay({
         Close
       </a>
       <div className="story-sprite" aria-hidden>
-        {pose === "none" ? null : (
-          <Mascot
-            size="xl"
-            pose={pose === "stand" ? "stand" : pose}
-            bob={pose === "wait"}
-            className="mx-auto"
-          />
-        )}
+        <CastSprite
+          who={node.encounter?.who ?? node.who}
+          pose={pose}
+        />
       </div>
 
       <div
