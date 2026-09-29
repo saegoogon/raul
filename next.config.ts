@@ -7,6 +7,12 @@ const nextConfig: NextConfig = {
       static: 180,
     },
   },
+  async redirects() {
+    return [
+      { source: "/submit", destination: "/play", permanent: true },
+      { source: "/post/:id", destination: "/play", permanent: true },
+    ];
+  },
   images: {
     qualities: [70, 75],
     remotePatterns: [

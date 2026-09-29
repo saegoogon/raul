@@ -1,5 +1,5 @@
 import { StoryPlay } from "@/components/story/StoryPlay";
-import { getCurrentUser } from "@/lib/posts";
+import { getCurrentUser } from "@/lib/user";
 import { getStorySave, hasTrueNight } from "@/lib/story/progress";
 
 export const metadata = {

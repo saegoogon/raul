@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 const SHARE_URL = "https://www.blacksmile.co.kr";
-const SHARE_TEXT = `BlackSmile — more fun together.\n${SHARE_URL}`;
+const SHARE_TEXT = `BlackSmile — a small smile can change your world.\n${SHARE_URL}`;
 
 export function InviteNight({ className = "" }: { className?: string }) {
   const [copied, setCopied] = useState(false);

@@ -46,7 +46,7 @@ export default async function OpenGraphImage() {
             fontSize: 28,
           }}
         >
-          More fun together
+          A small smile can change your world
         </div>
       </div>
     ),

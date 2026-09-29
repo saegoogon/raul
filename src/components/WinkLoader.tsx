@@ -12,7 +12,7 @@ export function WinkLoader() {
         <Mascot size="xl" pose="wait" priority className="buddy-hop" />
         <span className="buddy-shadow" aria-hidden />
       </div>
-      <p className="buddy-caption mt-5 text-sm text-mute">More fun together</p>
+      <p className="buddy-caption mt-5 text-sm text-mute">A small smile can change your world</p>
       <span className="buddy-dots" aria-hidden>
         <span />
         <span />

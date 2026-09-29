@@ -30,7 +30,7 @@ export function AppChrome({ children }: { children: ReactNode }) {
         <p className="mt-2 text-sm">
           <BrandMark />
         </p>
-        <p className="mt-1">More fun together</p>
+        <p className="mt-1">A small smile can change your world</p>
       </footer>
     </Providers>
   );

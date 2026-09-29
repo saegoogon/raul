@@ -52,7 +52,7 @@ export function WinkIntro() {
         <p className="mt-4 text-xl">
           <BrandMark />
         </p>
-        <p className="mt-2 text-sm text-mute">More fun together</p>
+        <p className="mt-2 text-sm text-mute">A small smile can change your world</p>
       </div>
     </div>
   );

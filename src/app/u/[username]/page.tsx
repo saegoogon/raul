@@ -1,9 +1,9 @@
 import { notFound } from "next/navigation";
+import Link from "next/link";
 import { Avatar } from "@/components/Avatar";
 import { Crown } from "@/components/Crown";
-import { PostFeed } from "@/components/PostFeed";
-import { getPostsByUser, getProfile } from "@/lib/posts";
 import { getTonightRank } from "@/lib/rank";
+import { getProfile } from "@/lib/user";
 
 export default async function ProfilePage({
   params,
@@ -17,7 +17,6 @@ export default async function ProfilePage({
   ]);
   if (!profile) notFound();
 
-  const posts = await getPostsByUser(profile.id);
   const entry = ranking.board.find((row) => row.userId === profile.id);
 
   return (
@@ -33,15 +32,14 @@ export default async function ProfilePage({
                 #{entry.rank} tonight · {entry.score} pts
               </>
             ) : (
-              "Not on the board yet"
+              "In the dark"
             )}
           </p>
-          <p className="mt-1 text-sm text-mute">
-            {posts.length} {posts.length === 1 ? "moment tonight" : "moments tonight"}
-          </p>
+          <Link href="/play" className="mt-3 inline-flex btn-primary text-sm">
+            Play tonight
+          </Link>
         </div>
       </section>
-      <PostFeed posts={posts} />
     </div>
   );
 }

@@ -19,8 +19,8 @@ export function GuestHero() {
           <Link href="/play" className="btn-primary text-sm">
             Play tonight
           </Link>
-          <Link href="/rank" className="btn-secondary text-sm">
-            Ranking
+          <Link href="/login" className="btn-secondary text-sm">
+            Log in
           </Link>
         </div>
       </div>

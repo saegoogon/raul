@@ -28,11 +28,11 @@ export function TonightRank({
             Tonight ranking
           </h2>
           <p className="mt-0.5 text-sm text-mute">
-            Smiles ×3, posts ×1, winks ×1. Resets in 24 hours.
+            Winks tonight. Resets in 24 hours.
           </p>
         </div>
         {compact ? (
-          <Link href="/rank" className="btn-primary shrink-0 px-3 py-1.5 text-sm">
+          <Link href="/play" className="btn-primary shrink-0 px-3 py-1.5 text-sm">
             Play
           </Link>
         ) : null}
@@ -40,7 +40,7 @@ export function TonightRank({
 
       {rows.length === 0 ? (
         <p className="px-4 pb-5 text-sm text-mute sm:px-5">
-          Nobody is on the board yet. Share a moment or wink to enter.
+          Nobody is on the board yet. Wink to enter.
         </p>
       ) : (
         <ol>

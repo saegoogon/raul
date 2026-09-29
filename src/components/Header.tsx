@@ -41,12 +41,6 @@ export function Header() {
                   @{username}
                 </Link>
               )}
-              <Link
-                href="/submit"
-                className="hidden text-mute hover:text-paper md:inline"
-              >
-                Share
-              </Link>
               <form action={signOut}>
                 <button type="submit" className="text-mute hover:text-paper">
                   Log out
