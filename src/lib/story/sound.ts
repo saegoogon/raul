@@ -53,6 +53,45 @@ class NightSound {
     osc.stop(this.ctx.currentTime + 0.018);
   }
 
+  private tone(freq: number, seconds: number, type: OscillatorType, volume: number, to?: number) {
+    if (this.muted || quiet() || !this.ctx) return;
+    const now = this.ctx.currentTime;
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+    osc.type = type;
+    osc.frequency.setValueAtTime(freq, now);
+    if (to) osc.frequency.exponentialRampToValueAtTime(to, now + seconds);
+    gain.gain.setValueAtTime(volume, now);
+    gain.gain.exponentialRampToValueAtTime(0.0001, now + seconds);
+    osc.connect(gain).connect(this.ctx.destination);
+    osc.start(now);
+    osc.stop(now + seconds);
+  }
+
+  blip() {
+    this.tone(540, 0.05, "square", 0.02);
+  }
+
+  select() {
+    this.tone(660, 0.09, "square", 0.025, 990);
+  }
+
+  hit() {
+    this.tone(180, 0.22, "sawtooth", 0.05, 60);
+  }
+
+  heal() {
+    this.tone(520, 0.3, "triangle", 0.05, 1040);
+  }
+
+  encounter() {
+    this.tone(880, 0.35, "square", 0.03, 110);
+  }
+
+  spare() {
+    this.tone(440, 0.5, "triangle", 0.05, 880);
+  }
+
   startDrone() {
     if (this.muted || quiet() || !this.ctx || this.drone) return;
     const osc = this.ctx.createOscillator();

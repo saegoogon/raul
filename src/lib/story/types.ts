@@ -17,7 +17,10 @@ export type CastId =
   | "flame"
   | "tvman"
   | "white-king"
-  | "black-queen";
+  | "black-queen"
+  | "null";
+
+export type Pattern = "rain" | "sweep" | "ring" | "bounce" | "rise" | "close";
 
 export type StoryChoice = {
   label: string;
@@ -47,7 +50,13 @@ export type StoryNode = {
     spareAt: number;
     acts: StoryAct[];
     spare: StoryChoice;
-    leave: StoryChoice;
+    leave?: StoryChoice;
+    attacks: Pattern[][];
+    taunts: string[];
+    flavor?: string;
+    damage?: number;
+    seconds?: number;
+    survive?: { turns: number; next: string };
   };
   shop?: boolean;
   paid?: boolean;

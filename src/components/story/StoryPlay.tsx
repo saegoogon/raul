@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Mascot } from "@/components/Mascot";
+import { Battle } from "@/components/story/Battle";
 import { Overworld, Sprite, type Talk } from "@/components/story/Overworld";
 import { saveStory } from "@/actions/story";
 import { CAST } from "@/lib/story/cast";
@@ -81,8 +82,6 @@ export function StoryPlay({
   const [flags, setFlags] = useState<string[]>(fresh ? [] : (initial?.flags ?? []));
   const [meter, setMeter] = useState(fresh ? 0 : (initial?.meter ?? 0));
   const [shown, setShown] = useState("");
-  const [phase, setPhase] = useState<"line" | "menu" | "act">("line");
-  const [actText, setActText] = useState("");
   const [busy, setBusy] = useState(false);
   const [shopError, setShopError] = useState<string | null>(null);
   const [paused, setPaused] = useState(false);
@@ -96,10 +95,15 @@ export function StoryPlay({
   const showMap = onMap || overlay;
   const node = useMemo(() => getNode(onMap ? STORY_START : nodeId), [nodeId, onMap]);
   const pose = (node.pose ?? "sit") as Pose;
-  const full = onMap ? "" : phase === "act" ? actText : node.text;
+  const inBattle = !onMap && !overlay && !!node.encounter;
+  const full = onMap || inBattle ? "" : node.text;
   const scene = node.scene ?? "wake";
   const typing = shown.length < full.length;
-  const stageKey = showMap ? `map-${place.map}` : `scene-${scene}`;
+  const stageKey = showMap
+    ? `map-${place.map}`
+    : inBattle
+      ? `battle-${nodeId}`
+      : `scene-${scene}`;
 
   useEffect(() => {
     nightSound.load();
@@ -175,8 +179,6 @@ export function StoryPlay({
   const go = useCallback(
     (next: string, flag?: string) => {
       addFlag(flag);
-      setActText("");
-      setPhase("line");
 
       if (next === STORY_START) {
         setFlags([]);
@@ -243,8 +245,6 @@ export function StoryPlay({
     }
   }, [loggedIn]);
 
-  const spareReady = meter >= (node.encounter?.spareAt ?? 99);
-
   const items: MenuItem[] = useMemo(() => {
     if (paused) {
       return [
@@ -277,33 +277,8 @@ export function StoryPlay({
         },
       ];
     }
-    if (onMap) return [];
-    if (phase === "menu" && node.encounter) {
-      return [
-        ...node.encounter.acts.map((act) => ({
-          id: act.label,
-          label: act.label,
-          run: () => {
-            setActText(act.text);
-            setPhase("act");
-            if (act.meter) setMeter((value) => value + act.meter!);
-            addFlag(act.set);
-          },
-        })),
-        {
-          id: "spare",
-          label: node.encounter.spare.label,
-          disabled: !spareReady,
-          run: () => spareReady && go(node.encounter!.spare.next),
-        },
-        {
-          id: "leave",
-          label: node.encounter.leave.label,
-          run: () => go(node.encounter!.leave.next),
-        },
-      ];
-    }
-    if (shown.length >= full.length && node.choices && phase === "line") {
+    if (onMap || inBattle) return [];
+    if (shown.length >= full.length && node.choices) {
       return node.choices.map((choice) => ({
         id: choice.label,
         label: choice.label,
@@ -338,32 +313,26 @@ export function StoryPlay({
     muted,
     loggedIn,
     onMap,
-    phase,
+    inBattle,
     node,
-    spareReady,
     shown.length,
     full.length,
     paid,
     busy,
     go,
-    addFlag,
     buy,
   ]);
 
   const advance = useCallback(() => {
-    if (paused || onMap) return;
+    if (paused || onMap || inBattle) return;
     if (typing) {
       skip.current = true;
       setShown(full);
       return;
     }
-    if (node.encounter && phase !== "menu") {
-      setPhase("menu");
-      return;
-    }
-    if (node.choices?.length || node.encounter || node.shop) return;
+    if (node.choices?.length || node.shop) return;
     go(node.next ?? ON_MAP);
-  }, [paused, onMap, typing, full, node, phase, go]);
+  }, [paused, onMap, inBattle, typing, full, node, go]);
 
   const back = useCallback(() => {
     if (paused) {
@@ -373,10 +342,8 @@ export function StoryPlay({
     if (typing) {
       skip.current = true;
       setShown(full);
-      return;
     }
-    if (phase === "act") setPhase("menu");
-  }, [paused, typing, full, phase]);
+  }, [paused, typing, full]);
 
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
@@ -387,7 +354,7 @@ export function StoryPlay({
         setPaused((value) => !value);
         return;
       }
-      if (onMap && !paused) return;
+      if ((onMap || inBattle) && !paused) return;
       if (key === "x" || key === "X") {
         event.preventDefault();
         back();
@@ -421,13 +388,13 @@ export function StoryPlay({
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [items, cursor, typing, advance, back, paused, onMap]);
+  }, [items, cursor, typing, advance, back, paused, onMap, inBattle]);
 
   useEffect(() => {
     setCursor(0);
-  }, [items.length, paused, phase]);
+  }, [items.length, paused]);
 
-  const who = node.encounter?.who ?? node.who;
+  const who = node.who;
 
   const pauseMenu = (
     <div className="story-pause" onClick={(event) => event.stopPropagation()}>
@@ -466,29 +433,16 @@ export function StoryPlay({
         ) : null}
         <div className="story-text">
           {node.speaker ? <p className="story-speaker">{node.speaker}</p> : null}
-          {node.encounter && phase !== "line" ? (
-            <p className="story-enemy">{node.encounter.name}</p>
-          ) : null}
           <p className="story-line">
             <span aria-hidden>* </span>
             {shown}
             {typing ? <span className="story-caret">_</span> : null}
           </p>
-          {node.encounter && phase === "menu" ? (
-            <p className="story-meter" aria-label="understanding">
-              {Array.from({ length: node.encounter.spareAt }, (_, index) => (
-                <i key={index} className={index < meter ? "on" : ""} />
-              ))}
-            </p>
-          ) : null}
         </div>
       </div>
 
       {items.length > 0 ? (
-        <div
-          className={`story-menu${node.encounter && phase === "menu" ? " story-acts" : ""}`}
-          onClick={(event) => event.stopPropagation()}
-        >
+        <div className="story-menu" onClick={(event) => event.stopPropagation()}>
           {items.map((item, index) => (
             <button
               key={item.id}
@@ -508,10 +462,10 @@ export function StoryPlay({
 
   return (
     <div
-      className={`story-stage ${showMap ? "is-map" : `scene-${scene}`}${paused ? " is-paused" : ""}`}
+      className={`story-stage ${showMap ? "is-map" : inBattle ? "is-battle" : `scene-${scene}`}${paused ? " is-paused" : ""}`}
       onClick={() => {
         nightSound.unlock();
-        if (!paused && !onMap && items.length === 0) advance();
+        if (!paused && !onMap && !inBattle && items.length === 0) advance();
       }}
     >
       <div className={`story-veil${veil ? " on" : ""}`} />
@@ -536,6 +490,11 @@ export function StoryPlay({
             onTalk={talk}
           />
           {paused ? pauseMenu : onMap ? null : <div className="ow-dialogue">{dialogue}</div>}
+        </>
+      ) : inBattle ? (
+        <>
+          <Battle key={nodeId} node={node} paused={paused} onFlag={addFlag} onEnd={go} />
+          {paused ? pauseMenu : null}
         </>
       ) : (
         <>
