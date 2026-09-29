@@ -15,8 +15,8 @@ export function NightRoom({ people }: { people: Profile[] }) {
             <DarkPresence />
           </div>
         </div>
-        <Link href="/rank" className="btn-primary shrink-0 px-3 py-1.5 text-sm">
-          Rank
+        <Link href="/play" className="btn-primary shrink-0 px-3 py-1.5 text-sm">
+          Play
         </Link>
       </div>
 

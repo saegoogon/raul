@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Crown } from "@/components/Crown";
 import { useAuth } from "@/components/Providers";
 
 export function BottomNav() {
@@ -21,11 +20,11 @@ export function BottomNav() {
           Night
         </Link>
         <Link
-          href="/rank"
-          className="flex h-11 w-11 items-center justify-center rounded-full bg-smile text-night"
-          aria-label="Tonight ranking"
+          href="/play"
+          className="flex h-11 w-11 items-center justify-center rounded-full bg-smile text-sm text-night"
+          aria-label="Play tonight"
         >
-          <Crown className="h-5 w-5" />
+          *
         </Link>
         <Link
           href={username ? `/u/${username}` : "/login"}

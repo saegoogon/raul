@@ -10,17 +10,16 @@ export function GuestHero() {
         <p className="text-2xl font-semibold tracking-tight">
           <BrandMark />
         </p>
-        <p className="mt-1 text-sm text-mute">More fun together</p>
+        <p className="mt-1 text-sm text-mute">One night only</p>
         <p className="mx-auto mt-3 max-w-sm text-sm leading-relaxed text-mute">
-          Compete for tonight&apos;s crown. Smiles, posts, and winks count for 24
-          hours. No follow.
+          A story in the dark. Talk, wait, spare. Do not grind.
         </p>
         <div className="mt-5 flex flex-wrap justify-center gap-2">
-          <Link href="/rank" className="btn-primary text-sm">
-            Tonight ranking
+          <Link href="/play" className="btn-primary text-sm">
+            Play tonight
           </Link>
-          <Link href="/signup" className="btn-secondary text-sm">
-            Join
+          <Link href="/rank" className="btn-secondary text-sm">
+            Ranking
           </Link>
         </div>
       </div>

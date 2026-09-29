@@ -25,6 +25,9 @@ export function Header() {
         </a>
 
         <nav className="flex items-center gap-3 text-sm">
+          <Link href="/play" className="btn-primary px-3 py-1.5 text-sm">
+            Play
+          </Link>
           <Link href="/rank" className="text-mute hover:text-paper">
             Rank
           </Link>
@@ -44,12 +47,6 @@ export function Header() {
               >
                 Share
               </Link>
-              <Link
-                href="/rank"
-                className="btn-primary hidden px-3 py-1.5 text-sm md:inline-flex"
-              >
-                Play
-              </Link>
               <form action={signOut}>
                 <button type="submit" className="text-mute hover:text-paper">
                   Log out
@@ -61,7 +58,7 @@ export function Header() {
               <Link href="/login" className="text-mute hover:text-paper">
                 Log in
               </Link>
-              <Link href="/signup" prefetch className="btn-primary px-3 py-1.5 text-sm">
+              <Link href="/signup" prefetch className="text-mute hover:text-paper">
                 Join
               </Link>
             </>

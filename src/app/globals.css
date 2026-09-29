@@ -412,6 +412,113 @@ body {
   }
 }
 
+.story-stage {
+  position: relative;
+  display: flex;
+  min-height: 100dvh;
+  flex-direction: column;
+  background: #000;
+  padding: 1.25rem 1rem 1.5rem;
+}
+
+.story-exit {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 2;
+  color: #a7aaaa;
+  font-size: 0.8rem;
+}
+
+.story-sprite {
+  display: flex;
+  min-height: 240px;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+}
+
+.story-box {
+  border: 3px solid #fff;
+  padding: 0.9rem 1rem 1.1rem;
+  min-height: 7.5rem;
+  text-align: left;
+  cursor: pointer;
+}
+
+.story-speaker {
+  margin-bottom: 0.45rem;
+  color: #a7aaaa;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.story-line {
+  font-size: 1.05rem;
+  line-height: 1.55;
+}
+
+.story-caret {
+  animation: buddy-caption 1s steps(1) infinite;
+}
+
+.story-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.story-enemy {
+  font-size: 0.8rem;
+  letter-spacing: 0.18em;
+}
+
+.story-meter {
+  display: flex;
+  gap: 6px;
+}
+
+.story-meter i {
+  width: 18px;
+  height: 10px;
+  border: 1px solid #fff;
+}
+
+.story-meter i.on {
+  background: #fff;
+}
+
+.story-acts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+
+.story-choice {
+  border: 2px solid #fff;
+  background: #000;
+  color: #fff;
+  padding: 0.55rem 0.7rem;
+  text-align: left;
+}
+
+.story-choice:hover,
+.story-choice:focus-visible {
+  background: #fff;
+  color: #000;
+}
+
+.story-choice:disabled {
+  opacity: 0.35;
+}
+
+.story-error {
+  color: #a7aaaa;
+  font-size: 0.85rem;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .blacksmile-intro-mark,
   .buddy-loop,
