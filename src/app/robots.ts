@@ -5,7 +5,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
+      disallow: ["/drive", "/s/", "/auth/"],
     },
-    sitemap: "https://www.blacksmile.co.kr",
   };
 }

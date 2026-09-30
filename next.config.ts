@@ -9,20 +9,12 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
-      { source: "/submit", destination: "/play", permanent: true },
-      { source: "/post/:id", destination: "/play", permanent: true },
-      { source: "/rank", destination: "/", permanent: true },
+      ...["/play", "/shop", "/rank", "/submit", "/post/:id", "/pay/:path*", "/u/:path*"].map((source) => ({
+        source,
+        destination: "/",
+        permanent: false,
+      })),
     ];
-  },
-  images: {
-    qualities: [70, 75],
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "**.supabase.co",
-        pathname: "/storage/v1/object/public/**",
-      },
-    ],
   },
 };
 

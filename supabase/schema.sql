@@ -1,195 +1,75 @@
--- Run this in Supabase SQL Editor (https://supabase.com/dashboard)
+-- BlackSmile Cloud. Run in the Supabase SQL Editor, then run handle-new-user.sql.
 
-create table public.profiles (
+-- Profiles (one per auth user, filled by the handle_new_user trigger).
+create table if not exists public.profiles (
   id uuid references auth.users on delete cascade primary key,
   username text unique not null,
   created_at timestamptz default now() not null
 );
 
-create table public.posts (
-  id uuid primary key default gen_random_uuid(),
-  user_id uuid references public.profiles(id) on delete cascade not null,
-  title text not null,
-  content text,
-  image_url text,
-  created_at timestamptz default now() not null
-);
-
-create table public.comments (
-  id uuid primary key default gen_random_uuid(),
-  post_id uuid references public.posts(id) on delete cascade not null,
-  user_id uuid references public.profiles(id) on delete cascade not null,
-  content text not null,
-  created_at timestamptz default now() not null
-);
-
-create table public.votes (
-  id uuid primary key default gen_random_uuid(),
-  user_id uuid references public.profiles(id) on delete cascade not null,
-  post_id uuid references public.posts(id) on delete cascade not null,
-  value smallint not null check (value in (-1, 1)),
-  unique (user_id, post_id)
-);
-
 alter table public.profiles enable row level security;
-alter table public.posts enable row level security;
-alter table public.comments enable row level security;
-alter table public.votes enable row level security;
 
-create policy "Profiles are viewable by everyone"
-  on public.profiles for select using (true);
+drop policy if exists "Users can read own profile" on public.profiles;
+create policy "Users can read own profile"
+  on public.profiles for select using (auth.uid() = id);
 
+drop policy if exists "Users can update own profile" on public.profiles;
 create policy "Users can update own profile"
   on public.profiles for update using (auth.uid() = id);
 
-create policy "Posts are viewable by everyone"
-  on public.posts for select using (true);
-
-create policy "Authenticated users can create posts"
-  on public.posts for insert with check (auth.uid() = user_id);
-
-create policy "Users can delete own posts"
-  on public.posts for delete using (auth.uid() = user_id);
-
-create policy "Comments are viewable by everyone"
-  on public.comments for select using (true);
-
-create policy "Authenticated users can create comments"
-  on public.comments for insert with check (auth.uid() = user_id);
-
-create policy "Users can delete own comments"
-  on public.comments for delete using (auth.uid() = user_id);
-
-create policy "Votes are viewable by everyone"
-  on public.votes for select using (true);
-
-create policy "Authenticated users can vote"
-  on public.votes for insert with check (auth.uid() = user_id);
-
-create policy "Users can update own votes"
-  on public.votes for update using (auth.uid() = user_id);
-
-create policy "Users can delete own votes"
-  on public.votes for delete using (auth.uid() = user_id);
-
-create or replace function public.handle_new_user()
-returns trigger
-language plpgsql
-security definer set search_path = ''
-as $$
-declare
-  base text;
-  candidate text;
-  n int := 0;
-begin
-  base := coalesce(
-    new.raw_user_meta_data ->> 'username',
-    new.raw_user_meta_data ->> 'preferred_username',
-    new.raw_user_meta_data ->> 'user_name',
-    new.raw_user_meta_data ->> 'nickname',
-    split_part(coalesce(new.email, ''), '@', 1),
-    'user'
-  );
-  base := lower(regexp_replace(base, '[^a-zA-Z0-9_]', '', 'g'));
-  if length(base) < 3 then
-    base := 'user' || substr(replace(new.id::text, '-', ''), 1, 6);
-  end if;
-  base := left(base, 20);
-  candidate := base;
-  while exists (
-    select 1 from public.profiles where username = candidate
-  ) loop
-    n := n + 1;
-    candidate := left(base, 16) || n::text;
-  end loop;
-
-  insert into public.profiles (id, username)
-  values (new.id, candidate);
-  return new;
-end;
-$$;
-
-create trigger on_auth_user_created
-  after insert on auth.users
-  for each row execute function public.handle_new_user();
-
-insert into storage.buckets (id, name, public, file_size_limit)
-values ('posts', 'posts', true, 52428800)
-on conflict (id) do update
-set file_size_limit = excluded.file_size_limit;
-
-create policy "Anyone can view post images"
-  on storage.objects for select
-  using (bucket_id = 'posts');
-
-create policy "Authenticated users can upload post images"
-  on storage.objects for insert
-  with check (bucket_id = 'posts' and auth.role() = 'authenticated');
-
-create table if not exists public.presence (
-  visitor_id text primary key,
-  last_seen timestamptz default now() not null
-);
-
-alter table public.presence enable row level security;
-
-create policy "Anyone can read presence"
-  on public.presence for select
-  using (true);
-
-create policy "Anyone can upsert presence"
-  on public.presence for insert
-  with check (true);
-
-create policy "Anyone can update presence"
-  on public.presence for update
-  using (true);
-
-create table if not exists public.winks (
+-- Drive: files and folders. Files live in the private "drive" bucket at <owner_id>/<item_id>.
+create table if not exists public.drive_items (
   id uuid primary key default gen_random_uuid(),
-  user_id uuid references public.profiles(id) on delete cascade not null,
-  created_at timestamptz default now() not null
-);
-
-create index if not exists winks_user_created on public.winks (user_id, created_at desc);
-create index if not exists winks_created on public.winks (created_at desc);
-
-alter table public.winks enable row level security;
-
-create policy "Winks are viewable by everyone"
-  on public.winks for select using (true);
-
-create policy "Authenticated users can wink"
-  on public.winks for insert with check (auth.uid() = user_id);
-
-create table if not exists public.story_saves (
-  user_id uuid references public.profiles(id) on delete cascade primary key,
-  node_id text not null,
-  flags jsonb not null default '[]'::jsonb,
-  meter int not null default 0,
+  owner_id uuid not null references auth.users(id) on delete cascade,
+  parent_id uuid references public.drive_items(id) on delete cascade,
+  kind text not null check (kind in ('folder', 'file')),
+  name text not null check (char_length(name) between 1 and 255),
+  size bigint not null default 0,
+  mime text,
+  storage_path text unique,
+  share_token text unique,
+  trashed_at timestamptz,
+  created_at timestamptz default now() not null,
   updated_at timestamptz default now() not null
 );
 
-alter table public.story_saves enable row level security;
+create index if not exists drive_items_owner_parent_idx on public.drive_items (owner_id, parent_id);
+create index if not exists drive_items_owner_trashed_idx on public.drive_items (owner_id, trashed_at);
 
-create policy "Users can read own story save"
-  on public.story_saves for select using (auth.uid() = user_id);
+alter table public.drive_items enable row level security;
 
-create policy "Users can write own story save"
-  on public.story_saves for insert with check (auth.uid() = user_id);
+drop policy if exists "Owners read items" on public.drive_items;
+create policy "Owners read items"
+  on public.drive_items for select using (auth.uid() = owner_id);
 
-create policy "Users can update own story save"
-  on public.story_saves for update using (auth.uid() = user_id);
+drop policy if exists "Owners create items" on public.drive_items;
+create policy "Owners create items"
+  on public.drive_items for insert with check (auth.uid() = owner_id);
 
-create table if not exists public.purchases (
-  id uuid primary key default gen_random_uuid(),
-  user_id uuid references public.profiles(id) on delete cascade not null,
-  product text not null,
-  created_at timestamptz default now() not null,
-  unique (user_id, product)
-);
+drop policy if exists "Owners update items" on public.drive_items;
+create policy "Owners update items"
+  on public.drive_items for update using (auth.uid() = owner_id);
 
-alter table public.purchases enable row level security;
+drop policy if exists "Owners delete items" on public.drive_items;
+create policy "Owners delete items"
+  on public.drive_items for delete using (auth.uid() = owner_id);
 
-create policy "Users can read own purchases"
-  on public.purchases for select using (auth.uid() = user_id);
+-- Private bucket, 50 MB per file (the Supabase free plan cap).
+insert into storage.buckets (id, name, public, file_size_limit)
+values ('drive', 'drive', false, 52428800)
+on conflict (id) do update set public = false, file_size_limit = excluded.file_size_limit;
+
+drop policy if exists "Owners read drive objects" on storage.objects;
+create policy "Owners read drive objects"
+  on storage.objects for select
+  using (bucket_id = 'drive' and (storage.foldername(name))[1] = auth.uid()::text);
+
+drop policy if exists "Owners upload drive objects" on storage.objects;
+create policy "Owners upload drive objects"
+  on storage.objects for insert
+  with check (bucket_id = 'drive' and (storage.foldername(name))[1] = auth.uid()::text);
+
+drop policy if exists "Owners delete drive objects" on storage.objects;
+create policy "Owners delete drive objects"
+  on storage.objects for delete
+  using (bucket_id = 'drive' and (storage.foldername(name))[1] = auth.uid()::text);

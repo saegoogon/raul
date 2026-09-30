@@ -1,55 +1,43 @@
 import type { Metadata, Viewport } from "next";
-import { AppChrome } from "@/components/AppChrome";
 import "./globals.css";
 
-export const preferredRegion = ["icn1"];
-
 export const viewport: Viewport = {
-  themeColor: "#000000",
+  themeColor: "#0a0a0a",
   colorScheme: "dark",
 };
+
+const description = "BlackSmile Cloud — store, organize, and share your files from anywhere.";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.blacksmile.co.kr"),
   title: {
-    default: "BlackSmile",
-    template: "%s · BlackSmile",
+    default: "BlackSmile Cloud",
+    template: "%s · BlackSmile Cloud",
   },
-  description: "BlackSmile — find why you are smiling.",
-  applicationName: "BlackSmile",
+  description,
+  applicationName: "BlackSmile Cloud",
   alternates: {
     canonical: "https://www.blacksmile.co.kr",
   },
   openGraph: {
-    title: "BlackSmile",
-    description: "A small smile can change your world. Find why you are smiling.",
-    siteName: "BlackSmile",
+    title: "BlackSmile Cloud",
+    description,
+    siteName: "BlackSmile Cloud",
     type: "website",
     locale: "en_US",
     url: "https://www.blacksmile.co.kr",
-    images: [
-      {
-        url: "/brand/blacksmile-logo.png",
-        width: 1024,
-        height: 1024,
-        alt: "BlackSmile",
-      },
-    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "BlackSmile",
-    description: "A small smile can change your world. Find why you are smiling.",
-    images: ["/brand/blacksmile-logo.png"],
+    title: "BlackSmile Cloud",
+    description,
   },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className="h-full">
-      <body className="flex min-h-full flex-col bg-night text-paper">
-        <AppChrome>{children}</AppChrome>
-      </body>
+      <body className="flex min-h-full flex-col bg-night text-paper">{children}</body>
     </html>
   );
 }

@@ -47,7 +47,7 @@ export async function signUp(_prev: AuthState, formData: FormData): Promise<Auth
         "Account created, but email confirm is on. Turn it off in Supabase, then log in.",
     };
   }
-  redirect("/");
+  redirect("/drive");
 }
 
 export async function signIn(_prev: AuthState, formData: FormData): Promise<AuthState> {
@@ -64,7 +64,7 @@ export async function signIn(_prev: AuthState, formData: FormData): Promise<Auth
   const { error } = await supabase.auth.signInWithPassword({ email, password });
 
   if (error) return { error: toAuthError(error.message) };
-  redirect("/");
+  redirect("/drive");
 }
 
 export async function signOut() {

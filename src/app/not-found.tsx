@@ -1,27 +1,19 @@
-import { Mascot } from "@/components/Mascot";
-import { BrandMark } from "@/components/BrandMark";
+import Link from "next/link";
+import { Icon } from "@/components/drive/Icon";
 
 export default function NotFound() {
   return (
-    <div className="buddy-scene flex flex-col items-center px-4 py-16 text-center">
-      <div className="buddy-stage">
-        <Mascot size="xl" pose="sleep" priority className="buddy-breathe" />
-        <span className="buddy-zzz" aria-hidden>
-          z<span>z</span>
-          <span>z</span>
-        </span>
-        <span className="buddy-shadow buddy-shadow-sleep" aria-hidden />
+    <div className="flex flex-1 flex-col items-center justify-center gap-4 px-4 py-24 text-center">
+      <div className="flex h-16 w-16 items-center justify-center rounded-full bg-ink text-mute">
+        <Icon name="search" size={30} />
       </div>
-      <p className="mt-6">
-        <BrandMark />
+      <h1 className="text-2xl font-semibold">Nothing here</h1>
+      <p className="max-w-xs text-sm text-mute">
+        This page or file doesn&apos;t exist, was moved, or the link was turned off.
       </p>
-      <h1 className="mt-2 text-xl">Page not found</h1>
-      <p className="mt-2 max-w-sm text-sm text-mute">
-        This moment is gone, or the link is wrong.
-      </p>
-      <a href="/" className="btn-primary mt-6 text-sm">
-        Back to tonight
-      </a>
+      <Link href="/" className="btn-primary mt-2">
+        Go home
+      </Link>
     </div>
   );
 }
