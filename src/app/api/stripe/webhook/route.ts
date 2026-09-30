@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { getStripe } from "@/lib/stripe";
-import { TRUE_NIGHT_PRODUCT } from "@/lib/story/types";
+import { FULL_GAME_PRODUCT } from "@/lib/story/types";
 import { createAdminClient } from "@/lib/supabase/admin";
 
 export const runtime = "nodejs";
@@ -29,8 +29,8 @@ export async function POST(request: Request) {
     const session = event.data.object;
     const userId =
       session.metadata?.userId ?? session.client_reference_id ?? null;
-    const product = session.metadata?.product ?? TRUE_NIGHT_PRODUCT;
-    if (userId) {
+    const product = session.metadata?.product ?? FULL_GAME_PRODUCT;
+    if (userId && session.payment_status === "paid") {
       const admin = createAdminClient();
       if (admin) {
         await admin.from("purchases").upsert(

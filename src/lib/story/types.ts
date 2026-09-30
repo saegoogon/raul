@@ -85,7 +85,8 @@ export type StorySave = {
 
 export const STORY_START = "n1";
 export const SAVE_KEY = "blacksmile-story-v3";
-export const TRUE_NIGHT_PRODUCT = "true-night";
+export const FULL_GAME_PRODUCT = "full-game";
+export const OWNED_PRODUCTS = [FULL_GAME_PRODUCT, "true-night"];
 
 export function emptySave(): StorySave {
   return { nodeId: STORY_START, flags: [], meter: 0 };

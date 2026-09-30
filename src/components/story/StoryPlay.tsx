@@ -82,8 +82,6 @@ export function StoryPlay({
   const [flags, setFlags] = useState<string[]>(fresh ? [] : (initial?.flags ?? []));
   const [meter, setMeter] = useState(fresh ? 0 : (initial?.meter ?? 0));
   const [shown, setShown] = useState("");
-  const [busy, setBusy] = useState(false);
-  const [shopError, setShopError] = useState<string | null>(null);
   const [paused, setPaused] = useState(false);
   const [muted, setMuted] = useState(false);
   const [cursor, setCursor] = useState(0);
@@ -221,30 +219,6 @@ export function StoryPlay({
     [addFlag, go],
   );
 
-  const buy = useCallback(async () => {
-    if (!loggedIn) {
-      window.location.href = "/login";
-      return;
-    }
-    setBusy(true);
-    setShopError(null);
-    try {
-      const response = await fetch("/api/stripe/checkout", { method: "POST" });
-      const data = (await response.json()) as { url?: string; error?: string };
-      if (data.url) {
-        window.location.href = data.url;
-        return;
-      }
-      setShopError(
-        data.error ?? "Payments are not connected yet. Add Stripe keys on Vercel.",
-      );
-    } catch {
-      setShopError("Could not start checkout.");
-    } finally {
-      setBusy(false);
-    }
-  }, [loggedIn]);
-
   const items: MenuItem[] = useMemo(() => {
     if (paused) {
       return [
@@ -289,13 +263,11 @@ export function StoryPlay({
       const shop: MenuItem[] = [
         {
           id: "buy",
-          label: paid
-            ? "True Night is open"
-            : busy
-              ? "Opening..."
-              : "Unlock True Night",
-          disabled: busy || paid,
-          run: () => void buy(),
+          label: paid ? "Full game unlocked" : "Get the full game",
+          disabled: paid,
+          run: () => {
+            window.location.assign("/shop");
+          },
         },
       ];
       if (paid) {
@@ -318,9 +290,7 @@ export function StoryPlay({
     shown.length,
     full.length,
     paid,
-    busy,
     go,
-    buy,
   ]);
 
   const advance = useCallback(() => {
@@ -454,7 +424,6 @@ export function StoryPlay({
               {item.label}
             </button>
           ))}
-          {shopError ? <p className="story-error">{shopError}</p> : null}
         </div>
       ) : null}
     </>

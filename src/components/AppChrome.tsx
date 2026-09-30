@@ -6,7 +6,7 @@ import { Providers } from "@/components/Providers";
 
 export function AppChrome({ children }: { children: ReactNode }) {
   const pathname = usePathname();
-  const game = pathname === "/" || pathname.startsWith("/play");
+  const game = pathname === "/" || pathname.startsWith("/play") || pathname.startsWith("/shop");
 
   if (game) {
     return <Providers>{children}</Providers>;

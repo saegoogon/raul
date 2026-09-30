@@ -63,6 +63,9 @@ export function TitleScreen({ cloudSave }: { cloudSave: boolean }) {
         >
           New Game
         </button>
+        <Link href="/shop" className="story-choice">
+          Full Game
+        </Link>
         {userId ? (
           <form action={signOut}>
             <button type="submit" className="story-choice">

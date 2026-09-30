@@ -1,6 +1,6 @@
 import { StoryPlay } from "@/components/story/StoryPlay";
 import { getCurrentUser } from "@/lib/user";
-import { getStorySave, hasTrueNight } from "@/lib/story/progress";
+import { getStorySave, ownsFullGame } from "@/lib/story/progress";
 import { emptySave } from "@/lib/story/types";
 
 export const metadata = {
@@ -15,7 +15,7 @@ export default async function PlayPage({
   const [{ new: fresh }, save, paid, user] = await Promise.all([
     searchParams,
     getStorySave(),
-    hasTrueNight(),
+    ownsFullGame(),
     getCurrentUser(),
   ]);
   const startNew = fresh === "1";

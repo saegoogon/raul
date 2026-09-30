@@ -585,10 +585,10 @@ export const STORY: Record<string, StoryNode> = {
     who: "jenny",
     shop: true,
     speaker: "Jenny",
-    text: "CHAPTER 1 COMPLETE. cores remaining: 5. secret remaining: 1. i am not that secret. probably. the second night costs a decision.",
+    text: "CHAPTER 1 COMPLETE. cores remaining: 5. secret remaining: 1. i am not that secret. probably. the rest of the night costs one decision. just one. i checked.",
     choices: [
       { label: "Replay chapter one.", next: "n1" },
-      { label: "Unlock True Night.", next: "shop-1" },
+      { label: "Keep going (full game).", next: "shop-1" },
     ],
   },
   "shop-1": {
@@ -597,7 +597,7 @@ export const STORY: Record<string, StoryNode> = {
     shop: true,
     paid: true,
     speaker: "Jenny",
-    text: "True Night is chapter two. hider will not give you the map. he will watch you guess. the first core is not in his pocket. i checked. twice.",
+    text: "the full game opens True Night and every chapter after it. one payment. no random boxes, no tricks. hider will not give you the map. he will watch you guess.",
     next: "c2-1",
   },
   "c2-1": {

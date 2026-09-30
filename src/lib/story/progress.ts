@@ -1,6 +1,6 @@
 import { cache } from "react";
 import { createClient } from "@/lib/supabase/server";
-import { TRUE_NIGHT_PRODUCT, type StorySave } from "@/lib/story/types";
+import { OWNED_PRODUCTS, type StorySave } from "@/lib/story/types";
 
 export const getStorySave = cache(async (): Promise<StorySave | null> => {
   try {
@@ -25,7 +25,7 @@ export const getStorySave = cache(async (): Promise<StorySave | null> => {
   }
 });
 
-export const hasTrueNight = cache(async () => {
+export const ownsFullGame = cache(async () => {
   try {
     const supabase = await createClient();
     const {
@@ -36,9 +36,9 @@ export const hasTrueNight = cache(async () => {
       .from("purchases")
       .select("id")
       .eq("user_id", user.id)
-      .eq("product", TRUE_NIGHT_PRODUCT)
-      .maybeSingle();
-    return !error && !!data;
+      .in("product", OWNED_PRODUCTS)
+      .limit(1);
+    return !error && !!data?.length;
   } catch {
     return false;
   }
