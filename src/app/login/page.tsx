@@ -7,7 +7,7 @@ import { getCurrentUser } from "@/lib/user";
 export const metadata = { title: "Log in" };
 
 export default async function LoginPage({ searchParams }: PageProps<"/login">) {
-  if (await getCurrentUser()) redirect("/drive");
+  if (await getCurrentUser()) redirect("/dashboard");
   const { error } = await searchParams;
   return (
     <AuthCard

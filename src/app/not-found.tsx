@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Icon } from "@/components/drive/Icon";
+import { Icon } from "@/components/Icon";
 
 export default function NotFound() {
   return (
@@ -8,9 +8,7 @@ export default function NotFound() {
         <Icon name="search" size={30} />
       </div>
       <h1 className="text-2xl font-semibold">Nothing here</h1>
-      <p className="max-w-xs text-sm text-mute">
-        This page or file doesn&apos;t exist, was moved, or the link was turned off.
-      </p>
+      <p className="max-w-xs text-sm text-mute">This page doesn&apos;t exist or the username was changed.</p>
       <Link href="/" className="btn-primary mt-2">
         Go home
       </Link>

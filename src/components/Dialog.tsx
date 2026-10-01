@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, type ReactNode } from "react";
-import { Icon } from "@/components/drive/Icon";
+import { Icon } from "@/components/Icon";
 
 export function Dialog({
   title,

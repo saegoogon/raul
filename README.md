@@ -1,6 +1,10 @@
-# BlackSmile Cloud
+# BlackSmile Links
 
-File storage at [blacksmile.co.kr](https://www.blacksmile.co.kr): upload, folders, preview, trash, and share links. Next.js 16 + Supabase (Auth, Postgres, Storage).
+Short links, a link-in-bio page, and click analytics at [blacksmile.co.kr](https://www.blacksmile.co.kr). Next.js 16 + Supabase (Auth, Postgres).
+
+- Short links: `blacksmile.co.kr/l/<code>`
+- Public page: `blacksmile.co.kr/@<username>`
+- Dashboard: `/dashboard` (links), `/dashboard/analytics`, `/dashboard/page`
 
 ## Setup
 
@@ -8,10 +12,6 @@ File storage at [blacksmile.co.kr](https://www.blacksmile.co.kr): upload, folder
 2. Set env vars (locally in `.env.local`, and on Vercel):
    - `NEXT_PUBLIC_SUPABASE_URL`
    - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
-   - `SUPABASE_SERVICE_ROLE_KEY` (server only, used for public share links)
 3. `npm install` and `npm run dev`.
 
-## Limits
-
-- 1 GB per account, 50 MB per file (`src/lib/drive.ts`).
-- Files live in the private `drive` bucket at `<user id>/<item id>` and are served through short-lived signed URLs.
+Public reads and click logging go through `security definer` functions (`follow_link`, `public_page`, `record_page_view`), so no service role key is needed.

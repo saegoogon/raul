@@ -1,54 +1,84 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { BrandMark } from "@/components/BrandMark";
-import { Icon, type IconName } from "@/components/drive/Icon";
+import { Icon, Logo, type IconName } from "@/components/Icon";
 import { getCurrentUser } from "@/lib/user";
 
 const FEATURES: { icon: IconName; title: string; body: string }[] = [
-  { icon: "upload", title: "Drag, drop, done", body: "Upload many files at once and watch each one finish." },
-  { icon: "folder", title: "Folders that stay tidy", body: "Nest folders, rename, move, and search in a click." },
-  { icon: "share", title: "Share with a link", body: "Turn on a link for any file or folder. Turn it off anytime." },
-  { icon: "image", title: "Preview in place", body: "Open photos, video, audio, PDFs, and text without downloading." },
+  { icon: "link", title: "Short links", body: "Turn any long URL into blacksmile.co.kr/l/… with your own code." },
+  { icon: "user", title: "One page for all", body: "A clean link-in-bio page at blacksmile.co.kr/@you." },
+  { icon: "chart", title: "Click analytics", body: "Daily clicks, referrers, countries, and devices for every link." },
+  { icon: "edit", title: "Change anytime", body: "Edit destinations, pause links, and reorder without new URLs." },
 ];
 
-export default async function Home() {
-  if (await getCurrentUser()) redirect("/drive");
+const DEMO = ["Latest video", "Shop my picks", "Newsletter", "Book a call"];
+
+export default async function Home({ searchParams }: PageProps<"/">) {
+  if (await getCurrentUser()) redirect("/dashboard");
+  const { missing } = await searchParams;
 
   return (
     <div className="flex min-h-dvh flex-col">
       <header className="mx-auto flex w-full max-w-6xl items-center justify-between px-5 py-5">
-        <span className="flex items-center gap-2 font-semibold">
-          <Icon name="cloud" size={22} filled />
-          <BrandMark /> <span className="text-mute">Cloud</span>
+        <span className="flex items-center gap-2.5 font-semibold">
+          <Logo />
+          <BrandMark /> <span className="text-mute">Links</span>
         </span>
         <nav className="flex items-center gap-2">
           <Link href="/login" className="btn-ghost">
             Log in
           </Link>
           <Link href="/signup" className="btn-primary">
-            Get started
+            Sign up free
           </Link>
         </nav>
       </header>
 
+      {missing ? (
+        <p className="mx-auto mt-2 rounded-full border border-line px-4 py-1.5 text-sm text-mute">
+          That link doesn&apos;t exist or was paused.
+        </p>
+      ) : null}
+
       <main className="mx-auto flex w-full max-w-6xl flex-1 flex-col px-5">
-        <section className="flex flex-col items-center py-20 text-center md:py-28">
-          <p className="mb-5 rounded-full border border-line px-4 py-1.5 text-xs text-mute">1 GB free for every account</p>
-          <h1 className="max-w-3xl text-4xl font-semibold tracking-tight md:text-6xl">
-            All your files.
-            <br />
-            <span className="text-mute">One quiet place.</span>
-          </h1>
-          <p className="mt-6 max-w-xl text-base text-mute md:text-lg">
-            BlackSmile Cloud keeps your documents, photos, and projects safe, organized, and ready to share from any device.
-          </p>
-          <div className="mt-9 flex flex-wrap justify-center gap-3">
-            <Link href="/signup" className="btn-primary px-6 py-3 text-base">
-              Create free account
-            </Link>
-            <Link href="/login" className="btn-ghost px-6 py-3 text-base">
-              I already have one
-            </Link>
+        <section className="grid items-center gap-12 py-16 md:grid-cols-[1.2fr_1fr] md:py-24">
+          <div>
+            <p className="mb-5 inline-block rounded-full border border-line px-4 py-1.5 text-xs text-mute">
+              Free while in beta
+            </p>
+            <h1 className="text-4xl font-semibold tracking-tight md:text-6xl">
+              Every link you share.
+              <br />
+              <span className="text-mute">Shorter, smarter, tracked.</span>
+            </h1>
+            <p className="mt-6 max-w-xl text-base text-mute md:text-lg">
+              Shorten URLs, build a link-in-bio page, and see exactly who clicks — all in one simple dashboard.
+            </p>
+            <div className="mt-9 flex flex-wrap gap-3">
+              <Link href="/signup" className="btn-primary px-6 py-3 text-base">
+                Create free account
+              </Link>
+              <Link href="/login" className="btn-ghost px-6 py-3 text-base">
+                Log in
+              </Link>
+            </div>
+          </div>
+
+          <div className="mx-auto w-full max-w-xs rounded-[2.5rem] border border-line bg-ink p-6 shadow-2xl">
+            <div className="flex flex-col items-center text-center">
+              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-paper text-2xl font-semibold text-night">
+                B
+              </div>
+              <p className="mt-3 font-semibold">BlackSmile</p>
+              <p className="text-xs text-mute">@blacksmile</p>
+            </div>
+            <ul className="mt-6 flex flex-col gap-2.5">
+              {DEMO.map((title) => (
+                <li key={title} className="rounded-2xl border border-line bg-night px-4 py-3 text-center text-sm">
+                  {title}
+                </li>
+              ))}
+            </ul>
           </div>
         </section>
 
@@ -65,9 +95,7 @@ export default async function Home() {
         </section>
       </main>
 
-      <footer className="border-t border-line py-6 text-center text-xs text-mute">
-        © {new Date().getFullYear()} BlackSmile
-      </footer>
+      <footer className="border-t border-line py-6 text-center text-xs text-mute">© BlackSmile</footer>
     </div>
   );
 }

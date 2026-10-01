@@ -6,30 +6,30 @@ export const viewport: Viewport = {
   colorScheme: "dark",
 };
 
-const description = "BlackSmile Cloud — store, organize, and share your files from anywhere.";
+const description = "BlackSmile Links ??store, organize, and share your files from anywhere.";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.blacksmile.co.kr"),
   title: {
-    default: "BlackSmile Cloud",
-    template: "%s · BlackSmile Cloud",
+    default: "BlackSmile Links",
+    template: "%s · BlackSmile Links",
   },
   description,
-  applicationName: "BlackSmile Cloud",
+  applicationName: "BlackSmile Links",
   alternates: {
     canonical: "https://www.blacksmile.co.kr",
   },
   openGraph: {
-    title: "BlackSmile Cloud",
+    title: "BlackSmile Links",
     description,
-    siteName: "BlackSmile Cloud",
+    siteName: "BlackSmile Links",
     type: "website",
     locale: "en_US",
     url: "https://www.blacksmile.co.kr",
   },
   twitter: {
     card: "summary_large_image",
-    title: "BlackSmile Cloud",
+    title: "BlackSmile Links",
     description,
   },
 };
