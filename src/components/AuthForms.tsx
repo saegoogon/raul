@@ -5,7 +5,7 @@ import { signIn, signUp } from "@/actions/auth";
 import { SocialLogin } from "@/components/SocialLogin";
 
 function Alert({ children }: { children: string }) {
-  return <p className="rounded-2xl border border-line bg-night px-3 py-2 text-sm text-mute">{children}</p>;
+  return <p className="text-sm text-warn">{children}</p>;
 }
 
 function Divider() {
@@ -21,7 +21,7 @@ function Divider() {
 function Field({ label, ...props }: { label: string } & React.InputHTMLAttributes<HTMLInputElement>) {
   return (
     <div>
-      <label htmlFor={props.id} className="mb-1.5 block text-sm font-medium">
+      <label htmlFor={props.id} className="mb-1.5 block text-sm text-mute">
         {label}
       </label>
       <input required className="field" {...props} />

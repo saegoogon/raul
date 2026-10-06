@@ -2,34 +2,36 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
 export const viewport: Viewport = {
-  themeColor: "#0a0a0a",
+  themeColor: "#0c0c0c",
   colorScheme: "dark",
 };
 
-const description = "BlackSmile Links ??store, organize, and share your files from anywhere.";
+const description = "Download BlackSmile AI, a desktop companion named Blacky for Windows.";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.blacksmile.co.kr"),
   title: {
-    default: "BlackSmile Links",
-    template: "%s · BlackSmile Links",
+    default: "BlackSmile AI",
+    template: "%s · BlackSmile AI",
   },
   description,
-  applicationName: "BlackSmile Links",
+  icons: {
+    icon: "/favicon.ico",
+  },
   alternates: {
     canonical: "https://www.blacksmile.co.kr",
   },
   openGraph: {
-    title: "BlackSmile Links",
+    title: "BlackSmile AI",
     description,
-    siteName: "BlackSmile Links",
+    siteName: "BlackSmile AI",
     type: "website",
     locale: "en_US",
     url: "https://www.blacksmile.co.kr",
   },
   twitter: {
     card: "summary_large_image",
-    title: "BlackSmile Links",
+    title: "BlackSmile AI",
     description,
   },
 };

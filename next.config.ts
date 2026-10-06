@@ -12,7 +12,9 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
-      { source: "/drive/:path*", destination: "/dashboard", permanent: false },
+      { source: "/drive/:path*", destination: "/", permanent: false },
+      { source: "/dashboard/:path*", destination: "/", permanent: false },
+      { source: "/dashboard", destination: "/", permanent: false },
       ...["/play", "/shop", "/rank", "/submit", "/post/:id", "/pay/:path*", "/u/:path*", "/s/:path*"].map((source) => ({
         source,
         destination: "/",

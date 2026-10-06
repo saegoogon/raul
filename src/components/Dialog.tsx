@@ -27,12 +27,12 @@ export function Dialog({
         role="dialog"
         aria-modal
         aria-label={title}
-        className="w-full max-w-md rounded-t-3xl border border-line bg-ink p-6 shadow-2xl sm:rounded-3xl"
+        className="w-full max-w-md border-t border-line bg-night p-6 sm:border"
         onClick={(event) => event.stopPropagation()}
       >
         <div className="mb-4 flex items-center justify-between gap-4">
-          <h2 className="truncate text-lg font-semibold">{title}</h2>
-          <button type="button" aria-label="Close" onClick={onClose} className="rounded-full p-1.5 text-mute hover:bg-night hover:text-paper">
+          <h2 className="truncate text-lg font-medium">{title}</h2>
+          <button type="button" aria-label="Close" onClick={onClose} className="text-mute hover:text-paper">
             <Icon name="close" size={18} />
           </button>
         </div>

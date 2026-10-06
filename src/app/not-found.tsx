@@ -1,15 +1,12 @@
 import Link from "next/link";
-import { Icon } from "@/components/Icon";
 
 export default function NotFound() {
   return (
-    <div className="flex flex-1 flex-col items-center justify-center gap-4 px-4 py-24 text-center">
-      <div className="flex h-16 w-16 items-center justify-center rounded-full bg-ink text-mute">
-        <Icon name="search" size={30} />
-      </div>
-      <h1 className="text-2xl font-semibold">Nothing here</h1>
-      <p className="max-w-xs text-sm text-mute">This page doesn&apos;t exist or the username was changed.</p>
-      <Link href="/" className="btn-primary mt-2">
+    <div className="flex flex-1 flex-col justify-center px-6 py-24 md:px-10">
+      <p className="text-sm text-mute">Blacky</p>
+      <h1 className="mt-3 text-lg font-medium">This page isn&apos;t here.</h1>
+      <p className="mt-3 max-w-xs text-sm text-mute">Maybe the address moved. I can take you back.</p>
+      <Link href="/" className="btn-ghost mt-8 w-fit px-0">
         Go home
       </Link>
     </div>

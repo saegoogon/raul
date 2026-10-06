@@ -1,0 +1,40 @@
+{
+  "name": "blacksmile-ai",
+  "version": "0.1.0",
+  "description": "A desktop AI companion that lives on your PC.",
+  "author": "BlackSmile",
+  "private": true,
+  "type": "module",
+  "main": "./out/main/index.js",
+  "scripts": {
+    "dev": "electron-vite dev",
+    "build": "electron-vite build",
+    "preview": "electron-vite preview",
+    "pack": "npm run build && electron-builder --win nsis",
+    "postinstall": "electron-builder install-app-deps"
+  },
+  "dependencies": {
+    "@electron-toolkit/utils": "^4.0.0",
+    "@react-three/fiber": "^9.8.1",
+    "better-sqlite3": "^12.4.1",
+    "framer-motion": "^12.23.24",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "three": "^0.186.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.1.14",
+    "@types/better-sqlite3": "^7.6.13",
+    "@types/node": "^24.7.2",
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.2",
+    "@types/three": "^0.186.0",
+    "@vitejs/plugin-react": "^5.0.4",
+    "electron": "^37.7.0",
+    "electron-builder": "^26.0.12",
+    "electron-vite": "^5.0.0",
+    "tailwindcss": "^4.1.14",
+    "typescript": "^5.9.3",
+    "vite": "^7.1.12"
+  }
+}

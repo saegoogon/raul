@@ -19,6 +19,7 @@ const PATHS = {
   phone: "M8 3h8v18H8zM11 18h2",
   search: "M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14zM20 20l-4-4",
   spark: "M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M6 18l2.5-2.5M15.5 8.5 18 6",
+  download: "M12 4v12M7 11l5 5 5-5M4 20h16",
 } as const;
 
 export type IconName = keyof typeof PATHS;
@@ -52,12 +53,11 @@ export function Icon({
 
 export function Logo({ size = 22 }: { size?: number }) {
   return (
-    <span
-      className="inline-flex items-center justify-center rounded-lg bg-paper text-night"
-      style={{ width: size, height: size }}
-      aria-hidden
-    >
-      <Icon name="link" size={size * 0.68} />
-    </span>
+    <svg width={size} height={size} viewBox="0 0 32 32" className="text-paper" aria-hidden>
+      <rect width="32" height="32" rx="8" fill="currentColor" />
+      <circle cx="11.2" cy="12.6" r="2.4" fill="#0c0c0c" />
+      <circle cx="20.8" cy="12.6" r="2.4" fill="#0c0c0c" />
+      <path d="M10 19c2.4 3.2 9.6 3.2 12 0" fill="none" stroke="#0c0c0c" strokeWidth="2.2" strokeLinecap="round" />
+    </svg>
   );
 }

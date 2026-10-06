@@ -7,7 +7,7 @@ import { getCurrentUser } from "@/lib/user";
 export const metadata = { title: "Create account" };
 
 export default async function SignUpPage() {
-  if (await getCurrentUser()) redirect("/dashboard");
+  if (await getCurrentUser()) redirect("/");
   return (
     <AuthCard
       title="Create account"
