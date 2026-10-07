@@ -1,5 +1,4 @@
 import type { Metadata, Viewport } from "next";
-import { CartFlash } from "@/components/cart/CartFlash";
 import { SiteFooter } from "@/components/footer/SiteFooter";
 import { SiteHeader } from "@/components/header/SiteHeader";
 import { Providers } from "@/components/providers";
@@ -11,7 +10,7 @@ export const viewport: Viewport = {
   colorScheme: "dark",
 };
 
-const description = "BlackSmile. Objects for the dark, with a mouth.";
+const description = "BlackSmile is a community. Rooms, posts, comments, and votes.";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.blacksmile.co.kr"),
@@ -52,7 +51,6 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           </div>
           <SiteFooter />
           <SearchOverlay />
-          <CartFlash />
         </Providers>
       </body>
     </html>

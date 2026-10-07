@@ -1,8 +1,8 @@
 # BlackSmile
 
-Shop at [blacksmile.co.kr](https://www.blacksmile.co.kr). Next.js 16 + Supabase Auth.
+Community at [blacksmile.co.kr](https://www.blacksmile.co.kr). Next.js 16 + Supabase Auth.
 
-Catalog data lives in `src/data/products.ts` so it can move to a database later. The bag is on this device for now (`localStorage`), behind `src/lib/cart`.
+Rooms, threads, replies, votes. Run `supabase/community.sql` in the Supabase SQL editor after profiles exist (`supabase/schema.sql` + `supabase/handle-new-user.sql`).
 
 ## Setup
 
