@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "BlackSmile AI";
+export const alt = "BlackSmile";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -13,19 +13,18 @@ export default function OpengraphImage() {
           height: "100%",
           display: "flex",
           flexDirection: "column",
-          justifyContent: "center",
-          padding: 96,
-          background: "#0a0a0a",
-          color: "#fafafa",
+          justifyContent: "flex-end",
+          padding: 80,
+          background: "#0c0c0c",
+          color: "#ecece8",
           fontFamily: "sans-serif",
         }}
       >
-        <div style={{ display: "flex", marginTop: 8, fontSize: 80, fontWeight: 700, letterSpacing: -2 }}>
-          BlackSmile <span style={{ color: "#9a9a9a", marginLeft: 24 }}>AI</span>
+        <div style={{ fontSize: 22, letterSpacing: 8, color: "#7a7a76" }}>BLACKSMILE</div>
+        <div style={{ marginTop: 18, fontSize: 72, fontWeight: 600, letterSpacing: -2, lineHeight: 1.05 }}>
+          The night smiles back.
         </div>
-        <div style={{ marginTop: 24, fontSize: 36, color: "#9a9a9a" }}>
-          Download Blacky for Windows.
-        </div>
+        <div style={{ marginTop: 20, fontSize: 28, color: "#f2d84a" }}>Shop the grin.</div>
       </div>
     ),
     size,

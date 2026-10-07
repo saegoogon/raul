@@ -1,4 +1,9 @@
 import type { Metadata, Viewport } from "next";
+import { CartFlash } from "@/components/cart/CartFlash";
+import { SiteFooter } from "@/components/footer/SiteFooter";
+import { SiteHeader } from "@/components/header/SiteHeader";
+import { Providers } from "@/components/providers";
+import { SearchOverlay } from "@/components/search/SearchOverlay";
 import "./globals.css";
 
 export const viewport: Viewport = {
@@ -6,13 +11,13 @@ export const viewport: Viewport = {
   colorScheme: "dark",
 };
 
-const description = "Download BlackSmile AI, a desktop companion named Blacky for Windows.";
+const description = "BlackSmile. Objects for the dark, with a mouth.";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.blacksmile.co.kr"),
   title: {
-    default: "BlackSmile AI",
-    template: "%s · BlackSmile AI",
+    default: "BlackSmile",
+    template: "%s · BlackSmile",
   },
   description,
   icons: {
@@ -22,16 +27,16 @@ export const metadata: Metadata = {
     canonical: "https://www.blacksmile.co.kr",
   },
   openGraph: {
-    title: "BlackSmile AI",
+    title: "BlackSmile",
     description,
-    siteName: "BlackSmile AI",
+    siteName: "BlackSmile",
     type: "website",
     locale: "en_US",
     url: "https://www.blacksmile.co.kr",
   },
   twitter: {
     card: "summary_large_image",
-    title: "BlackSmile AI",
+    title: "BlackSmile",
     description,
   },
 };
@@ -39,7 +44,17 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className="h-full">
-      <body className="flex min-h-full flex-col bg-night text-paper">{children}</body>
+      <body className="flex min-h-full flex-col bg-night text-paper">
+        <Providers>
+          <SiteHeader />
+          <div className="site-main" id="main">
+            {children}
+          </div>
+          <SiteFooter />
+          <SearchOverlay />
+          <CartFlash />
+        </Providers>
+      </body>
     </html>
   );
 }

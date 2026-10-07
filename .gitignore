@@ -17,15 +17,8 @@
 /.next/
 /out/
 
-# desktop (Electron)
-/desktop/out/
-/desktop/dist/
-/desktop/release/
-/desktop/node_modules/
-
-# agent installer (too large for git; served locally / via GitHub Releases)
-/public/downloads/*.exe
-/public/downloads/*.blockmap
+# leftover Electron folder (locked binaries after agent removal)
+/desktop/
 
 # production
 /build

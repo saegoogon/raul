@@ -15,7 +15,7 @@ const nextConfig: NextConfig = {
       { source: "/drive/:path*", destination: "/", permanent: false },
       { source: "/dashboard/:path*", destination: "/", permanent: false },
       { source: "/dashboard", destination: "/", permanent: false },
-      ...["/play", "/shop", "/rank", "/submit", "/post/:id", "/pay/:path*", "/u/:path*", "/s/:path*"].map((source) => ({
+      ...["/play", "/rank", "/submit", "/post/:id", "/pay/:path*", "/u/:path*", "/s/:path*"].map((source) => ({
         source,
         destination: "/",
         permanent: false,

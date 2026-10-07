@@ -1,14 +1,15 @@
 import Link from "next/link";
+import { Grin } from "@/components/mascot/Grin";
 
 export default function NotFound() {
   return (
-    <div className="flex flex-1 flex-col justify-center px-6 py-24 md:px-10">
-      <p className="text-sm text-mute">Blacky</p>
-      <h1 className="mt-3 text-lg font-medium">This page isn&apos;t here.</h1>
-      <p className="mt-3 max-w-xs text-sm text-mute">Maybe the address moved. I can take you back.</p>
-      <Link href="/" className="btn-ghost mt-8 w-fit px-0">
-        Go home
+    <main className="page-pad empty" style={{ maxWidth: 28 * 16 }}>
+      <Grin size={64} />
+      <h1 className="page-title">This hallway is empty.</h1>
+      <p className="lede">The page is missing. You are not. The grin still works.</p>
+      <Link href="/shop" className="btn-primary" style={{ marginTop: 20 }}>
+        Back to the shop
       </Link>
-    </div>
+    </main>
   );
 }
