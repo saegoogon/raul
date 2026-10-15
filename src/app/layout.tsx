@@ -10,7 +10,7 @@ export const viewport: Viewport = {
   colorScheme: "dark",
 };
 
-const description = "BlackSmile is a community. Rooms, posts, comments, and votes.";
+const description = "BlackSmile. A dark GitHub. Talk, paste, feel.";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.blacksmile.co.kr"),

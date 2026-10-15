@@ -1,18 +1,18 @@
 "use client";
 
 import { useActionState } from "react";
-import { createComment } from "@/actions/community";
+import { createComment } from "@/actions/snippets";
 
-export function CommentForm({ postId, parentId, compact }: { postId: string; parentId?: string; compact?: boolean }) {
+export function CommentForm({ snippetId, parentId, compact }: { snippetId: string; parentId?: string; compact?: boolean }) {
   const [state, action, pending] = useActionState(createComment, null);
   return (
     <form action={action} className={compact ? "reply-form" : "composer"}>
-      <input type="hidden" name="postId" value={postId} />
+      <input type="hidden" name="snippetId" value={snippetId} />
       {parentId ? <input type="hidden" name="parentId" value={parentId} /> : null}
-      <textarea name="body" className="field" rows={compact ? 2 : 4} required placeholder={compact ? "Reply" : "Write a reply"} />
+      <textarea name="body" className="field" rows={compact ? 2 : 4} required placeholder={compact ? "Reply" : "Write a comment"} />
       {state?.error ? <p className="text-sm text-warn">{state.error}</p> : null}
       <button type="submit" className="btn-ghost" disabled={pending}>
-        {pending ? "Sending…" : compact ? "Reply" : "Reply"}
+        {pending ? "Posting…" : "Reply"}
       </button>
     </form>
   );

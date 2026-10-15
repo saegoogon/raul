@@ -1,8 +1,10 @@
 import Link from "next/link";
-import { PostRow } from "@/components/community/PostRow";
-import { SetupNote } from "@/components/community/SetupNote";
-import { SortLinks } from "@/components/community/SortLinks";
-import { listPosts, listRooms } from "@/lib/community/queries";
+import { NightRail } from "@/components/snippets/NightRail";
+import { SetupNote } from "@/components/snippets/SetupNote";
+import { SnippetRow } from "@/components/snippets/SnippetRow";
+import { SortLinks } from "@/components/snippets/SortLinks";
+import { isLanguage } from "@/lib/snippets/languages";
+import { listSnippets, weekBoard } from "@/lib/snippets/queries";
 import { getCurrentUser } from "@/lib/user";
 
 export default async function Home({
@@ -12,19 +14,22 @@ export default async function Home({
 }) {
   const params = await searchParams;
   const sort = params.sort === "new" ? "new" : "hot";
+  const language = typeof params.lang === "string" && isLanguage(params.lang) ? params.lang : undefined;
   const user = await getCurrentUser();
-  const [{ posts, status }, { rooms }] = await Promise.all([listPosts({ sort }), listRooms()]);
+  const [{ snippets, status }, board] = await Promise.all([listSnippets({ sort, language }), weekBoard()]);
+  const sortBase = language ? `/?lang=${language}` : "/";
 
   return (
     <main className="page-pad feed-layout">
       <section>
         <header className="feed-hero">
-          <h1>BlackSmile</h1>
-          <p className="lede">A community. Rooms, posts, comments, and votes.</p>
+          <p className="kicker">after hours</p>
+          <h1>A dark GitHub.</h1>
+          <p className="lede">A night board for people who write code. Talk, paste, feel.</p>
           <div className="hero-actions">
             {user ? (
-              <Link href="/submit" className="btn-primary">
-                New post
+              <Link href="/new" className="btn-primary">
+                New
               </Link>
             ) : (
               <Link href="/signup" className="btn-primary">
@@ -37,35 +42,18 @@ export default async function Home({
           </div>
         </header>
         <SetupNote status={status} />
-        <SortLinks base="/" sort={sort} />
-        {posts.length ? (
-          <div className="feed">
-            {posts.map((post) => (
-              <PostRow key={post.id} post={post} />
+        <SortLinks base={sortBase} sort={sort} />
+        {snippets.length ? (
+          <div className="issue-list">
+            {snippets.map((snippet) => (
+              <SnippetRow key={snippet.id} snippet={snippet} />
             ))}
           </div>
         ) : status === "ok" ? (
           <p className="mute">No posts yet.</p>
         ) : null}
       </section>
-      <aside className="room-rail">
-        <h2>Rooms</h2>
-        <ul>
-          {rooms.map((room) => (
-            <li key={room.id}>
-              <Link href={`/in/${room.slug}`}>
-                <strong>in/{room.slug}</strong>
-                <span>{room.description}</span>
-              </Link>
-            </li>
-          ))}
-        </ul>
-        {user ? (
-          <Link href="/rooms/new" className="btn-ghost">
-            Create a room
-          </Link>
-        ) : null}
-      </aside>
+      <NightRail top={board.top} trends={board.trends} />
     </main>
   );
 }

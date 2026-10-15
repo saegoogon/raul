@@ -1,32 +1,24 @@
-export type Room = {
-  id: string;
-  slug: string;
-  name: string;
-  description: string;
-  createdAt: string;
-};
+import type { Language } from "@/lib/snippets/languages";
 
-export type Post = {
+export type Snippet = {
   id: string;
   title: string;
-  body: string;
-  url: string | null;
-  score: number;
+  language: Language;
+  code: string;
+  note: string;
+  starCount: number;
   commentCount: number;
   createdAt: string;
-  room: { slug: string; name: string };
   author: { username: string };
-  myVote: number;
+  starred: boolean;
 };
 
 export type Comment = {
   id: string;
   body: string;
-  score: number;
   createdAt: string;
   parentId: string | null;
   author: { username: string };
-  myVote: number;
 };
 
 export type FeedSort = "hot" | "new";

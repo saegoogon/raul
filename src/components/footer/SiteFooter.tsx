@@ -6,7 +6,6 @@ export function SiteFooter() {
       <p className="footer-mark">BLACKSMILE</p>
       <nav className="footer-nav">
         <Link href="/">Feed</Link>
-        <Link href="/rooms">Rooms</Link>
         <Link href="/about">About</Link>
         <Link href="/account">Account</Link>
       </nav>

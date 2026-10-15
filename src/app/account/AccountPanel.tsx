@@ -21,7 +21,7 @@ export function AccountPanel({
         ) : null}
         <div className="hero-actions" style={{ marginTop: 12 }}>
           {email ? (
-            <Link href="/submit" className="btn-primary">
+            <Link href="/new" className="btn-primary">
               New post
             </Link>
           ) : (

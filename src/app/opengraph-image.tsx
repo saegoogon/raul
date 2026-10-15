@@ -22,9 +22,9 @@ export default function OpengraphImage() {
       >
         <div style={{ fontSize: 22, letterSpacing: 8, color: "#7a7a76" }}>BLACKSMILE</div>
         <div style={{ marginTop: 18, fontSize: 72, fontWeight: 600, letterSpacing: -2, lineHeight: 1.05 }}>
-          Community
+          A dark GitHub.
         </div>
-        <div style={{ marginTop: 20, fontSize: 28, color: "#f2d84a" }}>Rooms, posts, comments.</div>
+        <div style={{ marginTop: 20, fontSize: 28, color: "#f2d84a" }}>Developers talk here.</div>
       </div>
     ),
     size,

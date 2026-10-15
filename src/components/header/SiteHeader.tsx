@@ -8,7 +8,6 @@ import { useSearch } from "@/components/search/SearchProvider";
 
 const NAV = [
   { href: "/", label: "Feed" },
-  { href: "/rooms", label: "Rooms" },
   { href: "/about", label: "About" },
 ];
 
@@ -30,7 +29,7 @@ export function SiteHeader() {
         </Link>
 
         {chrome ? (
-          <nav className="site-nav" aria-label="Community">
+          <nav className="site-nav" aria-label="Site">
             {NAV.map((item) => (
               <Link key={item.label} href={item.href} className="nav-link">
                 {item.label}
@@ -45,7 +44,7 @@ export function SiteHeader() {
               <button type="button" className="icon-btn" aria-label="Search" onClick={search.show}>
                 <Icon name="search" size={18} />
               </button>
-              <Link href="/submit" className="icon-btn" aria-label="New post">
+              <Link href="/new" className="icon-btn" aria-label="New post">
                 <Icon name="plus" size={18} />
               </Link>
               <Link href="/account" className="icon-btn" aria-label="Account">
@@ -70,8 +69,8 @@ export function SiteHeader() {
               {item.label}
             </Link>
           ))}
-          <Link href="/submit" onClick={() => setMenu(false)}>
-            Post
+          <Link href="/new" onClick={() => setMenu(false)}>
+            New
           </Link>
         </nav>
       ) : null}

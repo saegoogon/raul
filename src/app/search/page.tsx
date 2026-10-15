@@ -1,5 +1,5 @@
-import { PostRow } from "@/components/community/PostRow";
-import { listPosts } from "@/lib/community/queries";
+import { SnippetRow } from "@/components/snippets/SnippetRow";
+import { listSnippets } from "@/lib/snippets/queries";
 
 export const metadata = { title: "Search" };
 
@@ -10,23 +10,23 @@ export default async function SearchPage({
 }) {
   const params = await searchParams;
   const q = String(params.q ?? "").trim();
-  const { posts } = q ? await listPosts({ q, sort: "new" }) : { posts: [] };
+  const { snippets } = q ? await listSnippets({ q, sort: "new" }) : { snippets: [] };
 
   return (
     <main className="page-pad">
       <h1 className="page-title">{q ? `“${q}”` : "Search"}</h1>
       <form className="search-form" action="/search">
-        <input name="q" defaultValue={q} className="search-input" placeholder="Search posts" />
+        <input name="q" defaultValue={q} className="search-input" placeholder="Search" />
         <button type="submit" className="btn-ghost">
           Search
         </button>
       </form>
-      <div className="feed">
-        {posts.map((post) => (
-          <PostRow key={post.id} post={post} />
+      <div className="issue-list">
+        {snippets.map((snippet) => (
+          <SnippetRow key={snippet.id} snippet={snippet} />
         ))}
       </div>
-      {q && !posts.length ? <p className="mute">No matching posts.</p> : null}
+      {q && !snippets.length ? <p className="mute">No matching posts.</p> : null}
     </main>
   );
 }

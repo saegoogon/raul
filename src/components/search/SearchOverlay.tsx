@@ -33,7 +33,7 @@ export function SearchOverlay() {
           ref={input}
           value={q}
           onChange={(event) => setQ(event.target.value)}
-          placeholder="Search posts"
+          placeholder="Search"
           className="search-input"
           aria-label="Search BlackSmile"
         />
@@ -42,7 +42,7 @@ export function SearchOverlay() {
         </button>
       </form>
       <p className="mute" style={{ marginTop: 24 }}>
-        Searches post titles and text.
+        Search posts and code.
       </p>
     </div>
   );

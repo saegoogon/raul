@@ -5,7 +5,7 @@ export function SortLinks({ base, sort }: { base: string; sort: string }) {
   return (
     <div className="sort-links">
       <Link href={base} className={sort !== "new" ? "is-on" : ""}>
-        Hot
+        Popular
       </Link>
       <Link href={`${base}${join}sort=new`} className={sort === "new" ? "is-on" : ""}>
         New

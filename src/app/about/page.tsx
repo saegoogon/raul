@@ -4,8 +4,9 @@ export default function AboutPage() {
   return (
     <main className="page-pad about-body">
       <h1 className="page-title">BlackSmile</h1>
-      <p>BlackSmile is a community. People post in rooms, comment, and vote.</p>
-      <p>Anyone can read. You need an account to post. Rooms live at in/lounge, in/night, in/seoul, and others you create.</p>
+      <p>A dark GitHub. A night board for developers.</p>
+      <p>Post a thought. Upload code if you want. Feel a post. See this week’s top 3 and what’s moving.</p>
+      <p>Anyone can read. You need an account to post, comment, or feel.</p>
       <p>Seoul. blacksmile.co.kr</p>
     </main>
   );

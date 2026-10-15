@@ -21,7 +21,13 @@ const nextConfig: NextConfig = {
       { source: "/cart", destination: "/", permanent: false },
       { source: "/checkout", destination: "/", permanent: false },
       { source: "/checkout/:path*", destination: "/", permanent: false },
-      ...["/play", "/rank", "/pay/:path*", "/s/:path*"].map((source) => ({
+      { source: "/in", destination: "/", permanent: false },
+      { source: "/in/:path*", destination: "/", permanent: false },
+      { source: "/rooms", destination: "/", permanent: false },
+      { source: "/rooms/:path*", destination: "/", permanent: false },
+      { source: "/submit", destination: "/new", permanent: false },
+      { source: "/post/:id", destination: "/", permanent: false },
+      ...["/play", "/rank", "/pay/:path*"].map((source) => ({
         source,
         destination: "/",
         permanent: false,

@@ -1,8 +1,8 @@
 # BlackSmile
 
-Community at [blacksmile.co.kr](https://www.blacksmile.co.kr). Next.js 16 + Supabase Auth.
+A dark GitHub at [blacksmile.co.kr](https://www.blacksmile.co.kr). Next.js 16 + Supabase Auth.
 
-Rooms, threads, replies, votes. Run `supabase/community.sql` in the Supabase SQL editor after profiles exist (`supabase/schema.sql` + `supabase/handle-new-user.sql`).
+Night board for people who write code. Posts, optional code (paste or file), Feel, this week’s top 3, trends. Run `supabase/snippets.sql` in the Supabase SQL editor after profiles exist (`supabase/schema.sql` + `supabase/handle-new-user.sql`).
 
 ## Setup
 

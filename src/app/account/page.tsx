@@ -1,6 +1,6 @@
 import { AccountPanel } from "@/app/account/AccountPanel";
 import { signOut } from "@/actions/auth";
-import { getProfileById } from "@/lib/community/queries";
+import { getProfileById } from "@/lib/snippets/queries";
 import { getCurrentUser } from "@/lib/user";
 
 export const metadata = { title: "Account" };
