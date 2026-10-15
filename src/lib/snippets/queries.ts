@@ -57,7 +57,7 @@ export async function listSnippets(options: {
   sort?: FeedSort;
   since?: string;
   limit?: number;
-}) {
+}): Promise<{ snippets: Snippet[]; status: SnippetStatus }> {
   const supabase = await db();
   if (!supabase) return { snippets: [] as Snippet[], status: "offline" as SnippetStatus };
   const user = await getCurrentUser();
@@ -80,7 +80,7 @@ export async function listSnippets(options: {
       ? query.order("created_at", { ascending: false })
       : query.order("star_count", { ascending: false }).order("created_at", { ascending: false });
   const { data, error } = await query.limit(options.limit ?? 40);
-  if (error) return { snippets: [], status: isMissingTable(error) ? "missing" : "offline" };
+  if (error) return { snippets: [], status: (isMissingTable(error) ? "missing" : "offline") as SnippetStatus };
 
   const rows = (data ?? []) as SnippetRow[];
   const stars = user ? await myStars(supabase, user.id, rows.map((row) => row.id)) : {};
@@ -90,12 +90,16 @@ export async function listSnippets(options: {
   };
 }
 
-export async function getSnippet(id: string) {
+export async function getSnippet(id: string): Promise<{
+  snippet: Snippet | null;
+  comments: Comment[];
+  status: SnippetStatus;
+}> {
   const supabase = await db();
   if (!supabase) return { snippet: null as Snippet | null, comments: [] as Comment[], status: "offline" as SnippetStatus };
   const user = await getCurrentUser();
   const { data, error } = await supabase.from("snippets").select(SNIPPET_SELECT).eq("id", id).maybeSingle();
-  if (error) return { snippet: null, comments: [], status: isMissingTable(error) ? "missing" : "offline" };
+  if (error) return { snippet: null, comments: [], status: (isMissingTable(error) ? "missing" : "offline") as SnippetStatus };
   if (!data) return { snippet: null, comments: [], status: "ok" as SnippetStatus };
   const stars = user ? await myStars(supabase, user.id, [id]) : {};
   const snippet = mapSnippet(data as SnippetRow, Boolean(stars[id]));
