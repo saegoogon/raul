@@ -23,8 +23,10 @@ export default async function Home({
     <main className="page-pad feed-layout">
       <section>
         <header className="feed-hero">
-          <p className="kicker">after hours</p>
-          <h1>A dark GitHub.</h1>
+          <p className="kicker">root@blacksmile:~$</p>
+          <h1 className="glitch-title" data-text="A dark GitHub.">
+            A dark GitHub.<span className="caret" aria-hidden />
+          </h1>
           <p className="lede">A night board for people who write code. Talk, paste, feel.</p>
           <div className="hero-actions">
             {user ? (

@@ -1,12 +1,19 @@
 import type { Metadata, Viewport } from "next";
+import { Fira_Code } from "next/font/google";
 import { SiteFooter } from "@/components/footer/SiteFooter";
 import { SiteHeader } from "@/components/header/SiteHeader";
 import { Providers } from "@/components/providers";
 import { SearchOverlay } from "@/components/search/SearchOverlay";
 import "./globals.css";
 
+const fira = Fira_Code({
+  subsets: ["latin"],
+  variable: "--font-mono",
+  display: "swap",
+});
+
 export const viewport: Viewport = {
-  themeColor: "#0c0c0c",
+  themeColor: "#0a0a0a",
   colorScheme: "dark",
 };
 
@@ -42,8 +49,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className="h-full">
-      <body className="flex min-h-full flex-col bg-night text-paper">
+    <html lang="en" className={`${fira.variable} h-full`}>
+      <body className={`${fira.className} flex min-h-full flex-col bg-night text-paper`}>
         <Providers>
           <SiteHeader />
           <div className="site-main" id="main">

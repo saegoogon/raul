@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import { GlitchText } from "@/components/GlitchText";
 import { Icon, Logo } from "@/components/Icon";
 import { useSearch } from "@/components/search/SearchProvider";
 
@@ -25,7 +26,8 @@ export function SiteHeader() {
       <div className="site-header-bar">
         <Link href="/" className="brand" onClick={() => setMenu(false)}>
           <Logo size={18} />
-          <span>BLACKSMILE</span>
+          <GlitchText text="BLACKSMILE" />
+          <span className="caret" aria-hidden />
         </Link>
 
         {chrome ? (
