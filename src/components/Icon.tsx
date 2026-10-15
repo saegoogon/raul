@@ -54,13 +54,4 @@ export function Icon({
   );
 }
 
-export function Logo({ size = 22 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 32 32" className="text-paper" aria-hidden>
-      <rect width="32" height="32" fill="#00ff66" />
-      <rect x="8" y="10" width="4" height="4" fill="#0a0a0a" />
-      <rect x="20" y="10" width="4" height="4" fill="#0a0a0a" />
-      <path d="M9 20h14" fill="none" stroke="#0a0a0a" strokeWidth="2.2" />
-    </svg>
-  );
-}
+export { HoodFace as Logo } from "@/components/mascot/Hood";

@@ -313,12 +313,14 @@ textarea {
   outline: none;
 }
 
-.grin-mascot {
+.grin-mascot,
+.hood-mascot {
   margin: 0 0 1rem;
   color: var(--color-paper);
 }
 
-.grin-mascot figcaption {
+.grin-mascot figcaption,
+.hood-mascot figcaption {
   margin-top: 0.6rem;
   color: var(--color-mute);
   font-size: 0.9rem;

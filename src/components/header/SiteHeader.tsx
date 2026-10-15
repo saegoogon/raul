@@ -25,7 +25,7 @@ export function SiteHeader() {
       </a>
       <div className="site-header-bar">
         <Link href="/" className="brand" onClick={() => setMenu(false)}>
-          <Logo size={18} />
+          <Logo size={26} />
           <GlitchText text="BLACKSMILE" />
           <span className="caret" aria-hidden />
         </Link>
