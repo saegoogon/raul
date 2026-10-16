@@ -1,10 +1,16 @@
 import { createClient } from "@/lib/supabase/server";
 import { getCurrentUser } from "@/lib/user";
-import { isMissingTable } from "@/lib/snippets/errors";
+import { isMissingTable, isQueryError } from "@/lib/snippets/errors";
 import { isLanguage } from "@/lib/snippets/languages";
 import type { Comment, FeedSort, Snippet } from "@/lib/snippets/types";
 
-export type SnippetStatus = "ok" | "missing" | "offline";
+export type SnippetStatus = "ok" | "missing" | "offline" | "query";
+
+function statusFromError(error: { message?: string; code?: string } | null): SnippetStatus {
+  if (isMissingTable(error)) return "missing";
+  if (isQueryError(error)) return "query";
+  return "offline";
+}
 
 type SnippetRow = {
   id: string;
@@ -48,7 +54,8 @@ async function db() {
   }
 }
 
-const SNIPPET_SELECT = "id, title, language, code, note, star_count, comment_count, created_at, profiles ( username )";
+const SNIPPET_SELECT =
+  "id, title, language, code, note, star_count, comment_count, created_at, profiles!author_id ( username )";
 
 export async function listSnippets(options: {
   username?: string;
@@ -80,7 +87,7 @@ export async function listSnippets(options: {
       ? query.order("created_at", { ascending: false })
       : query.order("star_count", { ascending: false }).order("created_at", { ascending: false });
   const { data, error } = await query.limit(options.limit ?? 40);
-  if (error) return { snippets: [], status: (isMissingTable(error) ? "missing" : "offline") as SnippetStatus };
+  if (error) return { snippets: [], status: statusFromError(error) };
 
   const rows = (data ?? []) as SnippetRow[];
   const stars = user ? await myStars(supabase, user.id, rows.map((row) => row.id)) : {};
@@ -99,7 +106,7 @@ export async function getSnippet(id: string): Promise<{
   if (!supabase) return { snippet: null as Snippet | null, comments: [] as Comment[], status: "offline" as SnippetStatus };
   const user = await getCurrentUser();
   const { data, error } = await supabase.from("snippets").select(SNIPPET_SELECT).eq("id", id).maybeSingle();
-  if (error) return { snippet: null, comments: [], status: (isMissingTable(error) ? "missing" : "offline") as SnippetStatus };
+  if (error) return { snippet: null, comments: [], status: statusFromError(error) };
   if (!data) return { snippet: null, comments: [], status: "ok" as SnippetStatus };
   const stars = user ? await myStars(supabase, user.id, [id]) : {};
   const snippet = mapSnippet(data as SnippetRow, Boolean(stars[id]));
@@ -110,7 +117,7 @@ export async function getSnippet(id: string): Promise<{
 async function listComments(supabase: NonNullable<Awaited<ReturnType<typeof db>>>, snippetId: string) {
   const { data } = await supabase
     .from("snippet_comments")
-    .select("id, body, created_at, parent_id, profiles ( username )")
+    .select("id, body, created_at, parent_id, profiles!author_id ( username )")
     .eq("snippet_id", snippetId)
     .order("created_at", { ascending: true });
   return (data ?? [])

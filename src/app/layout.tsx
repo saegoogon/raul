@@ -28,10 +28,12 @@ export const metadata: Metadata = {
   description,
   icons: {
     icon: [
-      { url: "/favicon.ico", sizes: "any" },
-      { url: "/favicon.png", type: "image/png", sizes: "256x256" },
+      { url: "/favicon.ico?v=hood3", sizes: "any" },
+      { url: "/favicon-16.png?v=hood3", type: "image/png", sizes: "16x16" },
+      { url: "/favicon-32.png?v=hood3", type: "image/png", sizes: "32x32" },
+      { url: "/favicon.png?v=hood3", type: "image/png", sizes: "256x256" },
     ],
-    apple: "/apple-icon.png",
+    apple: [{ url: "/apple-touch-icon.png?v=hood3", sizes: "180x180", type: "image/png" }],
   },
   alternates: {
     canonical: "https://www.blacksmile.co.kr",

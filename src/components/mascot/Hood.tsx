@@ -7,7 +7,7 @@ export function HoodFace({
 }) {
   return (
     // eslint-disable-next-line @next/next/no-img-element
-    <img src="/favicon.png" width={size} height={size} alt="" aria-hidden className="hood-face" />
+    <img src="/favicon.png?v=hood3" width={size} height={size} alt="" aria-hidden className="hood-face" />
   );
 }
 
