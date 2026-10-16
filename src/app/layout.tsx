@@ -27,8 +27,11 @@ export const metadata: Metadata = {
   },
   description,
   icons: {
-    icon: [{ url: "/icon.svg", type: "image/svg+xml" }],
-    apple: "/apple-icon.svg",
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/favicon.png", type: "image/png", sizes: "256x256" },
+    ],
+    apple: "/apple-icon.png",
   },
   alternates: {
     canonical: "https://www.blacksmile.co.kr",

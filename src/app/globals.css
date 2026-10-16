@@ -326,6 +326,12 @@ textarea {
   font-size: 0.9rem;
 }
 
+.hood-face,
+.hood-desk {
+  display: block;
+  object-fit: contain;
+}
+
 .mute {
   color: var(--color-mute);
 }
