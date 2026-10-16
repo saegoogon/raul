@@ -11,23 +11,23 @@ export function NightRail({
   return (
     <aside className="night-rail">
       <section>
-        <h2>This week · top 3</h2>
+        <h2>이번 주</h2>
         {top.length ? (
           <ol>
             {top.map((item, index) => (
               <li key={item.id}>
-                <span className="night-rank">{index + 1}</span>
+                <span className="night-rank">{String(index + 1).padStart(2, "0")}</span>
                 <Link href={`/s/${item.id}`}>{item.title}</Link>
                 <em>Feel {item.starCount}</em>
               </li>
             ))}
           </ol>
         ) : (
-          <p className="mute">Nothing this week yet.</p>
+          <p className="mute">이번 주 글이 아직 없습니다.</p>
         )}
       </section>
       <section>
-        <h2>Trends</h2>
+        <h2>언어</h2>
         {trends.length ? (
           <ul className="trend-list">
             {trends.map((item) => (
@@ -38,7 +38,7 @@ export function NightRail({
             ))}
           </ul>
         ) : (
-          <p className="mute">No code posted this week.</p>
+          <p className="mute">코드가 올라오면 여기에 모입니다.</p>
         )}
       </section>
     </aside>

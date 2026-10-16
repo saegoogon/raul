@@ -12,7 +12,7 @@ function Divider() {
   return (
     <div className="flex items-center gap-3 text-xs text-mute">
       <span className="h-px flex-1 bg-line" />
-      or email
+      또는 이메일
       <span className="h-px flex-1 bg-line" />
     </div>
   );
@@ -33,15 +33,15 @@ export function LoginForm({ oauthFailed }: { oauthFailed: boolean }) {
   const [state, formAction, pending] = useActionState(signIn, null);
   return (
     <>
-      {oauthFailed ? <Alert>Social login was canceled or is not set up yet.</Alert> : null}
+      {oauthFailed ? <Alert>소셜 로그인이 취소되었거나 아직 설정되지 않았습니다.</Alert> : null}
       <SocialLogin />
       <Divider />
       <form action={formAction} className="flex flex-col gap-4">
         {state?.error ? <Alert>{state.error}</Alert> : null}
-        <Field label="Email" id="email" name="email" type="email" autoComplete="email" />
-        <Field label="Password" id="password" name="password" type="password" minLength={6} autoComplete="current-password" />
+        <Field label="이메일" id="email" name="email" type="email" autoComplete="email" />
+        <Field label="비밀번호" id="password" name="password" type="password" minLength={6} autoComplete="current-password" />
         <button type="submit" disabled={pending} className="btn-primary py-2.5">
-          {pending ? "Logging in…" : "Log in"}
+          {pending ? "로그인 중…" : "로그인"}
         </button>
       </form>
     </>
@@ -57,19 +57,19 @@ export function SignUpForm() {
       <form action={formAction} className="flex flex-col gap-4">
         {state?.error ? <Alert>{state.error}</Alert> : null}
         <Field
-          label="Username"
+          label="사용자 이름"
           id="username"
           name="username"
           minLength={3}
           maxLength={20}
           pattern="[a-zA-Z0-9_]+"
-          title="Letters, numbers, underscore only"
+          title="영문, 숫자, 밑줄만 사용할 수 있습니다"
           autoComplete="username"
         />
-        <Field label="Email" id="email" name="email" type="email" autoComplete="email" />
-        <Field label="Password" id="password" name="password" type="password" minLength={6} autoComplete="new-password" />
+        <Field label="이메일" id="email" name="email" type="email" autoComplete="email" />
+        <Field label="비밀번호" id="password" name="password" type="password" minLength={6} autoComplete="new-password" />
         <button type="submit" disabled={pending} className="btn-primary py-2.5">
-          {pending ? "Creating…" : "Create account"}
+          {pending ? "만드는 중…" : "가입"}
         </button>
       </form>
     </>

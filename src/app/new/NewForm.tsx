@@ -30,15 +30,15 @@ export function NewForm() {
   return (
     <form action={action} className="composer">
       <label className="mute">
-        Title
+        제목
         <input name="title" className="field" required maxLength={200} />
       </label>
       <label className="mute">
-        Message
+        본문
         <textarea name="note" className="field" rows={6} maxLength={8000} />
       </label>
       <label className="mute">
-        Code
+        코드
         <textarea
           name="code"
           className="field code-input"
@@ -50,7 +50,7 @@ export function NewForm() {
         />
       </label>
       <label className="mute file-upload">
-        Or upload a file
+        또는 파일 올리기
         <input
           type="file"
           accept=".ts,.tsx,.js,.jsx,.mjs,.py,.go,.rs,.sql,.css,.html,.htm,.json,.txt,.md"
@@ -59,7 +59,7 @@ export function NewForm() {
             event.target.value = "";
             if (!file) return;
             if (file.size > 40_000) {
-              setFileError("File is over 40KB.");
+              setFileError("파일이 40KB를 넘습니다.");
               return;
             }
             const text = await file.text();
@@ -72,7 +72,7 @@ export function NewForm() {
       </label>
       {fileError ? <p className="text-sm text-warn">{fileError}</p> : null}
       <label className="mute">
-        Language
+        언어
         <select name="language" className="field" value={language} onChange={(event) => setLanguage(event.target.value as Language)}>
           {LANGUAGES.map((item) => (
             <option key={item} value={item}>
@@ -83,7 +83,7 @@ export function NewForm() {
       </label>
       {state?.error ? <p className="text-sm text-warn">{state.error}</p> : null}
       <button type="submit" className="btn-primary" disabled={pending}>
-        {pending ? "Posting…" : "Post"}
+        {pending ? "올리는 중…" : "올리기"}
       </button>
     </form>
   );

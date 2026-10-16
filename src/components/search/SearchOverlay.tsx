@@ -20,7 +20,7 @@ export function SearchOverlay() {
   if (!open) return null;
 
   return (
-    <div className="search-overlay" role="dialog" aria-modal aria-label="Search">
+    <div className="search-overlay" role="dialog" aria-modal aria-label="검색">
       <form
         className="search-form"
         onSubmit={(event) => {
@@ -33,16 +33,16 @@ export function SearchOverlay() {
           ref={input}
           value={q}
           onChange={(event) => setQ(event.target.value)}
-          placeholder="Search"
+          placeholder="검색"
           className="search-input"
-          aria-label="Search BlackSmile"
+          aria-label="BlackSmile 검색"
         />
         <button type="button" className="btn-ghost" onClick={hide}>
-          Close
+          닫기
         </button>
       </form>
       <p className="mute" style={{ marginTop: 24 }}>
-        Search posts and code.
+        글과 코드를 찾습니다.
       </p>
     </div>
   );

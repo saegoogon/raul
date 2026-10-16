@@ -7,16 +7,13 @@ export function SnippetRow({ snippet }: { snippet: Snippet }) {
   const hasCode = Boolean(snippet.code.trim());
   return (
     <article className="issue-row">
-      <div className="issue-mark" aria-hidden>
-        ●
-      </div>
       <div className="issue-main">
         <h2>
           <Link href={`/s/${snippet.id}`}>{snippet.title}</Link>
         </h2>
         <p className="post-meta">
           <Link href={`/u/${snippet.author.username}`}>@{snippet.author.username}</Link>
-          <span>opened {timeAgo(snippet.createdAt)}</span>
+          <span>{timeAgo(snippet.createdAt)}</span>
           {hasCode ? (
             <>
               <span>·</span>
@@ -25,7 +22,7 @@ export function SnippetRow({ snippet }: { snippet: Snippet }) {
           ) : null}
           <span>·</span>
           <Link href={`/s/${snippet.id}`}>
-            {snippet.commentCount} {snippet.commentCount === 1 ? "comment" : "comments"}
+            댓글 {snippet.commentCount}
           </Link>
         </p>
       </div>

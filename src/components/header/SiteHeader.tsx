@@ -3,13 +3,12 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { GlitchText } from "@/components/GlitchText";
 import { Icon, Logo } from "@/components/Icon";
 import { useSearch } from "@/components/search/SearchProvider";
 
 const NAV = [
-  { href: "/", label: "Feed" },
-  { href: "/about", label: "About" },
+  { href: "/", label: "커뮤니티" },
+  { href: "/about", label: "소개" },
 ];
 
 export function SiteHeader() {
@@ -21,19 +20,22 @@ export function SiteHeader() {
   return (
     <header className="site-header">
       <a href="#main" className="skip">
-        Skip to feed
+        본문으로
       </a>
       <div className="site-header-bar">
         <Link href="/" className="brand" onClick={() => setMenu(false)}>
-          <Logo size={26} />
-          <GlitchText text="BLACKSMILE" />
-          <span className="caret" aria-hidden />
+          <Logo size={28} />
+          BlackSmile
         </Link>
 
         {chrome ? (
-          <nav className="site-nav" aria-label="Site">
+          <nav className="site-nav" aria-label="사이트">
             {NAV.map((item) => (
-              <Link key={item.label} href={item.href} className="nav-link">
+              <Link
+                key={item.label}
+                href={item.href}
+                className={`nav-link${path === item.href ? " is-on" : ""}`}
+              >
                 {item.label}
               </Link>
             ))}
@@ -43,36 +45,39 @@ export function SiteHeader() {
         <div className="site-tools">
           {chrome ? (
             <>
-              <button type="button" className="icon-btn" aria-label="Search" onClick={search.show}>
+              <button type="button" className="icon-btn" aria-label="검색" onClick={search.show}>
                 <Icon name="search" size={18} />
               </button>
-              <Link href="/new" className="icon-btn" aria-label="New post">
+              <Link href="/new" className="icon-btn" aria-label="새 글">
                 <Icon name="plus" size={18} />
               </Link>
-              <Link href="/account" className="icon-btn" aria-label="Account">
+              <Link href="/account" className="icon-btn" aria-label="계정">
                 <Icon name="user" size={18} />
               </Link>
-              <button type="button" className="icon-btn menu-btn" aria-label="Menu" aria-expanded={menu} onClick={() => setMenu((v) => !v)}>
+              <button type="button" className="icon-btn menu-btn" aria-label="메뉴" aria-expanded={menu} onClick={() => setMenu((v) => !v)}>
                 <Icon name={menu ? "close" : "menu"} size={18} />
               </button>
             </>
           ) : (
             <Link href="/" className="nav-link">
-              Feed
+              커뮤니티
             </Link>
           )}
         </div>
       </div>
 
       {menu && chrome ? (
-        <nav className="mobile-nav" aria-label="Mobile">
+        <nav className="mobile-nav" aria-label="모바일">
           {NAV.map((item) => (
             <Link key={item.label} href={item.href} onClick={() => setMenu(false)}>
               {item.label}
             </Link>
           ))}
           <Link href="/new" onClick={() => setMenu(false)}>
-            New
+            글쓰기
+          </Link>
+          <Link href="/account" onClick={() => setMenu(false)}>
+            계정
           </Link>
         </nav>
       ) : null}

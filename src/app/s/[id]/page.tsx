@@ -14,7 +14,7 @@ type Props = { params: Promise<{ id: string }> };
 export async function generateMetadata({ params }: Props) {
   const { id } = await params;
   const { snippet } = await getSnippet(id);
-  return { title: snippet?.title ?? "Post" };
+  return { title: snippet?.title ?? "글" };
 }
 
 export default async function SnippetPage({ params }: Props) {
@@ -35,12 +35,18 @@ export default async function SnippetPage({ params }: Props) {
             </div>
             <p className="post-meta">
               <Link href={`/u/${snippet.author.username}`}>@{snippet.author.username}</Link>
-              <span>opened {timeAgo(snippet.createdAt)}</span>
+              <span>{timeAgo(snippet.createdAt)}</span>
+              {snippet.code.trim() ? (
+                <>
+                  <span>·</span>
+                  <span>{snippet.language}</span>
+                </>
+              ) : null}
             </p>
             {snippet.note ? <p className="thread-body">{snippet.note}</p> : null}
             {snippet.code.trim() ? <CodeBlock language={snippet.language} code={snippet.code} /> : null}
           </article>
-          {user ? <CommentForm snippetId={snippet.id} /> : <Link href="/login">Log in to comment.</Link>}
+          {user ? <CommentForm snippetId={snippet.id} /> : <Link href="/login">댓글을 쓰려면 로그인하세요.</Link>}
           <CommentTree comments={comments} snippetId={snippet.id} signedIn={Boolean(user)} />
         </>
       ) : null}

@@ -1,23 +1,37 @@
 import type { Metadata, Viewport } from "next";
-import { Fira_Code } from "next/font/google";
+import { IBM_Plex_Mono, Noto_Sans_KR, Syne } from "next/font/google";
 import { SiteFooter } from "@/components/footer/SiteFooter";
 import { SiteHeader } from "@/components/header/SiteHeader";
 import { Providers } from "@/components/providers";
 import { SearchOverlay } from "@/components/search/SearchOverlay";
 import "./globals.css";
 
-const fira = Fira_Code({
+const syne = Syne({
   subsets: ["latin"],
-  variable: "--font-mono",
+  variable: "--font-display",
+  display: "swap",
+});
+
+const noto = Noto_Sans_KR({
+  subsets: ["latin"],
+  weight: ["400", "500", "700"],
+  variable: "--font-ui",
+  display: "swap",
+});
+
+const plex = IBM_Plex_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500"],
+  variable: "--font-code",
   display: "swap",
 });
 
 export const viewport: Viewport = {
-  themeColor: "#0a0a0a",
+  themeColor: "#070707",
   colorScheme: "dark",
 };
 
-const description = "BlackSmile. A dark GitHub. Talk, paste, feel.";
+const description = "BlackSmile. 개발자가 이야기하고 코드를 나누는 플랫폼.";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.blacksmile.co.kr"),
@@ -43,7 +57,7 @@ export const metadata: Metadata = {
     description,
     siteName: "BlackSmile",
     type: "website",
-    locale: "en_US",
+    locale: "ko_KR",
     url: "https://www.blacksmile.co.kr",
   },
   twitter: {
@@ -55,8 +69,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${fira.variable} h-full`}>
-      <body className={`${fira.className} flex min-h-full flex-col bg-night text-paper`}>
+    <html lang="ko" className={`${syne.variable} ${noto.variable} ${plex.variable} h-full`}>
+      <body className={`${noto.className} flex min-h-full flex-col bg-night text-paper`}>
         <Providers>
           <SiteHeader />
           <div className="site-main" id="main">

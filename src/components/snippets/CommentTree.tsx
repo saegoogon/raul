@@ -6,7 +6,7 @@ import type { Comment } from "@/lib/snippets/types";
 export function CommentTree({ comments, snippetId, signedIn }: { comments: Comment[]; snippetId: string; signedIn: boolean }) {
   const roots = comments.filter((item) => !item.parentId);
   const kids = (id: string) => comments.filter((item) => item.parentId === id);
-  if (!roots.length) return <p className="mute">No comments yet.</p>;
+  if (!roots.length) return <p className="mute">아직 댓글이 없습니다.</p>;
   return (
     <div className="comment-tree">
       {roots.map((item) => (

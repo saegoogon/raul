@@ -18,13 +18,13 @@ export default async function ProfilePage({ params }: Props) {
   return (
     <main className="page-pad">
       <h1 className="page-title">@{profile.username}</h1>
-      <p className="mute">Joined {new Date(profile.created_at).toLocaleDateString("en-US")}</p>
+      <p className="mute">{new Date(profile.created_at).toLocaleDateString("ko-KR")} 가입</p>
       <div className="issue-list" style={{ marginTop: 32 }}>
         {snippets.map((snippet) => (
           <SnippetRow key={snippet.id} snippet={snippet} />
         ))}
       </div>
-      {!snippets.length ? <p className="mute">No posts yet.</p> : null}
+      {!snippets.length ? <p className="mute">아직 글이 없습니다.</p> : null}
     </main>
   );
 }

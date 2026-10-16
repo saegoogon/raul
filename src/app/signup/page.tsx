@@ -4,18 +4,18 @@ import { AuthCard } from "@/components/AuthCard";
 import { SignUpForm } from "@/components/AuthForms";
 import { getCurrentUser } from "@/lib/user";
 
-export const metadata = { title: "Create account" };
+export const metadata = { title: "가입" };
 
 export default async function SignUpPage() {
   if (await getCurrentUser()) redirect("/");
   return (
     <AuthCard
-      title="Create account"
+      title="가입"
       footer={
         <>
-          Already have an account?{" "}
+          이미 계정이 있으면{" "}
           <Link href="/login" className="font-medium text-paper hover:underline">
-            Log in
+            로그인
           </Link>
         </>
       }

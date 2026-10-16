@@ -80,11 +80,11 @@ export function SocialLogin() {
       {error && <p className="text-sm text-warn">{error}</p>}
       <button type="button" disabled={pending !== null} onClick={() => void start("google")} className="social social-google">
         <GoogleMark />
-        {pending === "google" ? "Opening Google..." : "Continue with Google"}
+        {pending === "google" ? "Google 여는 중…" : "Google로 계속"}
       </button>
       <button type="button" disabled={pending !== null} onClick={() => void start("naver")} className="social social-naver">
         <NaverMark />
-        {pending === "naver" ? "Opening Naver..." : "Continue with Naver"}
+        {pending === "naver" ? "Naver 여는 중…" : "Naver로 계속"}
       </button>
     </div>
   );
