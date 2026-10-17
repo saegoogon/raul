@@ -18,7 +18,7 @@ export function NightRail({
               <li key={item.id}>
                 <span className="night-rank">{String(index + 1).padStart(2, "0")}</span>
                 <Link href={`/s/${item.id}`}>{item.title}</Link>
-                <em>Feel {item.starCount}</em>
+                <em>공감 {item.starCount}</em>
               </li>
             ))}
           </ol>

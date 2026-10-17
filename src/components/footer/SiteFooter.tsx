@@ -9,7 +9,7 @@ export function SiteFooter() {
         <Link href="/about">소개</Link>
         <Link href="/account">계정</Link>
       </nav>
-      <p className="footer-note">blacksmile.co.kr · Seoul</p>
+      <p className="footer-note">blacksmile.co.kr · 대전</p>
     </footer>
   );
 }

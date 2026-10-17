@@ -20,7 +20,7 @@ export default function OpengraphImage() {
         }}
       >
         <div style={{ fontSize: 22, letterSpacing: 8, textTransform: "uppercase", color: "#8a8882" }}>
-          Seoul
+          대전
         </div>
         <div style={{ display: "flex", flexDirection: "column" }}>
           <div style={{ fontSize: 92, fontWeight: 800, letterSpacing: -4, lineHeight: 0.9 }}>BLACKSMILE</div>

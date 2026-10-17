@@ -151,6 +151,175 @@ textarea {
   border-color: #3d3d3d;
 }
 
+.star-btn {
+  position: relative;
+  overflow: visible;
+  transform-origin: 50% 80%;
+}
+
+.star-btn em {
+  font-style: normal;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--color-mute);
+}
+
+.star-btn.is-on em {
+  color: var(--color-paper);
+}
+
+.star-mark {
+  display: block;
+  width: 0.55rem;
+  height: 0.55rem;
+  border: 1.5px solid currentColor;
+  border-radius: 50%;
+  transform-origin: 50% 80%;
+}
+
+.star-btn.is-on .star-mark {
+  background: #e6e6e6;
+  border-color: #e6e6e6;
+}
+
+.star-burst {
+  position: absolute;
+  inset: 50% auto auto 0.7rem;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.star-burst i {
+  position: absolute;
+  width: 0.22rem;
+  height: 0.22rem;
+  border-radius: 50%;
+  background: #e6e6e6;
+  opacity: 0;
+}
+
+.star-btn.is-pop {
+  animation: star-pop 0.7s cubic-bezier(0.22, 1, 0.36, 1) 1 both;
+}
+
+.star-btn.is-pop .star-mark {
+  animation: star-mark-jump 0.7s cubic-bezier(0.22, 1, 0.36, 1) 1 both;
+}
+
+.star-btn.is-pop em {
+  animation: star-count-punch 0.55s cubic-bezier(0.22, 1, 0.36, 1) 1 both;
+}
+
+.star-btn.is-pop .star-burst i {
+  animation: star-spark 0.62s cubic-bezier(0.22, 1, 0.36, 1) 1 both;
+}
+
+.star-btn.is-pop .star-burst i:nth-child(1) {
+  --dx: -11px;
+  --dy: -14px;
+}
+
+.star-btn.is-pop .star-burst i:nth-child(2) {
+  --dx: 10px;
+  --dy: -16px;
+  animation-delay: 0.04s;
+}
+
+.star-btn.is-pop .star-burst i:nth-child(3) {
+  --dx: -7px;
+  --dy: 8px;
+  animation-delay: 0.07s;
+}
+
+.star-btn.is-pop .star-burst i:nth-child(4) {
+  --dx: 12px;
+  --dy: 6px;
+  animation-delay: 0.1s;
+}
+
+.star-btn.is-drop {
+  animation: star-drop 0.42s cubic-bezier(0.45, 0.05, 0.25, 1) 1 both;
+}
+
+@keyframes star-pop {
+  0% {
+    transform: translateY(0) rotate(0) scale(1, 1);
+  }
+  14% {
+    transform: translateY(2px) rotate(-4deg) scale(1.08, 0.86);
+  }
+  36% {
+    transform: translateY(-8px) rotate(5deg) scale(0.94, 1.1);
+  }
+  58% {
+    transform: translateY(-3px) rotate(-2deg) scale(1.04, 0.96);
+  }
+  78% {
+    transform: translateY(1px) rotate(1deg) scale(0.98, 1.03);
+  }
+  100% {
+    transform: translateY(0) rotate(0) scale(1, 1);
+  }
+}
+
+@keyframes star-mark-jump {
+  0% {
+    transform: scale(1);
+  }
+  18% {
+    transform: scale(0.7, 0.55);
+  }
+  42% {
+    transform: scale(1.35, 1.25);
+  }
+  70% {
+    transform: scale(0.92, 1.08);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes star-count-punch {
+  0% {
+    transform: translateY(0) scale(1);
+  }
+  35% {
+    transform: translateY(-4px) scale(1.28);
+  }
+  100% {
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes star-spark {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.4);
+  }
+  28% {
+    opacity: 1;
+    transform: translate(calc(var(--dx) * 0.6), calc(var(--dy) * 0.6)) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--dx), var(--dy)) scale(0.2);
+  }
+}
+
+@keyframes star-drop {
+  0% {
+    transform: translateY(0) rotate(0) scale(1);
+  }
+  30% {
+    transform: translateY(2px) rotate(-3deg) scale(0.96, 1.04);
+  }
+  100% {
+    transform: translateY(0) rotate(0) scale(1);
+  }
+}
+
 .btn-primary:disabled,
 .btn-ghost:disabled,
 .social:disabled,
@@ -1035,7 +1204,11 @@ textarea {
   .hood-motion .hood-face,
   .hood-motion .hood-desk,
   .hood-dots i,
-  .hood-check {
+  .hood-check,
+  .star-btn,
+  .star-btn .star-mark,
+  .star-btn em,
+  .star-burst i {
     animation: none !important;
   }
 }
