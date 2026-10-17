@@ -28,6 +28,11 @@ export default async function SnippetPage({ params }: Props) {
       <SetupNote status={status} />
       {snippet ? (
         <>
+          <p className="crumb">
+            <Link href="/">blacksmile</Link>
+            <span>/</span>
+            <span>{snippet.title}</span>
+          </p>
           <article className="snippet-detail">
             <div className="snippet-head">
               <h1>{snippet.title}</h1>

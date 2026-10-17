@@ -1,3 +1,4 @@
+import { HoodEmpty } from "@/components/mascot/HoodMotion";
 import { SnippetRow } from "@/components/snippets/SnippetRow";
 import { listSnippets } from "@/lib/snippets/queries";
 
@@ -21,12 +22,15 @@ export default async function SearchPage({
           찾기
         </button>
       </form>
-      <div className="issue-list">
-        {snippets.map((snippet) => (
-          <SnippetRow key={snippet.id} snippet={snippet} />
-        ))}
-      </div>
-      {q && !snippets.length ? <p className="mute">맞는 글이 없습니다.</p> : null}
+      {snippets.length ? (
+        <div className="issue-list">
+          {snippets.map((snippet) => (
+            <SnippetRow key={snippet.id} snippet={snippet} />
+          ))}
+        </div>
+      ) : q ? (
+        <HoodEmpty title="맞는 글이 없습니다">다른 단어로 찾아 보세요.</HoodEmpty>
+      ) : null}
     </main>
   );
 }

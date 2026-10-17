@@ -7,6 +7,7 @@ export function SnippetRow({ snippet }: { snippet: Snippet }) {
   const hasCode = Boolean(snippet.code.trim());
   return (
     <article className="issue-row">
+      <span className="issue-status" aria-hidden="true" />
       <div className="issue-main">
         <h2>
           <Link href={`/s/${snippet.id}`}>{snippet.title}</Link>

@@ -2,6 +2,7 @@
 
 import { useActionState, useState } from "react";
 import { createSnippet } from "@/actions/snippets";
+import { HoodMotion } from "@/components/mascot/HoodMotion";
 import { isLanguage, LANGUAGES, type Language } from "@/lib/snippets/languages";
 
 const EXT: Record<string, Language> = {
@@ -81,10 +82,18 @@ export function NewForm() {
           ))}
         </select>
       </label>
-      {state?.error ? <p className="text-sm text-warn">{state.error}</p> : null}
-      <button type="submit" className="btn-primary" disabled={pending}>
-        {pending ? "올리는 중…" : "올리기"}
-      </button>
+      {state?.error ? (
+        <div className="hood-error-block">
+          <HoodMotion kind="error" size={72} />
+          <p className="text-sm text-warn">{state.error}</p>
+        </div>
+      ) : null}
+      <div className="hood-action-row">
+        {pending ? <HoodMotion kind="loading" size={36} pose="face" /> : null}
+        <button type="submit" className="btn-primary" disabled={pending}>
+          {pending ? "올리는 중…" : "올리기"}
+        </button>
+      </div>
     </form>
   );
 }

@@ -25,7 +25,7 @@ export function SiteHeader() {
       <div className="site-header-bar">
         <Link href="/" className="brand" onClick={() => setMenu(false)}>
           <Logo size={28} />
-          BlackSmile
+          blacksmile
         </Link>
 
         {chrome ? (
@@ -45,7 +45,11 @@ export function SiteHeader() {
         <div className="site-tools">
           {chrome ? (
             <>
-              <button type="button" className="icon-btn" aria-label="검색" onClick={search.show}>
+              <button type="button" className="header-search" onClick={search.show}>
+                <Icon name="search" size={14} />
+                검색
+              </button>
+              <button type="button" className="icon-btn search-toggle" aria-label="검색" onClick={search.show}>
                 <Icon name="search" size={18} />
               </button>
               <Link href="/new" className="icon-btn" aria-label="새 글">

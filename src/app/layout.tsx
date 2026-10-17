@@ -27,7 +27,7 @@ const plex = IBM_Plex_Mono({
 });
 
 export const viewport: Viewport = {
-  themeColor: "#070707",
+  themeColor: "#000000",
   colorScheme: "dark",
 };
 

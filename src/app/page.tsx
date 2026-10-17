@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { HoodFace } from "@/components/mascot/Hood";
+import { HoodEmpty, HoodMotion } from "@/components/mascot/HoodMotion";
 import { NightRail } from "@/components/snippets/NightRail";
 import { SetupNote } from "@/components/snippets/SetupNote";
 import { SnippetRow } from "@/components/snippets/SnippetRow";
@@ -22,53 +22,45 @@ export default async function Home({
 
   return (
     <main className="page-pad">
-      <header className="masthead">
-        <div className="masthead-brand">
-          <p className="kicker">Seoul · 개발자 플랫폼</p>
-          <HoodFace size={72} />
-          <h1 className="wordmark">BlackSmile</h1>
-          <p className="lede">
-            이야기하고, 코드를 나누고, 서로의 글에 Feel을 남기는 커뮤니티입니다. 도구와 다운로드는 실제 파일이 준비되면
-            엽니다.
-          </p>
-          <div className="hero-actions">
-            {user ? (
-              <Link href="/new" className="btn-primary">
-                글쓰기
-              </Link>
-            ) : (
-              <Link href="/signup" className="btn-primary">
-                가입
-              </Link>
-            )}
-            <Link href="/about" className="btn-ghost">
-              소개
-            </Link>
-          </div>
+      <header className="repo-head">
+        <div className="repo-title">
+          <HoodMotion kind="enter" size={28} pose="face" />
+          <h1>blacksmile</h1>
+          <span className="repo-badge">음지</span>
         </div>
-        <ol className="platform-index">
-          <li>
-            <span className="idx">01</span>
-            <Link href="/">커뮤니티</Link>
-            <span>최근 활동</span>
-          </li>
-          <li>
-            <span className="idx">02</span>
-            <span>도구</span>
-            <span className="soon">준비 중</span>
-          </li>
-          <li>
-            <span className="idx">03</span>
-            <span>다운로드</span>
-            <span className="soon">준비 중</span>
-          </li>
-        </ol>
+        <p className="lede">
+          개발자가 글을 올리고 코드를 붙이는 실험실입니다. 커뮤니티는 열려 있습니다. 도구와 다운로드는 실제 파일이
+          준비되면 같은 목록에서 엽니다.
+        </p>
+        <div className="hero-actions">
+          {user ? (
+            <Link href="/new" className="btn-primary">
+              글쓰기
+            </Link>
+          ) : (
+            <Link href="/signup" className="btn-primary">
+              가입
+            </Link>
+          )}
+          <Link href="/about" className="btn-ghost">
+            소개
+          </Link>
+        </div>
       </header>
 
+      <nav className="tabs" aria-label="실험실 구역">
+        <a className="tab is-on" href="#community">
+          커뮤니티
+          {status === "ok" ? <em>{snippets.length}</em> : null}
+        </a>
+        <span className="tab is-wait">도구</span>
+        <span className="tab is-wait">다운로드</span>
+      </nav>
+
       <div className="feed-layout">
-        <section>
+        <section id="community" tabIndex={-1}>
           <div className="board-head">
-            <h2>커뮤니티</h2>
+            <h2>최근 활동</h2>
             <SortLinks base={sortBase} sort={sort} />
           </div>
           <SetupNote status={status} />
@@ -79,7 +71,22 @@ export default async function Home({
               ))}
             </div>
           ) : status === "ok" ? (
-            <p className="mute">아직 글이 없습니다.</p>
+            <HoodEmpty
+              title="아직 글이 없습니다"
+              action={
+                user ? (
+                  <Link href="/new" className="btn-primary">
+                    글쓰기
+                  </Link>
+                ) : (
+                  <Link href="/signup" className="btn-primary">
+                    가입
+                  </Link>
+                )
+              }
+            >
+              생각을 먼저 올리거나, 코드를 붙여 보세요.
+            </HoodEmpty>
           ) : null}
         </section>
         <NightRail top={board.top} trends={board.trends} />
