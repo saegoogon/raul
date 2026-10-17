@@ -8,6 +8,7 @@ import { useSearch } from "@/components/search/SearchProvider";
 
 const NAV = [
   { href: "/", label: "커뮤니티" },
+  { href: "/tools", label: "도구" },
   { href: "/about", label: "소개" },
 ];
 
@@ -34,7 +35,7 @@ export function SiteHeader() {
               <Link
                 key={item.label}
                 href={item.href}
-                className={`nav-link${path === item.href ? " is-on" : ""}`}
+                className={`nav-link${(item.href === "/" ? path === "/" : path.startsWith(item.href)) ? " is-on" : ""}`}
               >
                 {item.label}
               </Link>

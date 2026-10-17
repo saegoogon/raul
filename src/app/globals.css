@@ -1145,6 +1145,60 @@ textarea {
   }
 }
 
+.tool-layout {
+  display: grid;
+  gap: 1rem;
+}
+
+.tool-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+.tool-nav button {
+  padding: 0.35rem 0.65rem;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--color-mute);
+  cursor: pointer;
+}
+
+.tool-nav button.is-on,
+.tool-nav button:hover {
+  border-color: var(--color-line);
+  background: #111;
+  color: var(--color-paper);
+}
+
+.tool-panel {
+  display: grid;
+  gap: 0.75rem;
+  padding: 1rem;
+  border: 1px solid var(--color-line);
+  border-radius: 6px;
+  background: #0a0a0a;
+}
+
+.tool-note {
+  margin: 0;
+  color: var(--color-mute);
+  font-size: 0.8rem;
+}
+
+.tool-io {
+  min-height: 8rem;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+}
+
+.tool-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
 @media (min-width: 800px) {
   .wrap,
   .site-header-bar,
@@ -1176,6 +1230,15 @@ textarea {
     grid-column: 2;
     grid-row: 1 / span 2;
     align-self: start;
+  }
+
+  .tool-layout {
+    grid-template-columns: 10.5rem minmax(0, 1fr);
+    align-items: start;
+  }
+
+  .tool-nav {
+    flex-direction: column;
   }
 }
 

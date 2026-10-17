@@ -6,6 +6,7 @@ export function SiteFooter() {
       <p className="footer-mark">BlackSmile</p>
       <nav className="footer-nav">
         <Link href="/">커뮤니티</Link>
+        <Link href="/tools">도구</Link>
         <Link href="/about">소개</Link>
         <Link href="/account">계정</Link>
       </nav>

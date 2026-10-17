@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { HoodEmpty, HoodMotion } from "@/components/mascot/HoodMotion";
+import { SiteTabs } from "@/components/nav/SiteTabs";
 import { NightRail } from "@/components/snippets/NightRail";
 import { SetupNote } from "@/components/snippets/SetupNote";
 import { SnippetRow } from "@/components/snippets/SnippetRow";
@@ -29,8 +30,8 @@ export default async function Home({
           <span className="repo-badge">음지</span>
         </div>
         <p className="lede">
-          개발자가 글을 올리고 코드를 붙이는 실험실입니다. 커뮤니티는 열려 있습니다. 도구와 다운로드는 실제 파일이
-          준비되면 같은 목록에서 엽니다.
+          해커와 개발자가 정보를 나누고, 같은 자리에서 도구를 씁니다. 커뮤니티는 열려 있습니다. 다운로드는 실제 파일이
+          준비되면 엽니다.
         </p>
         <div className="hero-actions">
           {user ? (
@@ -48,14 +49,7 @@ export default async function Home({
         </div>
       </header>
 
-      <nav className="tabs" aria-label="실험실 구역">
-        <a className="tab is-on" href="#community">
-          커뮤니티
-          {status === "ok" ? <em>{snippets.length}</em> : null}
-        </a>
-        <span className="tab is-wait">도구</span>
-        <span className="tab is-wait">다운로드</span>
-      </nav>
+      <SiteTabs active="community" communityCount={status === "ok" ? snippets.length : undefined} />
 
       <div className="feed-layout">
         <section id="community" tabIndex={-1}>
